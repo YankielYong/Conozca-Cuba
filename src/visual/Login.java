@@ -58,7 +58,7 @@ public class Login extends JFrame {
         setResizable(false);
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0, 0, 652, 402);
+        setBounds(0, 0, 659, 402);
         setLocationRelativeTo(null);
 
         contentPane = new JPanel(null);
@@ -81,7 +81,7 @@ public class Login extends JFrame {
                 yMouse = e.getY();
             }
         });
-        panelSuperior.setBounds(1, 1, 650, 30);
+        panelSuperior.setBounds(1, 1, 657, 30);
         panelSuperior.setBackground(colorAzul);
         contentPane.add(panelSuperior);
 
@@ -108,7 +108,7 @@ public class Login extends JFrame {
                 btnMinimizar.setContentAreaFilled(false);
             }
         });
-        btnMinimizar.setBounds(560, 0, 45, 30);
+        btnMinimizar.setBounds(567, 0, 45, 30);
         btnMinimizar.setBackground(Color.lightGray);
         btnMinimizar.setIcon(iconMinimizar);
         btnMinimizar.setFocusable(false);
@@ -139,7 +139,7 @@ public class Login extends JFrame {
                 btnCerrar.setContentAreaFilled(false);
             }
         });
-        btnCerrar.setBounds(605, 0, 45, 30);
+        btnCerrar.setBounds(612, 0, 45, 30);
         btnCerrar.setBackground(Color.red);
         btnCerrar.setIcon(iconCerrar);
         btnCerrar.setFocusable(false);
@@ -149,19 +149,19 @@ public class Login extends JFrame {
         panelSuperior.add(btnCerrar);
 
         JPanel panelFoto = new JPanel(null);
-        panelFoto.setBounds(1, 31, 270, 370);
+        panelFoto.setBounds(1, 31, 277, 370);
         contentPane.add(panelFoto);
 
-        img = new ImageIcon(getClass().getResource("/visual/imagenes/login.jpg"));
-        image = img.getImage().getScaledInstance(270, 370, Image.SCALE_SMOOTH);
+        img = new ImageIcon(getClass().getResource("/visual/imagenes/login1.jpg"));
+        image = img.getImage().getScaledInstance(277, 370, Image.SCALE_SMOOTH);
         Icon fotoLogin = new ImageIcon(image);
 
         JLabel fotoIzq = new JLabel(fotoLogin);
-        fotoIzq.setBounds(0, 0, 270, 370);
+        fotoIzq.setBounds(0, 0, 277, 370);
         panelFoto.add(fotoIzq);
 
         panelInferior = new JPanel(null);
-        panelInferior.setBounds(271, 31, 380, 370);
+        panelInferior.setBounds(278, 31, 380, 370);
         panelInferior.setBackground(Color.white);
         contentPane.add(panelInferior);
         
