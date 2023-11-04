@@ -37,7 +37,7 @@ public class Login extends JFrame {
      */
     private int xMouse;
     private int yMouse;
-    private Color colorAzul = new Color(86, 197, 228);
+    private Color colorAzul = new Color(40, 87, 177);
 
     private JPanel contentPane;
     /*
