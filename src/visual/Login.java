@@ -37,7 +37,7 @@ public class Login extends JFrame {
      */
     private int xMouse;
     private int yMouse;
-    private Color colorAzul = new Color(40, 87, 177);
+    private Color colorAzul = new Color(33, 79, 165);
 
     private JPanel contentPane;
     /*
@@ -226,7 +226,7 @@ public class Login extends JFrame {
         registrarse.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                registrarse.setForeground(colorAzul);
+                registrarse.setForeground(new Color(50, 130, 246));
             }
 
             @Override
