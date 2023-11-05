@@ -153,7 +153,7 @@ public class Login extends JFrame {
         panelFoto.setBounds(1, 31, 270, 370);
         contentPane.add(panelFoto);
 
-        img = new ImageIcon(getClass().getResource("/visual/imagenes/login2.jpg"));
+        img = new ImageIcon(getClass().getResource("/visual/imagenes/login.jpg"));
         image = img.getImage().getScaledInstance(270, 370, Image.SCALE_SMOOTH);
         Icon fotoLogin = new ImageIcon(image);
 
@@ -165,6 +165,14 @@ public class Login extends JFrame {
         panelInferior.setBounds(271, 31, 380, 370);
         panelInferior.setBackground(Color.white);
         contentPane.add(panelInferior);
+        
+        img = new ImageIcon(getClass().getResource("/visual/imagenes/usuarioLogin.png"));
+        image = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Icon iconUsuario = new ImageIcon(image);
+        
+        JLabel lUsuario = new JLabel(iconUsuario);
+        lUsuario.setBounds(150, 90, 80, 80);
+        panelInferior.add(lUsuario);
         
         txtUsuario = new JTextField("Usuario");
         txtUsuario.addFocusListener(new FocusAdapter() {
