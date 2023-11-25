@@ -1,7 +1,6 @@
 package visual;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -26,10 +25,6 @@ import utils.MyButtonModel;
 
 public class Registrarse extends JFrame {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	/*
 	 * Utils
@@ -37,6 +32,7 @@ public class Registrarse extends JFrame {
 	private int xMouse;
 	private int yMouse;
 	private Color colorAzul = new Color(59, 165, 187);
+	private Color colorFondoBotones = new Color(58, 239, 235);
 
 	private JPanel contentPane;
 	/*
@@ -134,7 +130,7 @@ public class Registrarse extends JFrame {
 			}
 		});
 		btnMinimizar.setBounds(560, 0, 45, 30);
-		btnMinimizar.setBackground(Color.lightGray);
+		btnMinimizar.setBackground(colorFondoBotones);
 		btnMinimizar.setIcon(iconMinimizar);
 		btnMinimizar.setFocusable(false);
 		btnMinimizar.setBorderPainted(false);
@@ -252,6 +248,7 @@ public class Registrarse extends JFrame {
 
 		txtPassword = new JPasswordField("Contraseña");
 		txtPassword.addFocusListener(new FocusAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusGained(FocusEvent e) {
 				if(txtPassword.getText().equals("Contraseña") && !passChanged){
@@ -262,6 +259,7 @@ public class Registrarse extends JFrame {
 				}
 			}
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtPassword.getText().equals("")){

@@ -39,6 +39,7 @@ public class Login extends JFrame {
 	private int xMouse;
 	private int yMouse;
 	private Color colorAzul = new Color(59, 165, 187);
+	private Color colorFondoBotones = new Color(58, 239, 235);
 
 	private JPanel contentPane;
 	/*
@@ -114,7 +115,7 @@ public class Login extends JFrame {
 			}
 		});
 		btnMinimizar.setBounds(560, 0, 45, 30);
-		btnMinimizar.setBackground(Color.lightGray);
+		btnMinimizar.setBackground(colorFondoBotones);
 		btnMinimizar.setIcon(iconMinimizar);
 		btnMinimizar.setFocusable(false);
 		btnMinimizar.setBorderPainted(false);
@@ -206,6 +207,7 @@ public class Login extends JFrame {
 
 		txtPassword = new JPasswordField("Contraseña");
 		txtPassword.addFocusListener(new FocusAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusGained(FocusEvent e) {
 				if(txtPassword.getText().equals("Contraseña") && !passChanged){
@@ -216,6 +218,7 @@ public class Login extends JFrame {
 				}
 			}
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtPassword.getText().equals("")){

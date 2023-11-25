@@ -29,12 +29,15 @@ public class Principal extends JFrame{
 	
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
+	private Color colorFondoBotones = new Color(58, 239, 235);
 	
 	private JPanel contentPane;
 	
 	private JPanel panelSuperior;
 	private JButton btnCerrar;
 	private JButton btnMinimizar;
+	private JButton btnPerfil;
+	private JButton btnReservas;
 	
 	private JPanel panelPrincipal;
 	
@@ -53,8 +56,34 @@ public class Principal extends JFrame{
 		contentPane.add(panelSuperior);
 		
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/minimize.png"));
-        Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        Image image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
         Icon iconMinimizar = new ImageIcon(image);
+        
+        btnMinimizar = new JButton(iconMinimizar);
+        btnMinimizar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnMinimizar.setContentAreaFilled(false);
+				setExtendedState(ICONIFIED);
+			}
+		});
+        btnMinimizar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnMinimizar.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnMinimizar.setContentAreaFilled(false);
+			}
+		});
+        btnMinimizar.setModel(new MyButtonModel());
+        btnMinimizar.setBounds(pantalla.width-150, 0, 75, 50);
+        btnMinimizar.setBackground(colorFondoBotones);
+        btnMinimizar.setFocusable(false);
+        btnMinimizar.setBorderPainted(false);
+        btnMinimizar.setContentAreaFilled(false);
+		panelSuperior.add(btnMinimizar);
         
         img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
         image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
@@ -86,6 +115,64 @@ public class Principal extends JFrame{
 		btnCerrar.setContentAreaFilled(false);
 		panelSuperior.add(btnCerrar);
 		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/usuario.png"));
+        image = img.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconPerfil = new ImageIcon(image);
+		
+		btnPerfil = new JButton(iconPerfil);
+		btnPerfil.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnPerfil.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnPerfil.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnPerfil.setContentAreaFilled(false);
+			}
+		});
+		btnPerfil.setModel(new MyButtonModel());
+		btnPerfil.setBounds(0, 0, 75, 50);
+		btnPerfil.setBackground(colorFondoBotones);
+		btnPerfil.setFocusable(false);
+		btnPerfil.setBorderPainted(false);
+		btnPerfil.setContentAreaFilled(false);
+		panelSuperior.add(btnPerfil);
+		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/reservas.png"));
+        image = img.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Icon iconReservas = new ImageIcon(image);
+		
+		btnReservas = new JButton(iconReservas);
+		btnReservas.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnReservas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnReservas.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnReservas.setContentAreaFilled(false);
+			}
+		});
+		btnReservas.setModel(new MyButtonModel());
+		btnReservas.setBounds(75, 0, 75, 50);
+		btnReservas.setBackground(colorFondoBotones);
+		btnReservas.setFocusable(false);
+		btnReservas.setBorderPainted(false);
+		btnReservas.setContentAreaFilled(false);
+		panelSuperior.add(btnReservas);
+		
 		panelPrincipal = new JPanel(null){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -94,7 +181,7 @@ public class Principal extends JFrame{
 				g.drawImage(img, 0, 0, panelPrincipal.getWidth(), panelPrincipal.getHeight(), this);
 			}
 		};
-		panelPrincipal.setBounds(100, 50, pantalla.width-100, pantalla.height-50);
+		panelPrincipal.setBounds(0, 50, pantalla.width, pantalla.height-50);
 		contentPane.add(panelPrincipal);
 	}
 
