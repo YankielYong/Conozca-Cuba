@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import utils.MyButtonModel;
+import utils.Paneles;
 
 public class Principal extends JFrame{
 	
@@ -27,9 +28,11 @@ public class Principal extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	
+	private Principal este;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 	private Color colorFondoBotones = new Color(58, 239, 235);
+	private int panelAbierto;
 	
 	private JPanel contentPane;
 	
@@ -41,7 +44,14 @@ public class Principal extends JFrame{
 	
 	private JPanel panelPrincipal;
 	
+	/*
+	 * Paneles
+	 */
+	private Descubrir panelDescubrir;
+	private Perfil panelPerfil;
+	
 	public Principal(){
+		este = this;
 		setUndecorated(true);
 		setResizable(false);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -123,7 +133,21 @@ public class Principal extends JFrame{
 		btnPerfil.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				switch(panelAbierto){
+				case 0:
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_PERFIL;
+					break;
+				case 2: 
+					panelPrincipal.remove(panelDescubrir);
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_PERFIL;
+					break;
+				}
 			}
 		});
 		btnPerfil.addMouseListener(new MouseAdapter() {
@@ -152,7 +176,21 @@ public class Principal extends JFrame{
 		btnReservas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				switch(panelAbierto){
+				case 0:
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_DESCUBRIR;
+					break;
+				case 1:
+					panelPrincipal.remove(panelPerfil);
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_DESCUBRIR;
+					break;
+				}
 			}
 		});
 		btnReservas.addMouseListener(new MouseAdapter() {
@@ -183,6 +221,14 @@ public class Principal extends JFrame{
 		};
 		panelPrincipal.setBounds(0, 50, pantalla.width, pantalla.height-50);
 		contentPane.add(panelPrincipal);
+	}
+	
+	public void setPanelAbierto(int panel){
+		panelAbierto = panel;
+	}
+	
+	public JPanel getPanelPrincipal(){
+		return panelPrincipal;
 	}
 
 }
