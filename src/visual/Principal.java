@@ -49,6 +49,9 @@ public class Principal extends JFrame{
 	 */
 	private Descubrir panelDescubrir;
 	private Perfil panelPerfil;
+	private InfoHotel panelInfoHotel;
+	private InfoPaquete panelInfoPaquete;
+	private AgregarHotel panelAgregarHotel;
 	
 	public Principal(){
 		este = this;

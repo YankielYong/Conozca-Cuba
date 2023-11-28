@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,6 +27,7 @@ public class Perfil extends JPanel{
 	private JPanel panelInferior;
 	private JLabel nombre;
 	private JLabel nombreUsuario;
+	private JLabel cuenta;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 	private JButton btnCerrar;
@@ -37,7 +39,7 @@ public class Perfil extends JPanel{
 	public Perfil(Principal p){
 		padre = p;
 		este = this;
-		setBounds(pantalla.width/2-201, pantalla.height/2-201, 432, 392);	
+		setBounds(pantalla.width/2-201, pantalla.height/2-226, 432, 402);	
 		setBackground(Color.darkGray);
 		setLayout(null);
 
@@ -79,10 +81,8 @@ public class Perfil extends JPanel{
 		btnCerrar.setModel(new MyButtonModel());
 		panelSuperior.add(btnCerrar);
 
-
-
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 430, 360);
+		panelInferior.setBounds(1, 31, 430, 370);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 
@@ -91,23 +91,29 @@ public class Perfil extends JPanel{
 		Icon iconUsuario = new ImageIcon(image);
 
 		JLabel lUsuario = new JLabel(iconUsuario);
-		lUsuario.setBounds(173, 33, 80, 80);
+		lUsuario.setBounds(175, 30, 80, 80);
 		panelInferior.add(lUsuario);
 
 		nombre = new JLabel("Nombre: ");
-		nombre.setBounds(62, 206, 82, 20);
+		nombre.setBounds(50, 140, 100, 30);
 		nombre.setFont(new Font("Arial", Font.BOLD, 18));
 		nombre.setForeground(Color.black);
 		panelInferior.add(nombre);
 
 		nombreUsuario = new JLabel("Usuario: ");
-		nombreUsuario.setBounds(62, 138, 100, 20);
+		nombreUsuario.setBounds(50, 200, 100, 30);
 		nombreUsuario.setFont(new Font("Arial", Font.BOLD, 18));
 		nombreUsuario.setForeground(Color.black);
 		panelInferior.add(nombreUsuario);
+		
+		cuenta = new JLabel("Cuenta: ");
+		cuenta.setBounds(50, 260, 100, 30);
+		cuenta.setFont(new Font("Arial", Font.BOLD, 18));
+		cuenta.setForeground(Color.black);
+		panelInferior.add(cuenta);
 
 		btnCerrarSesion = new JButton("Cerrar Sesión");
-		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 13));
+		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 15));
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -125,7 +131,7 @@ public class Perfil extends JPanel{
 			}
 		});
 		btnCerrarSesion.setModel(new MyButtonModel());
-		btnCerrarSesion.setBounds(85, 280, 260, 30);
+		btnCerrarSesion.setBounds(85, 315, 260, 30);
 		btnCerrarSesion.setBackground(colorAzul);
 		btnCerrarSesion.setForeground(Color.black);
 		btnCerrarSesion.setFocusable(false);

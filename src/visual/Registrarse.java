@@ -1,7 +1,6 @@
 package visual;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -33,6 +32,7 @@ public class Registrarse extends JFrame {
 	private int yMouse;
 	private Color colorAzul = new Color(59, 165, 187);
 	private Color colorFondoBotones = new Color(58, 239, 235);
+	private Login anterior;
 
 	private JPanel contentPane;
 	/*
@@ -45,6 +45,7 @@ public class Registrarse extends JFrame {
 	 * Panel Inferior
 	 */
 	private JPanel panelInferior;
+	private JButton btnAtras;
 	private JTextField txtNombre;
 	private JTextField txtCuenta;
 	private JTextField txtUsuario;
@@ -56,26 +57,8 @@ public class Registrarse extends JFrame {
 	private boolean accountChanged = false;
 	private boolean passChanged = false;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Registrarse frame = new Registrarse();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public Registrarse() {
+	public Registrarse(Login a) {
+		anterior = a;
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,14 +168,45 @@ public class Registrarse extends JFrame {
 		panelInferior.setBounds(271, 31, 380, 390);
 		panelInferior.setBackground(Color.white);
 		contentPane.add(panelInferior);
+		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/atras.png"));
+		image = img.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+		Icon iconAtras = new ImageIcon(image);
+		
+		btnAtras = new JButton(iconAtras);
+		btnAtras.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				anterior.setVisible(true);
+				dispose();
+			}
+		});
+		btnAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnAtras.setContentAreaFilled(true);
+			}
 
-		img = new ImageIcon(getClass().getResource("/visual/imagenes/usuarioLogin.png"));
-		image = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-		Icon iconUsuario = new ImageIcon(image);
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAtras.setContentAreaFilled(false);
+			}
+		});
+		btnAtras.setBounds(5, 5, 40, 40);
+		btnAtras.setBackground(colorAzul);
+		btnAtras.setFocusable(false);
+		btnAtras.setBorderPainted(false);
+		btnAtras.setContentAreaFilled(false);
+		btnAtras.setModel(new MyButtonModel());
+		panelInferior.add(btnAtras);
+		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
+		image = img.getImage().getScaledInstance(230, 70, Image.SCALE_SMOOTH);
+		Icon iconLogo = new ImageIcon(image);
 
-		JLabel lUsuario = new JLabel(iconUsuario);
-		lUsuario.setBounds(150, 15, 80, 80);
-		panelInferior.add(lUsuario);
+		JLabel logo = new JLabel(iconLogo);
+		logo.setBounds(75, 10, 230, 70);
+		panelInferior.add(logo);
 		
 		txtNombre = new JTextField("Nombre");
 		txtNombre.addFocusListener(new FocusAdapter() {

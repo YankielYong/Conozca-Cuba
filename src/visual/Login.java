@@ -40,6 +40,7 @@ public class Login extends JFrame {
 	private int yMouse;
 	private Color colorAzul = new Color(59, 165, 187);
 	private Color colorFondoBotones = new Color(58, 239, 235);
+	private Login este;
 
 	private JPanel contentPane;
 	/*
@@ -61,6 +62,7 @@ public class Login extends JFrame {
 	private boolean passChanged = false;
 
 	public Login() {
+		este = this;
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,14 +172,14 @@ public class Login extends JFrame {
 		panelInferior.setBounds(271, 31, 380, 370);
 		panelInferior.setBackground(Color.white);
 		contentPane.add(panelInferior);
+		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
+		image = img.getImage().getScaledInstance(280, 85, Image.SCALE_SMOOTH);
+		Icon iconLogo = new ImageIcon(image);
 
-		img = new ImageIcon(getClass().getResource("/visual/imagenes/usuarioLogin.png"));
-		image = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-		Icon iconUsuario = new ImageIcon(image);
-
-		JLabel lUsuario = new JLabel(iconUsuario);
-		lUsuario.setBounds(150, 70, 80, 80);
-		panelInferior.add(lUsuario);
+		JLabel logo = new JLabel(iconLogo);
+		logo.setBounds(50, 35, 280, 85);
+		panelInferior.add(logo);
 
 		txtUsuario = new JTextField("Usuario");
 		txtUsuario.addFocusListener(new FocusAdapter() {
@@ -237,11 +239,10 @@ public class Login extends JFrame {
 		panelInferior.add(txtPassword);
 
 		btnIniciarSesion = new JButton("Iniciar Sesión");
-		btnIniciarSesion.setFont(new Font("Arial", Font.BOLD, 13));
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 			}
 		});
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {
@@ -256,6 +257,7 @@ public class Login extends JFrame {
 		});
 		btnIniciarSesion.setModel(new MyButtonModel());
 		btnIniciarSesion.setBounds(60, 280, 260, 30);
+		btnIniciarSesion.setFont(new Font("Arial", Font.BOLD, 13));
 		btnIniciarSesion.setBackground(colorAzul);
 		btnIniciarSesion.setForeground(Color.black);
 		btnIniciarSesion.setFocusable(false);
@@ -278,6 +280,12 @@ public class Login extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				registrarse.setForeground(colorAzul);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Registrarse r = new Registrarse(este);
+				r.setVisible(true);
+				dispose();
 			}
 		});
 		registrarse.setFont(new Font("Arial", Font.BOLD, 12));
