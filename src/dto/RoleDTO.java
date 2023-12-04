@@ -2,37 +2,37 @@ package dto;
 
 public class RoleDTO {
 
-	private int role_code;
-	private String role_name;
-	private String role_description;
+	private int roleCode;
+	private String roleName;
+	private String roleDescription;
 	
-	public RoleDTO(int role_code, String role_name, String role_description) {
-		this.role_code = role_code;
-		this.role_name = role_name;
-		this.role_description = role_description;
+	public RoleDTO(int roleCode, String roleName, String roleDescription) {
+		this.roleCode = roleCode;
+		this.roleName = roleName;
+		this.roleDescription = roleDescription;
 	}
 
-	public int getRole_code() {
-		return role_code;
+	public int getRoleCode() {
+		return roleCode;
 	}
 
-	public void setRole_code(int role_code) {
-		this.role_code = role_code;
+	public void setRoleCode(int roleCode) {
+		this.roleCode = roleCode;
 	}
 
-	public String getRole_name() {
-		return role_name;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole_name(String role_name) {
-		this.role_name = role_name;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
-	public String getRole_description() {
-		return role_description;
+	public String getRoleDescription() {
+		return roleDescription;
 	}
 
-	public void setRole_description(String role_description) {
-		this.role_description = role_description;
+	public void setRoleDescription(String roleDescription) {
+		this.roleDescription = roleDescription;
 	}
 }

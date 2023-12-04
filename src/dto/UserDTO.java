@@ -2,57 +2,57 @@ package dto;
 
 public class UserDTO {
 
-	private int user_code;
-	private String user_name;
-	private String user_nick;
-	private String user_password;
-	private int role_code;
+	private int userCode;
+	private String userName;
+	private String userNick;
+	private String userPassword;
+	private int roleCode;
 	
-	public UserDTO(int user_code, String user_name, String user_nick, String user_password, int role_code) {
-		this.user_code = user_code;
-		this.user_name = user_name;
-		this.user_nick = user_nick;
-		this.user_password = user_password;
-		this.role_code = role_code;
+	public UserDTO(int userCode, String userName, String userNick, String userPassword, int roleCode) {
+		this.userCode = userCode;
+		this.userName = userName;
+		this.userNick = userNick;
+		this.userPassword = userPassword;
+		this.roleCode = roleCode;
 	}
 
-	public int getUser_code() {
-		return user_code;
+	public int getUserCode() {
+		return userCode;
 	}
 
-	public void setUser_code(int user_code) {
-		this.user_code = user_code;
+	public void setUserCode(int userCode) {
+		this.userCode = userCode;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getUser_nick() {
-		return user_nick;
+	public String getUserNick() {
+		return userNick;
 	}
 
-	public void setUser_nick(String user_nick) {
-		this.user_nick = user_nick;
+	public void setUserNick(String userNick) {
+		this.userNick = userNick;
 	}
 
-	public String getUser_password() {
-		return user_password;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public int getRole_code() {
-		return role_code;
+	public int getRoleCode() {
+		return roleCode;
 	}
 
-	public void setRole_code(int role_code) {
-		this.role_code = role_code;
+	public void setRoleCode(int roleCode) {
+		this.roleCode = roleCode;
 	}
 }
