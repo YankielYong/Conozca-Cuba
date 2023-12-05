@@ -2,7 +2,7 @@ package dto;
 
 import java.util.Date;
 
-public abstract class ContractDTO {
+public class ContractDTO {
 
 	protected int contractCode;
 	protected String contractDescription;

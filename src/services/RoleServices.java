@@ -6,67 +6,63 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.UserDTO;
+import dto.RoleDTO;
 
-public class UserServices {
+public class RoleServices {
 
-	public void insertUser(String userName, String userNick, String userPassword, int roleCode) 
+	public void insertRole(String roleName, String roleDescription) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT user__insert(?,?,?,?)";
+		String query = "SELECT role_insert(?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setString(1, userName);
-		preparedStatement.setString(2, userNick);
-		preparedStatement.setString(3, userPassword);
-		preparedStatement.setInt(4, roleCode);
+		preparedStatement.setString(1, roleName);
+		preparedStatement.setString(2, roleDescription);
 		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
 	}
 	
-	public void deleteUser(int userCode) throws SQLException, ClassNotFoundException{
-		String query = "SELECT user__delete(?)";
+	public void deleteRole(int roleCode) throws SQLException, ClassNotFoundException{
+		String query = "SELECT role_delete(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1, userCode);
+		preparedStatement.setInt(1, roleCode);
 		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
 	}
 	
-	public void updateUser(int userCode, String userName, String userNick, String userPassword, int roleCode) 
+	public void updateRole(int roleCode, String roleName, String roleDescription) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT user__update(?,?,?,?,?)";
+		String query = "SELECT user__update(?,?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1, userCode);
-		preparedStatement.setString(2, userName);
-		preparedStatement.setString(3, userNick);
-		preparedStatement.setString(4, userPassword);
-		preparedStatement.setInt(5, roleCode);
+		preparedStatement.setInt(1, roleCode);
+		preparedStatement.setString(2, roleName);
+		preparedStatement.setString(3, roleDescription);
 		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
 	}
 	
-	public UserDTO findUser(int userCode) throws SQLException, ClassNotFoundException{
-		String query = "SELECT * FROM find_user_(?)";
+	public RoleDTO findRole(int roleCode) throws SQLException, ClassNotFoundException{
+		String query = "SELECT * FROM find_role(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedFunction = connection.prepareStatement(query);
-		preparedFunction.setInt(1, userCode);
+		preparedFunction.setInt(1, roleCode);
 		preparedFunction.execute();
 		ResultSet rs = preparedFunction.getResultSet();
 		rs.next();
-		UserDTO user = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+		RoleDTO role = new RoleDTO(rs.getInt(1), rs.getString(2), rs.getString(3));
 		rs.close();
 		preparedFunction.close();
 		connection.close();
-		return user;
+		return role;
 	}
 	
-	public ArrayList<UserDTO> selectAllUsers() throws SQLException, ClassNotFoundException{
-		ArrayList<UserDTO> users = new ArrayList<UserDTO>();
-		String function = "{?= call select_all_user_()}";
+	public ArrayList<RoleDTO> selectAllRoles() throws SQLException, ClassNotFoundException{
+		ArrayList<RoleDTO> roles = new ArrayList<RoleDTO>();
+		String function = "{?= call select_all_role()}";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		connection.setAutoCommit(false);
 		CallableStatement preparedFunction = connection.prepareCall(function);
@@ -74,11 +70,11 @@ public class UserServices {
 		preparedFunction.execute();
 		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
 		while (rs.next()){
-			users.add(new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+			roles.add(new RoleDTO(rs.getInt(1), rs.getString(2), rs.getString(3)));
 		}
 		rs.close();
 		preparedFunction.close();
 		connection.close();
-		return users;
+		return roles;
 	}
 }

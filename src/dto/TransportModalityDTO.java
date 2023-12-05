@@ -1,6 +1,6 @@
 package dto;
 
-public abstract class TransportModalityDTO {
+public class TransportModalityDTO {
 
 	protected int modalityCode;
 	protected String modalityType;

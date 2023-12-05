@@ -6,7 +6,7 @@ import utils.Connection;
 
 public class ServicesLocator {
 	
-	private static UserServices userServices;
+	private static UserServices userServices = null;
 	
 	public static UserServices getUserServices(){
 		if(userServices == null)
@@ -17,7 +17,7 @@ public class ServicesLocator {
 	public static java.sql.Connection getConnection(){
 		Connection connection = null;
 		try {
-			connection = new Connection("localhost", "conozca_cuba", "postgres", "aqui va su contraseña");
+			connection = new Connection("localhost", "conozca_cuba", "postgres", "aqui va la contrasena");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
