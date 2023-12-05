@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class ContractDTO {
 
-	protected int contractCode;
-	protected String contractDescription;
-	protected Date contractStartDate;
-	protected Date contractEndDate;
-	protected Date contractConciliationDate;
-	protected String contractType;
-	protected int packageCode;
+	private int contractCode;
+	private String contractDescription;
+	private Date contractStartDate;
+	private Date contractEndDate;
+	private Date contractConciliationDate;
+	private String contractType;
+	private int packageCode;
 	
 	public ContractDTO(int contractCode, String contractDescription, Date contractStartDate, 
 			Date contractEndDate, Date contractConciliationDate, String contractType, int packageCode) {

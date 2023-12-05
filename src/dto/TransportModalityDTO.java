@@ -2,8 +2,8 @@ package dto;
 
 public class TransportModalityDTO {
 
-	protected int modalityCode;
-	protected String modalityType;
+	private int modalityCode;
+	private String modalityType;
 	
 	public TransportModalityDTO(int modalityCode, String modalityType) {
 		this.modalityCode = modalityCode;

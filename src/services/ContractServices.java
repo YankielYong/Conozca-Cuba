@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,17 +59,15 @@ public class ContractServices {
 	}
 	
 	public ContractDTO findContract(int contractCode) throws SQLException, ClassNotFoundException{
-		String query = "SELECT * FROM find_contract(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
-		PreparedStatement preparedFunction = connection.prepareStatement(query);
-		preparedFunction.setInt(1, contractCode);
-		preparedFunction.execute();
-		ResultSet rs = preparedFunction.getResultSet();
-		rs.next();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT * FROM contract WHERE contract.contract_code = '"+contractCode+"'"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
 		ContractDTO contract = new ContractDTO(rs.getInt(1), rs.getString(2), new Date(rs.getTimestamp(3).getTime()),
 				new Date(rs.getTimestamp(4).getTime()), new Date(rs.getTimestamp(5).getTime()), rs.getString(6), rs.getInt(7));
 		rs.close();
-		preparedFunction.close();
+		statement.close();
 		connection.close();
 		return contract;
 	}
@@ -90,5 +89,18 @@ public class ContractServices {
 		preparedFunction.close();
 		connection.close();
 		return contracts;
+	}
+	
+	public int getLastContractCode() throws SQLException, ClassNotFoundException{
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT contract.contract_code FROM contract ORDER BY contract.contract_code DESC"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
+		int code = rs.getInt(1);
+		rs.close();
+		statement.close();
+		connection.close();
+		return code;
 	}
 }

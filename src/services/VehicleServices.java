@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.VehicleDTO;
@@ -56,16 +57,14 @@ public class VehicleServices {
 	}
 	
 	public VehicleDTO findVehicle(int vehicleCode) throws SQLException, ClassNotFoundException{
-		String query = "SELECT * FROM find_vehicle(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
-		PreparedStatement preparedFunction = connection.prepareStatement(query);
-		preparedFunction.setInt(1, vehicleCode);
-		preparedFunction.execute();
-		ResultSet rs = preparedFunction.getResultSet();
-		rs.next();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT * FROM vehicle WHERE vehicle.vehicle_code = '"+vehicleCode+"'"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
 		VehicleDTO vehicle = new VehicleDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
 		rs.close();
-		preparedFunction.close();
+		statement.close();
 		connection.close();
 		return vehicle;
 	}

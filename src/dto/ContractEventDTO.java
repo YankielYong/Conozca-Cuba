@@ -1,16 +1,21 @@
 package dto;
 
-import java.util.Date;
-
-public class ContractEventDTO extends ContractDTO{
+public class ContractEventDTO {
 	
+	private int contractCode;
 	private int eventCode;
 
-	public ContractEventDTO(int contractCode, String contractDescription, Date contractStartDate, 
-			Date contractEndDate, Date contractConciliationDate, String contractType, int packageCode, int eventCode) {
-		super(contractCode, contractDescription, contractStartDate, contractEndDate, 
-				contractConciliationDate,  contractType, packageCode);
+	public ContractEventDTO(int contractCode, int eventCode) {
+		this.contractCode = contractCode;
 		this.eventCode = eventCode;
+	}
+
+	public int getContractCode() {
+		return contractCode;
+	}
+
+	public void setContractCode(int contractCode) {
+		this.contractCode = contractCode;
 	}
 
 	public int getEventCode() {

@@ -1,16 +1,22 @@
 package dto;
 
-import java.util.Date;
 
-public class ContractTransportDTO extends ContractDTO{
+public class ContractTransportDTO {
 
+	private int contractCodde;
 	private int transportCode;
 
-	public ContractTransportDTO(int contractCode, String contractDescription, Date contractStartDate,
-			Date contractEndDate, Date contractConciliationDate, String contractType, int packageCode, int transportCode) {
-		super(contractCode, contractDescription, contractStartDate, contractEndDate,
-				contractConciliationDate, contractType, packageCode);
+	public ContractTransportDTO(int contractCodde, int transportCode) {
+		this.contractCodde = contractCodde;
 		this.transportCode = transportCode;
+	}
+
+	public int getContractCodde() {
+		return contractCodde;
+	}
+
+	public void setContractCodde(int contractCodde) {
+		this.contractCodde = contractCodde;
 	}
 
 	public int getTransportCode() {

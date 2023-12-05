@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.RoleDTO;
@@ -46,16 +47,14 @@ public class RoleServices {
 	}
 	
 	public RoleDTO findRole(int roleCode) throws SQLException, ClassNotFoundException{
-		String query = "SELECT * FROM find_role(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
-		PreparedStatement preparedFunction = connection.prepareStatement(query);
-		preparedFunction.setInt(1, roleCode);
-		preparedFunction.execute();
-		ResultSet rs = preparedFunction.getResultSet();
-		rs.next();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT * FROM role WHERE role.role_code = '"+roleCode+"'"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
 		RoleDTO role = new RoleDTO(rs.getInt(1), rs.getString(2), rs.getString(3));
 		rs.close();
-		preparedFunction.close();
+		statement.close();
 		connection.close();
 		return role;
 	}

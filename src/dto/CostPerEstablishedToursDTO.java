@@ -1,17 +1,26 @@
 package dto;
 
-public class CostPerEstablishedToursDTO extends TransportModalityDTO{
+public class CostPerEstablishedToursDTO {
 
+	private int modalityCode;
 	private String tourDescription;
 	private double costPerTour;
 	private double costPerTourRoundTrip;
-	
-	public CostPerEstablishedToursDTO(int modalityCode, String modalityType, String tourDescription, 
+
+	public CostPerEstablishedToursDTO(int modalityCode, String tourDescription,
 			double costPerTour, double costPerTourRoundTrip) {
-		super(modalityCode, modalityType);
+		this.modalityCode = modalityCode;
 		this.tourDescription = tourDescription;
 		this.costPerTour = costPerTour;
 		this.costPerTourRoundTrip = costPerTourRoundTrip;
+	}
+
+	public int getModalityCode() {
+		return modalityCode;
+	}
+
+	public void setModalityCode(int modalityCode) {
+		this.modalityCode = modalityCode;
 	}
 
 	public String getTourDescription() {

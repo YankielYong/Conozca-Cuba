@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.UserDTO;
@@ -50,16 +51,14 @@ public class UserServices {
 	}
 	
 	public UserDTO findUser(int userCode) throws SQLException, ClassNotFoundException{
-		String query = "SELECT * FROM find_user_(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
-		PreparedStatement preparedFunction = connection.prepareStatement(query);
-		preparedFunction.setInt(1, userCode);
-		preparedFunction.execute();
-		ResultSet rs = preparedFunction.getResultSet();
-		rs.next();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT * FROM user_ WHERE user_.user_code = '"+userCode+"'"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
 		UserDTO user = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
 		rs.close();
-		preparedFunction.close();
+		statement.close();
 		connection.close();
 		return user;
 	}

@@ -1,19 +1,28 @@
 package dto;
 
-public class CostPerHourKilometerDTO extends TransportModalityDTO{
+public class CostPerHourKilometerDTO {
 
+	private int modalityCode;
 	private double costPerKmTraveled;
 	private double costPerHour;
 	private double costForExtraKm;
 	private double costForExtraHours;
-	
-	public CostPerHourKilometerDTO(int modalityCode, String modalityType, double costPerKmTraveled,
+
+	public CostPerHourKilometerDTO(int modalityCode, double costPerKmTraveled,
 			double costPerHour, double costForExtraKm, double costForExtraHours) {
-		super(modalityCode, modalityType);
+		this.modalityCode = modalityCode;
 		this.costPerKmTraveled = costPerKmTraveled;
 		this.costPerHour = costPerHour;
 		this.costForExtraKm = costForExtraKm;
 		this.costForExtraHours = costForExtraHours;
+	}
+
+	public int getModalityCode() {
+		return modalityCode;
+	}
+
+	public void setModalityCode(int modalityCode) {
+		this.modalityCode = modalityCode;
 	}
 
 	public double getCostPerKmTraveled() {
