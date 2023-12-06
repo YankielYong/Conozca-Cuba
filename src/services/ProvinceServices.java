@@ -59,7 +59,7 @@ public class ProvinceServices {
 	
 	public ArrayList<ProvinceDTO> selectAllProvinces() throws SQLException, ClassNotFoundException{
 		ArrayList<ProvinceDTO> province = new ArrayList<ProvinceDTO>();
-		String function = "{?= call select_all_province_()}";
+		String function = "{?= call select_all_province()}";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		connection.setAutoCommit(false);
 		CallableStatement preparedFunction = connection.prepareCall(function);
