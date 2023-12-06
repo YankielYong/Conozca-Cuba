@@ -35,7 +35,7 @@ public class RoleServices {
 	
 	public void updateRole(int roleCode, String roleName, String roleDescription) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT user__update(?,?,?)";
+		String query = "SELECT role_update(?,?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, roleCode);

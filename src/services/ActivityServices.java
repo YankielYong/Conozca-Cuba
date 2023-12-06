@@ -56,15 +56,15 @@ public class ActivityServices {
 		String query = "SELECT * FROM activity WHERE activity.activity_code = '"+activityCode+"'"; 
 		ResultSet rs = statement.executeQuery(query);
 		rs.first();
-		ActivityDTO province = new ActivityDTO(rs.getInt(1), new Date(rs.getTimestamp(2).getTime()), rs.getDouble(3), rs.getString(4));
+		ActivityDTO activity = new ActivityDTO(rs.getInt(1), new Date(rs.getTimestamp(2).getTime()), rs.getDouble(3), rs.getString(4));
 		rs.close();
 		statement.close();
 		connection.close();
-		return province;
+		return activity;
 	}
 	
 	public ArrayList<ActivityDTO> selectAllActivity() throws SQLException, ClassNotFoundException{
-		ArrayList<ActivityDTO> province = new ArrayList<ActivityDTO>();
+		ArrayList<ActivityDTO> activity = new ArrayList<ActivityDTO>();
 		String function = "{?= call select_all_activity()}";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		connection.setAutoCommit(false);
@@ -73,11 +73,11 @@ public class ActivityServices {
 		preparedFunction.execute();
 		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
 		while (rs.next()){
-			province.add(new ActivityDTO(rs.getInt(1), new Date(rs.getTimestamp(2).getTime()), rs.getDouble(3), rs.getString(4)));
+			activity.add(new ActivityDTO(rs.getInt(1), new Date(rs.getTimestamp(2).getTime()), rs.getDouble(3), rs.getString(4)));
 		}
 		rs.close();
 		preparedFunction.close();
 		connection.close();
-		return province;
+		return activity;
 	}
 }

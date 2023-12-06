@@ -11,7 +11,7 @@ import dto.TransportModalityDTO;
 
 public class TransportModalityServices {
 
-	public void insertTransportModality( String modalityType) 
+	public void insertTransportModality(String modalityType) 
 			throws SQLException, ClassNotFoundException{
 		String query = "SELECT transport_modality_insert(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
@@ -57,7 +57,7 @@ public class TransportModalityServices {
 		return transportModality;
 	}
 	
-	public ArrayList<TransportModalityDTO> selectAllUsers() throws SQLException, ClassNotFoundException{
+	public ArrayList<TransportModalityDTO> selectAllTransportModality() throws SQLException, ClassNotFoundException{
 		ArrayList<TransportModalityDTO> transportModality = new ArrayList<TransportModalityDTO>();
 		String function = "{?= call select_all_transport_modality()}";
 		java.sql.Connection connection = ServicesLocator.getConnection();
@@ -73,5 +73,18 @@ public class TransportModalityServices {
 		preparedFunction.close();
 		connection.close();
 		return transportModality;
+	}
+	
+	public int getLastTransportModalityCode() throws SQLException, ClassNotFoundException{
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT transport_modality.modality_code FROM transport_modality ORDER BY transport_modality.modality_code DESC"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
+		int code = rs.getInt(1);
+		rs.close();
+		statement.close();
+		connection.close();
+		return code;
 	}
 }
