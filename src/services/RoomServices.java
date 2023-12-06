@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.RoomDTO;
-import dto.UserDTO;
 
 public class RoomServices {
 	
@@ -25,11 +24,11 @@ public class RoomServices {
 		connection.close();
 	}
 	
-	public void deleteRoom(int RoomCode) throws SQLException, ClassNotFoundException{
+	public void deleteRoom(int roomCode) throws SQLException, ClassNotFoundException{
 		String query = "SELECT room_delete(?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1, RoomCode);
+		preparedStatement.setInt(1, roomCode);
 		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();

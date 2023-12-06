@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.HotelChainDTO;
-import dto.UserDTO;
 
 public class HotelChainServices {
 	

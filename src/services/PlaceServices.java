@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.PlaceDTO;
-import dto.UserDTO;
 
 public class PlaceServices {
 	

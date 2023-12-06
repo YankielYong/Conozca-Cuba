@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.FoodPlanDTO;
-import dto.UserDTO;
 
 public class FoodPlanServices {
 	
@@ -33,12 +32,12 @@ public class FoodPlanServices {
 		connection.close();
 	}
 	
-	public void updateFoodPlan(int foodPlaceCode, String typeOfFoodPlan) 
+	public void updateFoodPlan(int foodPlanCode, String typeOfFoodPlan) 
 			throws SQLException, ClassNotFoundException{
 		String query = "SELECT food_plan_update(?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1, foodPlaceCode);
+		preparedStatement.setInt(1, foodPlanCode);
 		preparedStatement.setString(2, typeOfFoodPlan);
 		preparedStatement.execute();
 		preparedStatement.close();
