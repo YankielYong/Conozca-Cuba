@@ -41,14 +41,16 @@ public class Principal extends JFrame{
 	private JButton btnMinimizar;
 	private JButton btnPerfil;
 	private JButton btnReservas;
+	private JButton btnGestion;
 	
 	private JPanel panelPrincipal;
 	
 	/*
 	 * Paneles
 	 */
-	private Descubrir panelDescubrir;
 	private Perfil panelPerfil;
+	private Descubrir panelDescubrir;
+	private Gestion panelGestion;
 	private InfoHotel panelInfoHotel;
 	private InfoPaquete panelInfoPaquete;
 	private AgregarHotel panelAgregarHotel;
@@ -150,6 +152,13 @@ public class Principal extends JFrame{
 					panelPrincipal.repaint();
 					panelAbierto = Paneles.PANEL_PERFIL;
 					break;
+				case 3: 
+					panelPrincipal.remove(panelGestion);
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_PERFIL;
+					break;
 				}
 			}
 		});
@@ -193,6 +202,13 @@ public class Principal extends JFrame{
 					panelPrincipal.repaint();
 					panelAbierto = Paneles.PANEL_DESCUBRIR;
 					break;
+				case 3:
+					panelPrincipal.remove(panelGestion);
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_DESCUBRIR;
+					break;
 				}
 			}
 		});
@@ -213,6 +229,52 @@ public class Principal extends JFrame{
 		btnReservas.setBorderPainted(false);
 		btnReservas.setContentAreaFilled(false);
 		panelSuperior.add(btnReservas);
+		
+		btnGestion = new JButton("Gestion");
+		btnGestion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch(panelAbierto){
+				case 0:
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_GESTION;
+					break;
+				case 1:
+					panelPrincipal.remove(panelPerfil);
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_GESTION;
+					break;
+				case 2:
+					panelPrincipal.remove(panelDescubrir);
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+					panelAbierto = Paneles.PANEL_GESTION;
+					break;
+				}
+			}
+		});
+		btnGestion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestion.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestion.setContentAreaFilled(false);
+			}
+		});
+		btnGestion.setModel(new MyButtonModel());
+		btnGestion.setBounds(150, 0, 75, 50);
+		btnGestion.setBackground(colorFondoBotones);
+		btnGestion.setFocusable(false);
+		btnGestion.setBorderPainted(false);
+		btnGestion.setContentAreaFilled(false);
+		panelSuperior.add(btnGestion);
 		
 		panelPrincipal = new JPanel(null){
 			private static final long serialVersionUID = 1L;

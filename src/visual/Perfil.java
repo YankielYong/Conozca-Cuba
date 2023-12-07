@@ -13,7 +13,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -27,7 +26,7 @@ public class Perfil extends JPanel{
 	private JPanel panelInferior;
 	private JLabel nombre;
 	private JLabel nombreUsuario;
-	private JLabel cuenta;
+	private JLabel rol;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 	private JButton btnCerrar;
@@ -106,11 +105,11 @@ public class Perfil extends JPanel{
 		nombreUsuario.setForeground(Color.black);
 		panelInferior.add(nombreUsuario);
 		
-		cuenta = new JLabel("Cuenta: ");
-		cuenta.setBounds(50, 260, 100, 30);
-		cuenta.setFont(new Font("Arial", Font.BOLD, 18));
-		cuenta.setForeground(Color.black);
-		panelInferior.add(cuenta);
+		rol = new JLabel("Rol: ");
+		rol.setBounds(50, 260, 100, 30);
+		rol.setFont(new Font("Arial", Font.BOLD, 18));
+		rol.setForeground(Color.black);
+		panelInferior.add(rol);
 
 		btnCerrarSesion = new JButton("Cerrar Sesión");
 		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 15));

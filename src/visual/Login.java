@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import utils.MyButtonModel;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -40,7 +39,6 @@ public class Login extends JFrame {
 	private int yMouse;
 	private Color colorAzul = new Color(59, 165, 187);
 	private Color colorFondoBotones = new Color(58, 239, 235);
-	private Login este;
 
 	private JPanel contentPane;
 	/*
@@ -56,13 +54,11 @@ public class Login extends JFrame {
 	private JTextField txtUsuario;
 	private JPasswordField txtPassword;
 	private JButton btnIniciarSesion;
-	private JLabel registrarse;
 	
 	private boolean userChanged = false;
 	private boolean passChanged = false;
 
 	public Login() {
-		este = this;
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -235,7 +231,7 @@ public class Login extends JFrame {
 		txtPassword.setForeground(Color.gray);
 		txtPassword.setEchoChar((char) 0);
 		txtPassword.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
-		txtPassword.setBounds(60, 220, 260, 30);
+		txtPassword.setBounds(60, 230, 260, 30);
 		panelInferior.add(txtPassword);
 
 		btnIniciarSesion = new JButton("Iniciar Sesión");
@@ -256,43 +252,13 @@ public class Login extends JFrame {
 			}
 		});
 		btnIniciarSesion.setModel(new MyButtonModel());
-		btnIniciarSesion.setBounds(60, 280, 260, 30);
+		btnIniciarSesion.setBounds(60, 305, 260, 30);
 		btnIniciarSesion.setFont(new Font("Arial", Font.BOLD, 13));
 		btnIniciarSesion.setBackground(colorAzul);
 		btnIniciarSesion.setForeground(Color.black);
 		btnIniciarSesion.setFocusable(false);
 		btnIniciarSesion.setBorderPainted(false);
 		panelInferior.add(btnIniciarSesion);
-
-		JLabel noCuenta = new JLabel("¿No tienes una cuenta?");
-		noCuenta.setFont(new Font("Arial", Font.PLAIN, 12));
-		noCuenta.setForeground(Color.black);
-		noCuenta.setBounds(93, 330, 134, 20);
-		panelInferior.add(noCuenta);
-
-		registrarse = new JLabel("Regístrate");
-		registrarse.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				registrarse.setForeground(new Color(40, 113, 128));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				registrarse.setForeground(colorAzul);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Registrarse r = new Registrarse(este);
-				r.setVisible(true);
-				dispose();
-			}
-		});
-		registrarse.setFont(new Font("Arial", Font.BOLD, 12));
-		registrarse.setForeground(colorAzul);
-		registrarse.setBounds(229, 330, 60, 20);
-		registrarse.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		panelInferior.add(registrarse);
 
 
 
