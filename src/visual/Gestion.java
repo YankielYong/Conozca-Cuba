@@ -439,10 +439,10 @@ public class Gestion extends MiJPanel{
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
 
-				btnVer.setVisible(true);
-				btnAgregar.setVisible(true);
-				btnEliminar.setVisible(true);
-				btnEditar.setVisible(true);
+				btnVer.setVisible(false);
+				btnAgregar.setVisible(false);
+				btnEliminar.setVisible(false);
+				btnEditar.setVisible(false);
 				este.repaint();
 				ponerPlanesAlimenticios();
 			}
@@ -507,10 +507,10 @@ public class Gestion extends MiJPanel{
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
 
-				btnVer.setVisible(true);
-				btnAgregar.setVisible(true);
-				btnEliminar.setVisible(true);
-				btnEditar.setVisible(true);
+				btnVer.setVisible(false);
+				btnAgregar.setVisible(false);
+				btnEliminar.setVisible(false);
+				btnEditar.setVisible(false);
 				este.repaint();
 				ponerTemporadas();
 			}
@@ -998,7 +998,10 @@ public class Gestion extends MiJPanel{
 				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnHabitaciones.isBorderPainted()){
-				
+				padre.getPanelPrincipal().remove(este);
+				AgregarHabitacion panel = new AgregarHabitacion(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnHoteles.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
@@ -1007,22 +1010,16 @@ public class Gestion extends MiJPanel{
 				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnLugares.isBorderPainted()){
-				
-			}
-			else if(btnRoles.isBorderPainted()){
-				
-			}
-			else if(btnPlanAlimenticio.isBorderPainted()){
-				
+				padre.getPanelPrincipal().remove(este);
+				AgregarLugar panel = new AgregarLugar(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnProvincias.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
 				AgregarProvincia panel = new AgregarProvincia(padre, este);
 				padre.getPanelPrincipal().add(panel);
 				padre.getPanelPrincipal().repaint();
-			}
-			else if(btnTemporadas.isBorderPainted()){
-				
 			}
 			else if(btnUsuarios.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
@@ -1031,7 +1028,10 @@ public class Gestion extends MiJPanel{
 				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnVehiculos.isBorderPainted()){
-				
+				padre.getPanelPrincipal().remove(este);
+				AgregarVehiculo panel = new AgregarVehiculo(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 		}
 		else{
