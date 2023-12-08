@@ -40,7 +40,7 @@ public class Principal extends JFrame{
 	private JButton btnCerrar;
 	private JButton btnMinimizar;
 	private JButton btnPerfil;
-	private JButton btnReservas;
+	private JButton btnDescubrir;
 	private JButton btnGestion;
 	
 	private JPanel panelPrincipal;
@@ -51,9 +51,12 @@ public class Principal extends JFrame{
 	private Perfil panelPerfil;
 	private Descubrir panelDescubrir;
 	private Gestion panelGestion;
+	private AgregarUsuario panelAgregarUsuario;
+	private AgregarHotel panelAgregarHotel;
+	private AgregarProvincia panelAgregarProvincia;
+	private AgregarCadenaHotelera panelAgregarCadenaHotelera;
 	private InfoHotel panelInfoHotel;
 	private InfoPaquete panelInfoPaquete;
-	private AgregarHotel panelAgregarHotel;
 	
 	public Principal(){
 		este = this;
@@ -109,7 +112,6 @@ public class Principal extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
-				
 			}
 		});
 		btnCerrar.addMouseListener(new MouseAdapter() {
@@ -138,27 +140,46 @@ public class Principal extends JFrame{
 		btnPerfil.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switch(panelAbierto){
-				case 0:
+				if(panelAbierto == 0){
 					panelPerfil = new Perfil(este);
 					panelPrincipal.add(panelPerfil);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_PERFIL;
-					break;
-				case 2: 
+				}
+				else if(panelAbierto == Paneles.PANEL_DESCUBRIR){
 					panelPrincipal.remove(panelDescubrir);
 					panelPerfil = new Perfil(este);
 					panelPrincipal.add(panelPerfil);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_PERFIL;
-					break;
-				case 3: 
+				}
+				else if(panelAbierto == Paneles.PANEL_GESTION){
 					panelPrincipal.remove(panelGestion);
 					panelPerfil = new Perfil(este);
 					panelPrincipal.add(panelPerfil);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_PERFIL;
-					break;
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO){
+					panelPrincipal.remove(panelAgregarUsuario);
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL){
+					panelPrincipal.remove(panelAgregarHotel);
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA){
+					panelPrincipal.remove(panelAgregarProvincia);
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA){
+					panelPrincipal.remove(panelAgregarCadenaHotelera);
+					panelPerfil = new Perfil(este);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
 				}
 			}
 		});
@@ -184,77 +205,115 @@ public class Principal extends JFrame{
         image = img.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         Icon iconReservas = new ImageIcon(image);
 		
-		btnReservas = new JButton(iconReservas);
-		btnReservas.addActionListener(new ActionListener() {
+		btnDescubrir = new JButton(iconReservas);
+		btnDescubrir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switch(panelAbierto){
-				case 0:
+				if(panelAbierto == 0){
 					panelDescubrir = new Descubrir(este);
 					panelPrincipal.add(panelDescubrir);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_DESCUBRIR;
-					break;
-				case 1:
+				}
+				else if(panelAbierto == Paneles.PANEL_PERFIL){
 					panelPrincipal.remove(panelPerfil);
 					panelDescubrir = new Descubrir(este);
 					panelPrincipal.add(panelDescubrir);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_DESCUBRIR;
-					break;
-				case 3:
+				}
+				else if(panelAbierto == Paneles.PANEL_GESTION){
 					panelPrincipal.remove(panelGestion);
 					panelDescubrir = new Descubrir(este);
 					panelPrincipal.add(panelDescubrir);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_DESCUBRIR;
-					break;
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO){
+					panelPrincipal.remove(panelAgregarUsuario);
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL){
+					panelPrincipal.remove(panelAgregarHotel);
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA){
+					panelPrincipal.remove(panelAgregarProvincia);
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA){
+					panelPrincipal.remove(panelAgregarCadenaHotelera);
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
 				}
 			}
 		});
-		btnReservas.addMouseListener(new MouseAdapter() {
+		btnDescubrir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnReservas.setContentAreaFilled(true);
+				btnDescubrir.setContentAreaFilled(true);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnReservas.setContentAreaFilled(false);
+				btnDescubrir.setContentAreaFilled(false);
 			}
 		});
-		btnReservas.setModel(new MyButtonModel());
-		btnReservas.setBounds(75, 0, 75, 50);
-		btnReservas.setBackground(colorFondoBotones);
-		btnReservas.setFocusable(false);
-		btnReservas.setBorderPainted(false);
-		btnReservas.setContentAreaFilled(false);
-		panelSuperior.add(btnReservas);
+		btnDescubrir.setModel(new MyButtonModel());
+		btnDescubrir.setBounds(75, 0, 75, 50);
+		btnDescubrir.setBackground(colorFondoBotones);
+		btnDescubrir.setFocusable(false);
+		btnDescubrir.setBorderPainted(false);
+		btnDescubrir.setContentAreaFilled(false);
+		panelSuperior.add(btnDescubrir);
 		
-		btnGestion = new JButton("Gestion");
+		btnGestion = new JButton();
 		btnGestion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switch(panelAbierto){
-				case 0:
+				if(panelAbierto == 0){
 					panelGestion = new Gestion(este);
 					panelPrincipal.add(panelGestion);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_GESTION;
-					break;
-				case 1:
+				}
+				else if(panelAbierto == Paneles.PANEL_PERFIL){
 					panelPrincipal.remove(panelPerfil);
 					panelGestion = new Gestion(este);
 					panelPrincipal.add(panelGestion);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_GESTION;
-					break;
-				case 2:
+				}
+				else if(panelAbierto == Paneles.PANEL_DESCUBRIR){
 					panelPrincipal.remove(panelDescubrir);
 					panelGestion = new Gestion(este);
 					panelPrincipal.add(panelGestion);
 					panelPrincipal.repaint();
-					panelAbierto = Paneles.PANEL_GESTION;
-					break;
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO){
+					panelPrincipal.remove(panelAgregarUsuario);
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL){
+					panelPrincipal.remove(panelAgregarHotel);
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA){
+					panelPrincipal.remove(panelAgregarProvincia);
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+				}
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA){
+					panelPrincipal.remove(panelAgregarCadenaHotelera);
+					panelGestion = new Gestion(este);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
 				}
 			}
 		});
@@ -274,7 +333,6 @@ public class Principal extends JFrame{
 		btnGestion.setFocusable(false);
 		btnGestion.setBorderPainted(false);
 		btnGestion.setContentAreaFilled(false);
-		panelSuperior.add(btnGestion);
 		
 		panelPrincipal = new JPanel(null){
 			private static final long serialVersionUID = 1L;
@@ -286,8 +344,45 @@ public class Principal extends JFrame{
 		};
 		panelPrincipal.setBounds(0, 50, pantalla.width, pantalla.height-50);
 		contentPane.add(panelPrincipal);
+		
+		vistaGestorAgencia();
 	}
 	
+	private void vistaGestorVentas(){
+		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/gestion venta.png"));
+        Image image = img.getImage().getScaledInstance(38, 38, Image.SCALE_SMOOTH);
+        Icon iconGestion = new ImageIcon(image);
+		
+		btnGestion.setIcon(iconGestion);
+		panelSuperior.add(btnGestion);
+	}
+	
+	private void vistaGestorAgencia(){
+		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/gestion agencia.png"));
+        Image image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+        Icon iconGestion = new ImageIcon(image);
+		
+		btnGestion.setIcon(iconGestion);
+		panelSuperior.add(btnGestion);
+	}
+	
+	public void setPanelAgregarUsuario(AgregarUsuario agregarUsuario) {
+		this.panelAgregarUsuario = agregarUsuario;
+	}
+
+	public void setPanelAgregarHotel(AgregarHotel panelAgregarHotel) {
+		this.panelAgregarHotel = panelAgregarHotel;
+	}
+
+	public void setPanelAgregarProvincia(AgregarProvincia panelAgregarProvincia) {
+		this.panelAgregarProvincia = panelAgregarProvincia;
+	}
+
+	public void setPanelAgregarCadenaHotelera(
+			AgregarCadenaHotelera panelAgregarCadenaHotelera) {
+		this.panelAgregarCadenaHotelera = panelAgregarCadenaHotelera;
+	}
+
 	public void setPanelAbierto(int panel){
 		panelAbierto = panel;
 	}

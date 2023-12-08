@@ -27,7 +27,9 @@ import utils.FoodPlanTableModel;
 import utils.HotelChainTableModel;
 import utils.HotelTableModel;
 import utils.LodgingTableModel;
+import utils.MiJPanel;
 import utils.MyButtonModel;
+import utils.Paneles;
 import utils.PlaceTableModel;
 import utils.ProvinceTableModel;
 import utils.RoleTableModel;
@@ -41,7 +43,7 @@ import utils.VehicleTableModel;
 
 import javax.swing.SwingConstants;
 
-public class Gestion extends JPanel{
+public class Gestion extends MiJPanel{
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -60,6 +62,7 @@ public class Gestion extends JPanel{
 	private JButton btnEliminar;
 	private JButton btnEditar;
 	
+	private boolean esGestorAgencia;
 	/*
 	 * Gestor de agencia
 	 */
@@ -104,6 +107,8 @@ public class Gestion extends JPanel{
 	public Gestion(Principal p){
 		este = this;
 		padre = p;
+		setTipoPanel(Paneles.PANEL_GESTION);
+		padre.setPanelAbierto(getTipoPanel());
 		setBounds(pantalla.width/2-601, pantalla.height/2-376, 1202, 702);
 		setBackground(Color.darkGray);
 		setLayout(null);
@@ -177,6 +182,11 @@ public class Gestion extends JPanel{
 		panelInferior.add(btnVer);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionAgregar();
+			}
+		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -233,11 +243,11 @@ public class Gestion extends JPanel{
 		btnEditar.setBorderPainted(false);
 		panelInferior.add(btnEditar);
 		
-		vistaGestorDeVentas();
+		vistaGestorDeAgencia();
 	}
 	
 	public void vistaGestorDeAgencia(){
-
+		esGestorAgencia = true;
 		scrollPane.setBounds(300, 20, 880, 580);
 		btnVer.setBounds(300, 615, 205, 35);
 		btnAgregar.setBounds(525, 615, 205, 35);
@@ -259,6 +269,11 @@ public class Gestion extends JPanel{
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
 				
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerCadenasHoteleras();
 			}
 		});
@@ -287,7 +302,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerHabitacion();
 			}
 		});
@@ -316,7 +336,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerHotel();
 			}
 		});
@@ -345,7 +370,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerLugares();
 			}
 		});
@@ -374,7 +404,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(false);
+				btnAgregar.setVisible(false);
+				btnEliminar.setVisible(false);
+				btnEditar.setVisible(false);
+				este.repaint();
 				ponerRoles();
 			}
 		});
@@ -403,7 +438,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerPlanesAlimenticios();
 			}
 		});
@@ -432,7 +472,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerProvincias();
 			}
 		});
@@ -461,7 +506,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(true);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerTemporadas();
 			}
 		});
@@ -490,7 +540,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(true);
 				btnVehiculos.setBorderPainted(false);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerUsuarios();
 			}
 		});
@@ -519,7 +574,12 @@ public class Gestion extends JPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(true);
-				
+
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				este.repaint();
 				ponerVehiculos();
 			}
 		});
@@ -539,7 +599,7 @@ public class Gestion extends JPanel{
 	}
 	
 	public void vistaGestorDeVentas(){
-		
+		esGestorAgencia = false;
 		scrollPane.setBounds(330, 20, 850, 580);
 		btnVer.setBounds(330, 615, 196, 35);
 		btnAgregar.setBounds(548, 615, 196, 35);
@@ -927,5 +987,76 @@ public class Gestion extends JPanel{
 		table.setForeground(Color.BLACK);
 		table.setFont(new Font("Arial", Font.PLAIN, 15));
 		table.setBackground(Color.WHITE);
+	}
+	
+	private void accionAgregar(){
+		if(esGestorAgencia){
+			if(btnCadenas.isBorderPainted()){
+				padre.getPanelPrincipal().remove(este);
+				AgregarCadenaHotelera panel = new AgregarCadenaHotelera(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
+			}
+			else if(btnHabitaciones.isBorderPainted()){
+				
+			}
+			else if(btnHoteles.isBorderPainted()){
+				padre.getPanelPrincipal().remove(este);
+				AgregarHotel panel = new AgregarHotel(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
+			}
+			else if(btnLugares.isBorderPainted()){
+				
+			}
+			else if(btnRoles.isBorderPainted()){
+				
+			}
+			else if(btnPlanAlimenticio.isBorderPainted()){
+				
+			}
+			else if(btnProvincias.isBorderPainted()){
+				padre.getPanelPrincipal().remove(este);
+				AgregarProvincia panel = new AgregarProvincia(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
+			}
+			else if(btnTemporadas.isBorderPainted()){
+				
+			}
+			else if(btnUsuarios.isBorderPainted()){
+				padre.getPanelPrincipal().remove(este);
+				AgregarUsuario panel = new AgregarUsuario(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
+			}
+			else if(btnVehiculos.isBorderPainted()){
+				
+			}
+		}
+		else{
+			if(btnActividades.isBorderPainted()){
+				
+			}
+			else if(btnContratos.isBorderPainted()){
+				
+			}
+			else if(btnEventos.isBorderPainted()){
+				
+			}
+			else if(btnHospedajes.isBorderPainted()){
+				
+			}
+			else if(btnModalidades.isBorderPainted()){
+				
+			}
+			else if(btnPaquetes.isBorderPainted()){
+				
+			}
+			else if(btnTransportes.isBorderPainted()){
+				
+			}
+		}
+		btnAgregar.setBackground(colorAzul);
 	}
 }

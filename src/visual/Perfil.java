@@ -16,9 +16,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import utils.MiJPanel;
 import utils.MyButtonModel;
+import utils.Paneles;
 
-public class Perfil extends JPanel{
+public class Perfil extends MiJPanel{
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +40,8 @@ public class Perfil extends JPanel{
 	public Perfil(Principal p){
 		padre = p;
 		este = this;
+		setTipoPanel(Paneles.PANEL_PERFIL);
+		padre.setPanelAbierto(getTipoPanel());
 		setBounds(pantalla.width/2-201, pantalla.height/2-226, 432, 402);	
 		setBackground(Color.darkGray);
 		setLayout(null);

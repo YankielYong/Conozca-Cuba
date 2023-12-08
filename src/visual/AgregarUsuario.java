@@ -1,8 +1,10 @@
 package visual;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -13,123 +15,86 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import utils.ComboBoxModel;
+import utils.MiJPanel;
 import utils.MyButtonModel;
+import utils.Paneles;
+import utils.PropiedadesComboBox;
 
-public class Registrarse extends JFrame {
+public class AgregarUsuario extends MiJPanel {
 
 	private static final long serialVersionUID = 1L;
 	/*
 	 * Utils
 	 */
-	private int xMouse;
-	private int yMouse;
+	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
-	private Color colorFondoBotones = new Color(58, 239, 235);
-	private Login anterior;
-
-	private JPanel contentPane;
+	
+	private Principal padre;
+	private AgregarUsuario este;
+	private MiJPanel anterior;
+	
 	/*
 	 * Panel Superior
 	 */
 	private JPanel panelSuperior;
-	private JButton btnMinimizar;
 	private JButton btnCerrar;
+	private JLabel lblNombre;
 	/*
 	 * Panel Inferior
 	 */
 	private JPanel panelInferior;
 	private JButton btnAtras;
 	private JTextField txtNombre;
-	private JTextField txtCuenta;
+	private JComboBox<String> cbRol;
 	private JTextField txtUsuario;
 	private JPasswordField txtPassword;
 	private JButton btnRegistrarse;
 	
 	private boolean userChanged = false;
 	private boolean nameChanged = false;
-	private boolean accountChanged = false;
 	private boolean passChanged = false;
 
-	public Registrarse(Login a) {
+	public AgregarUsuario(Principal p, MiJPanel a) {
 		anterior = a;
-		setResizable(false);
-		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 652, 422);
-		setLocationRelativeTo(null);
-
-		contentPane = new JPanel(null);
-		contentPane.setBackground(Color.darkGray);
-		setContentPane(contentPane);
+		este = this;
+		padre = p;
+		setTipoPanel(Paneles.PANEL_AGREGAR_USUARIO);
+		padre.setPanelAbierto(getTipoPanel());
+		padre.setPanelAgregarUsuario(este);
+		setBounds(pantalla.width/2-201, pantalla.height/2-253, 402, 457);
+		setBackground(Color.darkGray);
+		setLayout(null);
 
 		panelSuperior = new JPanel(null);
-		panelSuperior.addMouseMotionListener(new MouseAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int x = e.getXOnScreen();
-				int y = e.getYOnScreen();
-				setLocation(x - xMouse, y - yMouse);
-			}
-		});
-		panelSuperior.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				xMouse = e.getX();
-				yMouse = e.getY();
-			}
-		});
-		panelSuperior.setBounds(1, 1, 650, 30);
+		panelSuperior.setBounds(1, 1, 400, 30);
 		panelSuperior.setBackground(colorAzul);
-		contentPane.add(panelSuperior);
+		add(panelSuperior);
+		
+		lblNombre = new JLabel("Agregar Usuario");
+		lblNombre.setForeground(Color.black);
+		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNombre.setBounds(10, 0, 200, 30);
+		panelSuperior.add(lblNombre);
 
-		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/minimize.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
 		Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-		Icon iconMinimizar = new ImageIcon(image);
-
-		btnMinimizar = new JButton();
-		btnMinimizar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnMinimizar.setContentAreaFilled(false);
-				setExtendedState(ICONIFIED);
-			}
-		});
-		btnMinimizar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnMinimizar.setContentAreaFilled(true);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnMinimizar.setContentAreaFilled(false);
-			}
-		});
-		btnMinimizar.setBounds(560, 0, 45, 30);
-		btnMinimizar.setBackground(colorFondoBotones);
-		btnMinimizar.setIcon(iconMinimizar);
-		btnMinimizar.setFocusable(false);
-		btnMinimizar.setBorderPainted(false);
-		btnMinimizar.setContentAreaFilled(false);
-		btnMinimizar.setModel(new MyButtonModel());
-		panelSuperior.add(btnMinimizar);
-
-		img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
-		image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 		Icon iconCerrar = new ImageIcon(image);
 
 		btnCerrar = new JButton();
 		btnCerrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(0);
 			}
 		});
 		btnCerrar.addMouseListener(new MouseAdapter() {
@@ -143,7 +108,7 @@ public class Registrarse extends JFrame {
 				btnCerrar.setContentAreaFilled(false);
 			}
 		});
-		btnCerrar.setBounds(605, 0, 45, 30);
+		btnCerrar.setBounds(355, 0, 45, 30);
 		btnCerrar.setBackground(Color.red);
 		btnCerrar.setIcon(iconCerrar);
 		btnCerrar.setFocusable(false);
@@ -152,22 +117,10 @@ public class Registrarse extends JFrame {
 		btnCerrar.setModel(new MyButtonModel());
 		panelSuperior.add(btnCerrar);
 
-		JPanel panelFoto = new JPanel(null);
-		panelFoto.setBounds(1, 31, 270, 390);
-		contentPane.add(panelFoto);
-
-		img = new ImageIcon(getClass().getResource("/visual/imagenes/login.jpg"));
-		image = img.getImage().getScaledInstance(270, 390, Image.SCALE_SMOOTH);
-		Icon fotoLogin = new ImageIcon(image);
-
-		JLabel fotoIzq = new JLabel(fotoLogin);
-		fotoIzq.setBounds(0, 0, 270, 390);
-		panelFoto.add(fotoIzq);
-
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(271, 31, 380, 390);
+		panelInferior.setBounds(1, 31, 400, 425);
 		panelInferior.setBackground(Color.white);
-		contentPane.add(panelInferior);
+		add(panelInferior);
 		
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/atras.png"));
 		image = img.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
@@ -177,8 +130,10 @@ public class Registrarse extends JFrame {
 		btnAtras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				anterior.setVisible(true);
-				dispose();
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		btnAtras.addMouseListener(new MouseAdapter() {
@@ -201,11 +156,11 @@ public class Registrarse extends JFrame {
 		panelInferior.add(btnAtras);
 		
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
-		image = img.getImage().getScaledInstance(230, 70, Image.SCALE_SMOOTH);
+		image = img.getImage().getScaledInstance(270, 82, Image.SCALE_SMOOTH);
 		Icon iconLogo = new ImageIcon(image);
 
 		JLabel logo = new JLabel(iconLogo);
-		logo.setBounds(75, 10, 230, 70);
+		logo.setBounds(63, 20, 270, 82);
 		panelInferior.add(logo);
 		
 		txtNombre = new JTextField("Nombre");
@@ -228,10 +183,10 @@ public class Registrarse extends JFrame {
 				}
 			}
 		});
-		txtNombre.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombre.setForeground(Color.gray);
-		txtNombre.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
-		txtNombre.setBounds(60, 100, 260, 30);
+		txtNombre.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		txtNombre.setBounds(70, 130, 260, 30);
 		panelInferior.add(txtNombre);
 
 		txtUsuario = new JTextField("Usuario");
@@ -254,10 +209,10 @@ public class Registrarse extends JFrame {
 				}
 			}
 		});
-		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtUsuario.setForeground(Color.gray);
-		txtUsuario.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
-		txtUsuario.setBounds(60, 160, 260, 30);
+		txtUsuario.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		txtUsuario.setBounds(70, 190, 260, 30);
 		panelInferior.add(txtUsuario);
 
 		txtPassword = new JPasswordField("Contraseña");
@@ -284,41 +239,25 @@ public class Registrarse extends JFrame {
 				}
 			}
 		});
-		txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtPassword.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPassword.setForeground(Color.gray);
 		txtPassword.setEchoChar((char) 0);
-		txtPassword.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
-		txtPassword.setBounds(60, 220, 260, 30);
+		txtPassword.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		txtPassword.setBounds(70, 250, 260, 30);
 		panelInferior.add(txtPassword);
 		
-		txtCuenta = new JTextField("Cuenta");
-		txtCuenta.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if(txtCuenta.getText().equals("Cuenta") && !accountChanged){
-					txtCuenta.setText("");
-					accountChanged = true;
-					txtCuenta.setForeground(Color.black);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(txtCuenta.getText().equals("")){
-					txtCuenta.setText("Cuenta");
-					accountChanged = false;
-					txtCuenta.setForeground(Color.gray);
-				}
-			}
-		});
-		txtCuenta.setFont(new Font("Arial", Font.PLAIN, 14));
-		txtCuenta.setForeground(Color.gray);
-		txtCuenta.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
-		txtCuenta.setBounds(60, 280, 260, 30);
-		panelInferior.add(txtCuenta);
+		cbRol = new JComboBox<String>();
+		cbRol.setBounds(70, 310, 260, 30);
+		cbRol.setBackground(Color.white);
+		cbRol.setFocusable(false);
+		cbRol.setModel(ComboBoxModel.localizacionesModel());
+		cbRol.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbRol.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		cbRol.setUI(PropiedadesComboBox.createUI(getRootPane(), cbRol.getBounds()));
+		panelInferior.add(cbRol);
 		
-		btnRegistrarse = new JButton("Registrarse");
-		btnRegistrarse.setFont(new Font("Arial", Font.BOLD, 13));
+		btnRegistrarse = new JButton("Registrar");
+		btnRegistrarse.setFont(new Font("Arial", Font.BOLD, 18));
 		btnRegistrarse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -336,7 +275,7 @@ public class Registrarse extends JFrame {
 			}
 		});
 		btnRegistrarse.setModel(new MyButtonModel());
-		btnRegistrarse.setBounds(60, 340, 260, 30);
+		btnRegistrarse.setBounds(70, 370, 260, 35);
 		btnRegistrarse.setBackground(colorAzul);
 		btnRegistrarse.setForeground(Color.black);
 		btnRegistrarse.setFocusable(false);

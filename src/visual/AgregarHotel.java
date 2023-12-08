@@ -21,10 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
 import utils.ComboBoxModel;
+import utils.MiJPanel;
 import utils.MyButtonModel;
+import utils.Paneles;
 import utils.PropiedadesComboBox;
 
-public class AgregarHotel extends JPanel{
+public class AgregarHotel extends MiJPanel{
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,7 +34,9 @@ public class AgregarHotel extends JPanel{
 
 	private JPanel panelSuperior;
 	private JButton btnCerrar;
+	private JLabel lblNombre;
 	private JPanel panelInferior;
+	private JButton btnAtras;
 	private JTextField txtNombre;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbCadena;
@@ -55,11 +59,18 @@ public class AgregarHotel extends JPanel{
 	private JRadioButton mTodoIncluido;
 	private JButton btnAgregar;
 	
+	private Principal padre;
+	private MiJPanel anterior;
 	private AgregarHotel este;
 	
-	public AgregarHotel(){
+	public AgregarHotel(Principal p, MiJPanel a){
 		este = this;
-		setBounds(pantalla.width/2-501, pantalla.height/2-346, 1002, 642);
+		padre = p;
+		anterior = a;
+		setTipoPanel(Paneles.PANEL_AGREGAR_HOTEL);
+		padre.setPanelAbierto(getTipoPanel());
+		padre.setPanelAgregarHotel(este);
+		setBounds(pantalla.width/2-501, pantalla.height/2-348, 1002, 647);
 		setBackground(Color.darkGray);
 		setLayout(null);
 		
@@ -67,6 +78,12 @@ public class AgregarHotel extends JPanel{
 		panelSuperior.setBounds(1, 1, 1000, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
+		
+		lblNombre = new JLabel("Agregar Hotel");
+		lblNombre.setForeground(Color.black);
+		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNombre.setBounds(10, 0, 200, 30);
+		panelSuperior.add(lblNombre);
 
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
 		Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -76,7 +93,9 @@ public class AgregarHotel extends JPanel{
 		btnCerrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(0);
 			}
 		});
 		btnCerrar.addMouseListener(new MouseAdapter() {
@@ -99,9 +118,42 @@ public class AgregarHotel extends JPanel{
 		panelSuperior.add(btnCerrar);
 		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 1000, 610);
+		panelInferior.setBounds(1, 31, 1000, 615);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
+		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/atras.png"));
+		image = img.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+		Icon iconAtras = new ImageIcon(image);
+		
+		btnAtras = new JButton(iconAtras);
+		btnAtras.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
+			}
+		});
+		btnAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnAtras.setContentAreaFilled(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAtras.setContentAreaFilled(false);
+			}
+		});
+		btnAtras.setBounds(5, 5, 40, 40);
+		btnAtras.setBackground(colorAzul);
+		btnAtras.setFocusable(false);
+		btnAtras.setBorderPainted(false);
+		btnAtras.setContentAreaFilled(false);
+		btnAtras.setModel(new MyButtonModel());
+		panelInferior.add(btnAtras);
 		
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/hotel.png"));
 		image = img.getImage().getScaledInstance(96, 120, Image.SCALE_SMOOTH);
@@ -372,9 +424,9 @@ public class AgregarHotel extends JPanel{
 				btnAgregar.setBackground(colorAzul);
 			}
 		});
-		btnAgregar.setBounds(400, 560, 200, 30);
+		btnAgregar.setBounds(400, 560, 200, 35);
 		btnAgregar.setModel(new MyButtonModel());
-		btnAgregar.setFont(new Font("Arial", Font.BOLD, 16));
+		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
 		btnAgregar.setBackground(colorAzul);
 		btnAgregar.setForeground(Color.black);
 		btnAgregar.setFocusable(false);

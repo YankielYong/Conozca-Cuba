@@ -19,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import utils.MiJPanel;
 import utils.MyButtonModel;
+import utils.Paneles;
 
 import java.awt.Font;
 
@@ -28,7 +30,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Cursor;
 import java.awt.Component;
 
-public class Descubrir extends JPanel{
+public class Descubrir extends MiJPanel{
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -59,6 +61,8 @@ public class Descubrir extends JPanel{
 	public Descubrir(Principal p){
 		padre = p;
 		este = this;
+		setTipoPanel(Paneles.PANEL_DESCUBRIR);
+		padre.setPanelAbierto(getTipoPanel());
 		setBounds(pantalla.width/2-601, pantalla.height/2-366, 1202, 682);
 		setBackground(Color.darkGray);
 		setLayout(null);
