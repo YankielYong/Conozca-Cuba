@@ -7,13 +7,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -23,17 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
-import services.HotelChainServices;
-import services.ServicesLocator;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
-import utils.Validaciones;
 
-public class AgregarCadenaHotelera extends MiJPanel{
+import java.awt.Insets;
+
+public class AgregarEvento extends MiJPanel{
 	
-	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
-
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
@@ -43,31 +35,33 @@ public class AgregarCadenaHotelera extends MiJPanel{
 	private JLabel lblNombre;
 	private JPanel panelInferior;
 	private JButton btnAtras;
-	private JTextField txtNombre;
+	private JTextField txtLugar;
+	private JButton btnLugares;
+	private JButton btnActividades;
+	private JTextField txtActividad;
 	private JButton btnAgregar;
-	private boolean nameChanged = false;
 	
 	private Principal padre;
-	private Gestion anterior;
-	private AgregarCadenaHotelera este;
+	private MiJPanel anterior;
+	private AgregarEvento este;
 	
-	public AgregarCadenaHotelera(Principal p, Gestion a){
+	public AgregarEvento(Principal p, MiJPanel a){
 		este = this;
 		padre = p;
 		anterior = a;
-		setTipoPanel(Paneles.PANEL_AGREGAR_CADENA_HOTELERA);
+		setTipoPanel(Paneles.PANEL_AGREGAR_EVENTO);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelAgregarCadenaHotelera(este);
-		setBounds(pantalla.width/2-181, pantalla.height/2-153, 362, 257);
+		padre.setPanelAgregarEvento(este);
+		setBounds(pantalla.width/2-201, pantalla.height/2-186, 402, 312);
 		setBackground(Color.darkGray);
 		setLayout(null);
 		
 		panelSuperior = new JPanel(null);
-		panelSuperior.setBounds(1, 1, 360, 30);
+		panelSuperior.setBounds(1, 1, 400, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Agregar Cadena Hotelera");
+		lblNombre = new JLabel("Agregar Evento");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -97,7 +91,7 @@ public class AgregarCadenaHotelera extends MiJPanel{
 				btnCerrar.setContentAreaFilled(false);
 			}
 		});
-		btnCerrar.setBounds(315, 0, 45, 30);
+		btnCerrar.setBounds(355, 0, 45, 30);
 		btnCerrar.setBackground(Color.red);
 		btnCerrar.setFocusable(false);
 		btnCerrar.setBorderPainted(false);
@@ -106,7 +100,7 @@ public class AgregarCadenaHotelera extends MiJPanel{
 		panelSuperior.add(btnCerrar);
 		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 360, 225);
+		panelInferior.setBounds(1, 31, 400, 280);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 		
@@ -144,65 +138,98 @@ public class AgregarCadenaHotelera extends MiJPanel{
 		panelInferior.add(btnAtras);
 		
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
-		image = img.getImage().getScaledInstance(220, 67, Image.SCALE_SMOOTH);
+		image = img.getImage().getScaledInstance(250, 76, Image.SCALE_SMOOTH);
 		Icon iconLogo = new ImageIcon(image);
 
 		JLabel logo = new JLabel(iconLogo);
-		logo.setBounds(68, 15, 220, 67);
+		logo.setBounds(75, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		txtNombre = new JTextField("Nombre");
-		txtNombre.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				Validaciones.soloLetras(e);
-			}
-		});
-		txtNombre.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if(txtNombre.getText().equals("Nombre") && !nameChanged){
-					txtNombre.setText("");
-					nameChanged = true;
-					txtNombre.setForeground(Color.black);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(txtNombre.getText().equals("")){
-					txtNombre.setText("Nombre");
-					nameChanged = false;
-					txtNombre.setForeground(Color.gray);
-				}
-			}
-		});
-		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtNombre.setForeground(Color.gray);
-		txtNombre.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
-		txtNombre.setBounds(50, 110, 260, 30);
-		panelInferior.add(txtNombre);
+		JLabel lugar = new JLabel("Código del Lugar:");
+		lugar.setBounds(50, 110, 132, 30);
+		lugar.setForeground(Color.black);
+		lugar.setFont(new Font("Arial", Font.PLAIN, 16));
+		panelInferior.add(lugar);
 		
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
+		txtLugar = new JTextField();
+		txtLugar.setBounds(182, 110, 108, 30);
+		txtLugar.setForeground(Color.black);
+		txtLugar.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtLugar.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		panelInferior.add(txtLugar);
+		
+		btnLugares = new JButton("Ver");
+		btnLugares.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnLugares.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLugares.setBackground(new Color(40, 113, 128));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLugares.setBackground(colorAzul);
+			}
+		});
+		btnLugares.setBounds(300, 110, 50, 30);
+		btnLugares.setModel(new MyButtonModel());
+		btnLugares.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnLugares.setMargin(new Insets(2, 5, 2, 5));
+		btnLugares.setBackground(colorAzul);
+		btnLugares.setForeground(Color.black);
+		btnLugares.setFocusable(false);
+		btnLugares.setBorderPainted(false);
+		panelInferior.add(btnLugares);
+		
+		JLabel actividad = new JLabel("Código de la Actividad:");
+		actividad.setBounds(50, 160, 170, 30);
+		actividad.setForeground(Color.black);
+		actividad.setFont(new Font("Arial", Font.PLAIN, 16));
+		panelInferior.add(actividad);
+		
+		txtActividad = new JTextField();
+		txtActividad.setBounds(220, 160, 70, 30);
+		txtActividad.setForeground(Color.black);
+		txtActividad.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtActividad.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		panelInferior.add(txtActividad);
+		
+		btnActividades = new JButton("Ver");
+		btnActividades.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnActividades.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnActividades.setBackground(new Color(40, 113, 128));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnActividades.setBackground(colorAzul);
+			}
+		});
+		btnActividades.setBounds(300, 160, 50, 30);
+		btnActividades.setModel(new MyButtonModel());
+		btnActividades.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnActividades.setMargin(new Insets(2, 5, 2, 5));
+		btnActividades.setBackground(colorAzul);
+		btnActividades.setForeground(Color.black);
+		btnActividades.setFocusable(false);
+		btnActividades.setBorderPainted(false);
+		panelInferior.add(btnActividades);
+		
+		btnAgregar = new JButton("Agregar Evento");
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				padre.getPanelPrincipal().remove(este);
-				padre.getPanelPrincipal().repaint();
-				try{
-					String cadena = "";
-					if(nameChanged) cadena = txtNombre.getText();
-					Validaciones.cadenaHotelera(cadena);
-					hotelChainServices.insertHotelChain(cadena);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La Cadena Hotelera fue agregada con éxito", MensajeAviso.CORRECTO);
-					ma.setVisible(true);
-					anterior.ponerCadenasHoteleras();
-				}
-				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
-					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					ma.setVisible(true);
-				}
+				
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
@@ -215,8 +242,9 @@ public class AgregarCadenaHotelera extends MiJPanel{
 				btnAgregar.setBackground(colorAzul);
 			}
 		});
+		btnAgregar.setBounds(50, 220, 300, 35);
 		btnAgregar.setModel(new MyButtonModel());
-		btnAgregar.setBounds(50, 170, 260, 35);
+		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
 		btnAgregar.setBackground(colorAzul);
 		btnAgregar.setForeground(Color.black);
 		btnAgregar.setFocusable(false);

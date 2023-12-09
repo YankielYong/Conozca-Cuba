@@ -11,6 +11,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -22,13 +24,25 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
-import utils.ComboBoxModel;
+import dto.RoleDTO;
+import services.RoleServices;
+import services.ServicesLocator;
+import services.UserServices;
+import utils.MD5;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
 import utils.PropiedadesComboBox;
+import utils.Validaciones;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AgregarUsuario extends MiJPanel {
+
+	private UserServices userServices = ServicesLocator.getUserServices();
+	private RoleServices roleServices = ServicesLocator.getRoleServices();
+	private ArrayList<RoleDTO> roles;
 
 	private static final long serialVersionUID = 1L;
 	/*
@@ -36,11 +50,13 @@ public class AgregarUsuario extends MiJPanel {
 	 */
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
-	
+	private Icon pOculta = new ImageIcon(getClass().getResource("/visual/imagenes/contraseña oculta.png"));
+	private Icon pVisible = new ImageIcon(getClass().getResource("/visual/imagenes/contraseña visible.png"));
+
 	private Principal padre;
 	private AgregarUsuario este;
-	private MiJPanel anterior;
-	
+	private Gestion anterior;
+
 	/*
 	 * Panel Superior
 	 */
@@ -56,13 +72,14 @@ public class AgregarUsuario extends MiJPanel {
 	private JComboBox<String> cbRol;
 	private JTextField txtUsuario;
 	private JPasswordField txtPassword;
+	private JButton btnMostrarPass;
 	private JButton btnRegistrarse;
-	
+
 	private boolean userChanged = false;
 	private boolean nameChanged = false;
 	private boolean passChanged = false;
 
-	public AgregarUsuario(Principal p, MiJPanel a) {
+	public AgregarUsuario(Principal p, Gestion a) {
 		anterior = a;
 		este = this;
 		padre = p;
@@ -77,7 +94,7 @@ public class AgregarUsuario extends MiJPanel {
 		panelSuperior.setBounds(1, 1, 400, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
-		
+
 		lblNombre = new JLabel("Agregar Usuario");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
@@ -121,11 +138,11 @@ public class AgregarUsuario extends MiJPanel {
 		panelInferior.setBounds(1, 31, 400, 425);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
-		
+
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/atras.png"));
 		image = img.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
 		Icon iconAtras = new ImageIcon(image);
-		
+
 		btnAtras = new JButton(iconAtras);
 		btnAtras.addActionListener(new ActionListener() {
 			@Override
@@ -154,7 +171,7 @@ public class AgregarUsuario extends MiJPanel {
 		btnAtras.setContentAreaFilled(false);
 		btnAtras.setModel(new MyButtonModel());
 		panelInferior.add(btnAtras);
-		
+
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
 		image = img.getImage().getScaledInstance(270, 82, Image.SCALE_SMOOTH);
 		Icon iconLogo = new ImageIcon(image);
@@ -162,8 +179,14 @@ public class AgregarUsuario extends MiJPanel {
 		JLabel logo = new JLabel(iconLogo);
 		logo.setBounds(63, 20, 270, 82);
 		panelInferior.add(logo);
-		
+
 		txtNombre = new JTextField("Nombre");
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloLetras(e);
+			}
+		});
 		txtNombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -190,6 +213,12 @@ public class AgregarUsuario extends MiJPanel {
 		panelInferior.add(txtNombre);
 
 		txtUsuario = new JTextField("Usuario");
+		txtUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumerosSignos(e);
+			}
+		});
 		txtUsuario.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -216,6 +245,12 @@ public class AgregarUsuario extends MiJPanel {
 		panelInferior.add(txtUsuario);
 
 		txtPassword = new JPasswordField("Contraseña");
+		txtPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumerosYTodosSignos(e);
+			}
+		});
 		txtPassword.addFocusListener(new FocusAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -223,7 +258,8 @@ public class AgregarUsuario extends MiJPanel {
 				if(txtPassword.getText().equals("Contraseña") && !passChanged){
 					txtPassword.setText("");
 					passChanged = true;
-					txtPassword.setEchoChar('●');
+					if(btnMostrarPass.getIcon().equals(pOculta))
+						txtPassword.setEchoChar('●');
 					txtPassword.setForeground(Color.black);
 				}
 			}
@@ -243,25 +279,82 @@ public class AgregarUsuario extends MiJPanel {
 		txtPassword.setForeground(Color.gray);
 		txtPassword.setEchoChar((char) 0);
 		txtPassword.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
-		txtPassword.setBounds(70, 250, 260, 30);
+		txtPassword.setBounds(70, 250, 225, 30);
 		panelInferior.add(txtPassword);
-		
+
+		btnMostrarPass = new JButton(pOculta);
+		btnMostrarPass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(passChanged){
+					if(txtPassword.getEchoChar() == '●'){
+						txtPassword.setEchoChar((char) 0);
+						btnMostrarPass.setIcon(pVisible);
+					}
+					else{
+						txtPassword.setEchoChar('●');
+						btnMostrarPass.setIcon(pOculta);
+					}
+				}
+				else
+					btnMostrarPass.setIcon(pOculta);
+			}
+		});
+		btnMostrarPass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnMostrarPass.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnMostrarPass.setContentAreaFilled(false);
+			}
+		});
+		btnMostrarPass.setModel(new MyButtonModel());
+		btnMostrarPass.setBounds(295, 250, 35, 30);
+		btnMostrarPass.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		btnMostrarPass.setBackground(colorAzul);
+		btnMostrarPass.setFocusable(false);
+		btnMostrarPass.setContentAreaFilled(false);
+		panelInferior.add(btnMostrarPass);
+
 		cbRol = new JComboBox<String>();
 		cbRol.setBounds(70, 310, 260, 30);
 		cbRol.setBackground(Color.white);
 		cbRol.setFocusable(false);
-		cbRol.setModel(ComboBoxModel.localizacionesModel());
 		cbRol.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbRol.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		cbRol.setUI(PropiedadesComboBox.createUI(getRootPane(), cbRol.getBounds()));
 		panelInferior.add(cbRol);
-		
+
 		btnRegistrarse = new JButton("Registrar");
 		btnRegistrarse.setFont(new Font("Arial", Font.BOLD, 18));
 		btnRegistrarse.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				try{
+					String nombre = "";
+					String usuario = "";
+					String pass = "";
+					if(nameChanged) nombre = txtNombre.getText();
+					if(userChanged) usuario = txtUsuario.getText();
+					if(passChanged) pass = txtPassword.getText();
+					Validaciones.usuario(nombre, usuario, pass);
+					int codigoRol = roles.get(cbRol.getSelectedIndex()).getRoleCode();
+					userServices.insertUser(nombre, usuario, MD5.encrypt(pass), codigoRol);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El usuario fue registrado con éxito", MensajeAviso.CORRECTO);
+					ma.setVisible(true);
+					anterior.ponerUsuarios();
+				}
+				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					if(e1.getMessage().equals("La contraseña debe tener al menos caracteres")){
+						ma.agrandar(15);
+					}
+					ma.setVisible(true);
+				}
 			}
 		});
 		btnRegistrarse.addMouseListener(new MouseAdapter() {
@@ -281,6 +374,18 @@ public class AgregarUsuario extends MiJPanel {
 		btnRegistrarse.setFocusable(false);
 		btnRegistrarse.setBorderPainted(false);
 		panelInferior.add(btnRegistrarse);
-		
+
+		llenarComboBox();
+	}
+
+	private void llenarComboBox(){
+		try {
+			roles = roleServices.selectAllRoles();
+			for(RoleDTO r : roles){
+				cbRol.addItem(r.getRoleName());
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

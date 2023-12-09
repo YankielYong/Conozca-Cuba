@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,35 +17,38 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import dto.RoleDTO;
+import dto.UserDTO;
+import services.RoleServices;
+import services.ServicesLocator;
 import utils.MyButtonModel;
 import utils.Paneles;
 
 public class Principal extends JFrame{
-	
-	public static void main(String[] args) {
-		Principal p = new Principal();
-		p.setVisible(true);
-	}
+
+	private RoleServices roleServices = ServicesLocator.getRoleServices();
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Principal este;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 	private Color colorFondoBotones = new Color(58, 239, 235);
 	private int panelAbierto;
-	
+	private UserDTO user;
+	private RoleDTO roleUser;
+
 	private JPanel contentPane;
-	
+
 	private JPanel panelSuperior;
 	private JButton btnCerrar;
 	private JButton btnMinimizar;
 	private JButton btnPerfil;
 	private JButton btnDescubrir;
 	private JButton btnGestion;
-	
+
 	private JPanel panelPrincipal;
-	
+
 	/*
 	 * Paneles
 	 */
@@ -58,37 +62,41 @@ public class Principal extends JFrame{
 	private AgregarLugar panelAgregarLugar;
 	private AgregarVehiculo panelAgregarVehiculo;
 	private AgregarHabitacion panelAgregarHabitacion;
+	private AgregarEvento panelAgregarEvento;
+	private AgregarActividad panelAgregarActividad;
 	private InfoHotel panelInfoHotel;
 	private InfoPaquete panelInfoPaquete;
-	
-	public Principal(){
+
+	public Principal(UserDTO u){
 		este = this;
+		user = u;
+		establecerRol();
 		setUndecorated(true);
 		setResizable(false);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBounds(0, 0, pantalla.width, pantalla.height);
-		
+
 		contentPane = new JPanel(null);
 		setContentPane(contentPane);
-		
+
 		panelSuperior = new JPanel(null);
 		panelSuperior.setBounds(0, 0, pantalla.width, 50);
 		panelSuperior.setBackground(colorAzul);
 		contentPane.add(panelSuperior);
-		
+
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/minimize.png"));
-        Image image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
-        Icon iconMinimizar = new ImageIcon(image);
-        
-        btnMinimizar = new JButton(iconMinimizar);
-        btnMinimizar.addActionListener(new ActionListener() {
+		Image image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+		Icon iconMinimizar = new ImageIcon(image);
+
+		btnMinimizar = new JButton(iconMinimizar);
+		btnMinimizar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				btnMinimizar.setContentAreaFilled(false);
 				setExtendedState(ICONIFIED);
 			}
 		});
-        btnMinimizar.addMouseListener(new MouseAdapter() {
+		btnMinimizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnMinimizar.setContentAreaFilled(true);
@@ -98,18 +106,18 @@ public class Principal extends JFrame{
 				btnMinimizar.setContentAreaFilled(false);
 			}
 		});
-        btnMinimizar.setModel(new MyButtonModel());
-        btnMinimizar.setBounds(pantalla.width-150, 0, 75, 50);
-        btnMinimizar.setBackground(colorFondoBotones);
-        btnMinimizar.setFocusable(false);
-        btnMinimizar.setBorderPainted(false);
-        btnMinimizar.setContentAreaFilled(false);
+		btnMinimizar.setModel(new MyButtonModel());
+		btnMinimizar.setBounds(pantalla.width-150, 0, 75, 50);
+		btnMinimizar.setBackground(colorFondoBotones);
+		btnMinimizar.setFocusable(false);
+		btnMinimizar.setBorderPainted(false);
+		btnMinimizar.setContentAreaFilled(false);
 		panelSuperior.add(btnMinimizar);
-        
-        img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
-        image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
-        Icon iconCerrar = new ImageIcon(image);
-		
+
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
+		image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+		Icon iconCerrar = new ImageIcon(image);
+
 		btnCerrar = new JButton(iconCerrar);
 		btnCerrar.addActionListener(new ActionListener() {
 			@Override
@@ -134,11 +142,11 @@ public class Principal extends JFrame{
 		btnCerrar.setBorderPainted(false);
 		btnCerrar.setContentAreaFilled(false);
 		panelSuperior.add(btnCerrar);
-		
+
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/usuario.png"));
-        image = img.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconPerfil = new ImageIcon(image);
-		
+		image = img.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Icon iconPerfil = new ImageIcon(image);
+
 		btnPerfil = new JButton(iconPerfil);
 		btnPerfil.addActionListener(new ActionListener() {
 			@Override
@@ -161,10 +169,16 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarVehiculo);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
 					panelPrincipal.remove(panelAgregarHabitacion);
-				
-				panelPerfil = new Perfil(este);
-				panelPrincipal.add(panelPerfil);
-				panelPrincipal.repaint();
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
+					panelPrincipal.remove(panelAgregarEvento);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
+					panelPrincipal.remove(panelAgregarActividad);
+
+				if(panelAbierto != Paneles.PANEL_PERFIL){
+					panelPerfil = new Perfil(este, user, roleUser);
+					panelPrincipal.add(panelPerfil);
+					panelPrincipal.repaint();
+				}
 			}
 		});
 		btnPerfil.addMouseListener(new MouseAdapter() {
@@ -184,11 +198,11 @@ public class Principal extends JFrame{
 		btnPerfil.setBorderPainted(false);
 		btnPerfil.setContentAreaFilled(false);
 		panelSuperior.add(btnPerfil);
-		
+
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/reservas.png"));
-        image = img.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        Icon iconReservas = new ImageIcon(image);
-		
+		image = img.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		Icon iconReservas = new ImageIcon(image);
+
 		btnDescubrir = new JButton(iconReservas);
 		btnDescubrir.addActionListener(new ActionListener() {
 			@Override
@@ -211,10 +225,16 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarVehiculo);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
 					panelPrincipal.remove(panelAgregarHabitacion);
-				
-				panelDescubrir = new Descubrir(este);
-				panelPrincipal.add(panelDescubrir);
-				panelPrincipal.repaint();
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
+					panelPrincipal.remove(panelAgregarEvento);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
+					panelPrincipal.remove(panelAgregarActividad);
+
+				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
+					panelDescubrir = new Descubrir(este);
+					panelPrincipal.add(panelDescubrir);
+					panelPrincipal.repaint();
+				}
 			}
 		});
 		btnDescubrir.addMouseListener(new MouseAdapter() {
@@ -234,7 +254,7 @@ public class Principal extends JFrame{
 		btnDescubrir.setBorderPainted(false);
 		btnDescubrir.setContentAreaFilled(false);
 		panelSuperior.add(btnDescubrir);
-		
+
 		btnGestion = new JButton();
 		btnGestion.addActionListener(new ActionListener() {
 			@Override
@@ -257,10 +277,16 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarVehiculo);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
 					panelPrincipal.remove(panelAgregarHabitacion);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
+					panelPrincipal.remove(panelAgregarEvento);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
+					panelPrincipal.remove(panelAgregarActividad);
 
-				panelGestion = new Gestion(este);
-				panelPrincipal.add(panelGestion);
-				panelPrincipal.repaint();
+				if(panelAbierto != Paneles.PANEL_GESTION){
+					panelGestion = new Gestion(este, user, roleUser);
+					panelPrincipal.add(panelGestion);
+					panelPrincipal.repaint();
+				}
 			}
 		});
 		btnGestion.addMouseListener(new MouseAdapter() {
@@ -279,7 +305,7 @@ public class Principal extends JFrame{
 		btnGestion.setFocusable(false);
 		btnGestion.setBorderPainted(false);
 		btnGestion.setContentAreaFilled(false);
-		
+
 		panelPrincipal = new JPanel(null){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -290,28 +316,31 @@ public class Principal extends JFrame{
 		};
 		panelPrincipal.setBounds(0, 50, pantalla.width, pantalla.height-50);
 		contentPane.add(panelPrincipal);
-		
-		vistaGestorAgencia();
+
+		if(roleUser.getRoleName().equals("Gestor de Agencia"))
+			vistaGestorAgencia();
+		else if(roleUser.getRoleName().equals("Gestor de Ventas"))
+			vistaGestorVentas();
 	}
-	
+
 	private void vistaGestorVentas(){
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/gestion venta.png"));
-        Image image = img.getImage().getScaledInstance(38, 38, Image.SCALE_SMOOTH);
-        Icon iconGestion = new ImageIcon(image);
-		
+		Image image = img.getImage().getScaledInstance(38, 38, Image.SCALE_SMOOTH);
+		Icon iconGestion = new ImageIcon(image);
+
 		btnGestion.setIcon(iconGestion);
 		panelSuperior.add(btnGestion);
 	}
-	
+
 	private void vistaGestorAgencia(){
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/gestion agencia.png"));
-        Image image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
-        Icon iconGestion = new ImageIcon(image);
-		
+		Image image = img.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+		Icon iconGestion = new ImageIcon(image);
+
 		btnGestion.setIcon(iconGestion);
 		panelSuperior.add(btnGestion);
 	}
-	
+
 	public void setPanelAgregarUsuario(AgregarUsuario agregarUsuario) {
 		this.panelAgregarUsuario = agregarUsuario;
 	}
@@ -340,12 +369,28 @@ public class Principal extends JFrame{
 		this.panelAgregarHabitacion = panelAgregarHabitacion;
 	}
 
+	public void setPanelAgregarEvento(AgregarEvento panelAgregarEvento) {
+		this.panelAgregarEvento = panelAgregarEvento;
+	}
+
+	public void setPanelAgregarActividad(AgregarActividad panelAgregarActividad) {
+		this.panelAgregarActividad = panelAgregarActividad;
+	}
+
 	public void setPanelAbierto(int panel){
 		panelAbierto = panel;
 	}
-	
+
 	public JPanel getPanelPrincipal(){
 		return panelPrincipal;
+	}
+
+	private void establecerRol(){
+		try {
+			roleUser = roleServices.findRole(user.getRoleCode());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -4,10 +4,15 @@ public class PlaceDTO {
 
 	private int placeCode;
 	private String placeName;
-	
-	public PlaceDTO(int placeCode, String placeName) {
+	private double costPerPerson;
+	private String typeOfService;
+
+	public PlaceDTO(int placeCode, String placeName, double costPerPerson, String typeOfService) {
+		super();
 		this.placeCode = placeCode;
 		this.placeName = placeName;
+		this.costPerPerson = costPerPerson;
+		this.typeOfService = typeOfService;
 	}
 
 	public int getPlaceCode() {
@@ -24,5 +29,21 @@ public class PlaceDTO {
 
 	public void setPlaceName(String placeName) {
 		this.placeName = placeName;
+	}
+
+	public double getCostPerPerson() {
+		return costPerPerson;
+	}
+
+	public void setCostPerPerson(double costPerPerson) {
+		this.costPerPerson = costPerPerson;
+	}
+
+	public String getTypeOfService() {
+		return typeOfService;
+	}
+
+	public void setTypeOfService(String typeOfService) {
+		this.typeOfService = typeOfService;
 	}
 }

@@ -9,22 +9,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import services.PlaceServices;
+import services.ServicesLocator;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
+import utils.PropiedadesComboBox;
+import utils.Validaciones;
 
 public class AgregarLugar extends MiJPanel{
+	
+	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -36,21 +46,24 @@ public class AgregarLugar extends MiJPanel{
 	private JPanel panelInferior;
 	private JButton btnAtras;
 	private JTextField txtNombre;
+	private JTextField txtCosto;
+	private JComboBox<String> cbTipo;
 	private JButton btnAgregar;
+	private boolean costChanged = false;
 	private boolean nameChanged = false;
 	
 	private Principal padre;
-	private MiJPanel anterior;
+	private Gestion anterior;
 	private AgregarLugar este;
 	
-	public AgregarLugar(Principal p, MiJPanel a){
+	public AgregarLugar(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
 		setTipoPanel(Paneles.PANEL_AGREGAR_LUGAR);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelAgregarLugar(este);
-		setBounds(pantalla.width/2-181, pantalla.height/2-153, 362, 257);
+		setBounds(pantalla.width/2-181, pantalla.height/2-206, 362, 362);
 		setBackground(Color.darkGray);
 		setLayout(null);
 		
@@ -98,7 +111,7 @@ public class AgregarLugar extends MiJPanel{
 		panelSuperior.add(btnCerrar);
 		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 360, 225);
+		panelInferior.setBounds(1, 31, 360, 330);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 		
@@ -144,6 +157,12 @@ public class AgregarLugar extends MiJPanel{
 		panelInferior.add(logo);
 		
 		txtNombre = new JTextField("Nombre");
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumeros(e);
+			}
+		});
 		txtNombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -169,12 +188,79 @@ public class AgregarLugar extends MiJPanel{
 		txtNombre.setBounds(50, 110, 260, 30);
 		panelInferior.add(txtNombre);
 		
+		txtCosto = new JTextField("Costo Por Persona");
+		txtCosto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeroYUnaComa(e, txtCosto.getText());
+				costChanged = true;
+			}
+		});
+		txtCosto.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtCosto.getText().equals("Costo Por Persona")){
+					txtCosto.setText("");
+					txtCosto.setForeground(Color.black);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtCosto.getText().equals("")){
+					txtCosto.setText("Costo Por Persona");
+					txtCosto.setForeground(Color.gray);
+					costChanged = false;
+				}
+				else{
+					String ca = txtCosto.getText();
+					if(ca.charAt(ca.length()-1)==','){
+						ca = ca.substring(0, ca.length()-1);
+						txtCosto.setText(ca);
+					}
+				}
+			}
+		});
+		txtCosto.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtCosto.setForeground(Color.gray);
+		txtCosto.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		txtCosto.setBounds(50, 160, 260, 30);
+		panelInferior.add(txtCosto);
+		
+		cbTipo = new JComboBox<String>();
+		cbTipo.setBounds(50, 210, 260, 30);
+		cbTipo.setBackground(Color.white);
+		cbTipo.setFocusable(false);
+		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbTipo.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		cbTipo.setModel(utils.ComboBoxModel.tiposServiciosModel());
+		cbTipo.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
+		panelInferior.add(cbTipo);
+		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				
+				try{
+					String cadena = "";
+					String costo = "";
+					if(nameChanged) cadena = txtNombre.getText();
+					if(costChanged) costo = txtCosto.getText();
+					double cos = Double.valueOf(costo);
+					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
+					Validaciones.lugar(cadena);
+					placeServices.insertPlace(cadena, cos, tipo);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue agregado con éxito", MensajeAviso.CORRECTO);
+					ma.setVisible(true);
+					anterior.ponerLugares();
+				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					ma.setVisible(true);
+				}
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
@@ -188,7 +274,7 @@ public class AgregarLugar extends MiJPanel{
 			}
 		});
 		btnAgregar.setModel(new MyButtonModel());
-		btnAgregar.setBounds(50, 170, 260, 35);
+		btnAgregar.setBounds(50, 270, 260, 35);
 		btnAgregar.setBackground(colorAzul);
 		btnAgregar.setForeground(Color.black);
 		btnAgregar.setFocusable(false);

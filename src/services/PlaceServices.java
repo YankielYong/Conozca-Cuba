@@ -11,12 +11,14 @@ import dto.PlaceDTO;
 
 public class PlaceServices {
 	
-	public void insertPlace(String placeName) 
+	public void insertPlace(String placeName, double costPerPerson, String typeOfService) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT place_insert(?)";
+		String query = "SELECT place_insert(?,?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, placeName);
+		preparedStatement.setDouble(2, costPerPerson);
+		preparedStatement.setString(3, typeOfService);
 		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
@@ -32,13 +34,15 @@ public class PlaceServices {
 		connection.close();
 	}
 	
-	public void updatePlace(int placeCode, String placeName) 
+	public void updatePlace(int placeCode, String placeName, double costPerPerson, String typeOfService) 
 			throws SQLException, ClassNotFoundException{
 		String query = "SELECT place_update(?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, placeCode);
 		preparedStatement.setString(2, placeName);
+		preparedStatement.setDouble(3, costPerPerson);
+		preparedStatement.setString(4, typeOfService);
 		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
@@ -50,7 +54,7 @@ public class PlaceServices {
 		String query = "SELECT * FROM place WHERE place.place_code = '"+placeCode+"'"; 
 		ResultSet rs = statement.executeQuery(query);
 		rs.first();
-		PlaceDTO place = new PlaceDTO(rs.getInt(1), rs.getString(2));
+		PlaceDTO place = new PlaceDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4));
 		rs.close();
 		statement.close();
 		connection.close();
@@ -67,7 +71,7 @@ public class PlaceServices {
 		preparedFunction.execute();
 		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
 		while (rs.next()){
-			places.add(new PlaceDTO(rs.getInt(1), rs.getString(2)));
+			places.add(new PlaceDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4)));
 		}
 		rs.close();
 		preparedFunction.close();

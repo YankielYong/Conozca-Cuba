@@ -20,11 +20,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import services.ProvinceServices;
+import services.ServicesLocator;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
+import utils.Validaciones;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 public class AgregarProvincia extends MiJPanel{
+	
+	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -40,10 +49,10 @@ public class AgregarProvincia extends MiJPanel{
 	private boolean nameChanged = false;
 	
 	private Principal padre;
-	private MiJPanel anterior;
+	private Gestion anterior;
 	private AgregarProvincia este;
 	
-	public AgregarProvincia(Principal p, MiJPanel a){
+	public AgregarProvincia(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
@@ -144,6 +153,12 @@ public class AgregarProvincia extends MiJPanel{
 		panelInferior.add(logo);
 		
 		txtNombre = new JTextField("Nombre");
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloLetras(e);
+			}
+		});
 		txtNombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -174,7 +189,24 @@ public class AgregarProvincia extends MiJPanel{
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				try{
+					String cadena;
+					if(!nameChanged)
+						cadena = "";
+					else
+						cadena = txtNombre.getText();
+					Validaciones.provincia(cadena);
+					provinceServices.insertProvince(cadena);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La provincia fue agregada con éxito", MensajeAviso.CORRECTO);
+					ma.setVisible(true);
+					anterior.ponerProvincias();
+				}
+				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					ma.setVisible(true);
+				}
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {

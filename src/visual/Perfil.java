@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dto.RoleDTO;
+import dto.UserDTO;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
@@ -36,10 +38,15 @@ public class Perfil extends MiJPanel{
 
 	private Principal padre;
 	private Perfil este;
+	
+	private UserDTO user;
+	private RoleDTO roleUser;
 
-	public Perfil(Principal p){
+	public Perfil(Principal p, UserDTO u, RoleDTO r){
 		padre = p;
 		este = this;
+		user = u;
+		roleUser = r;
 		setTipoPanel(Paneles.PANEL_PERFIL);
 		padre.setPanelAbierto(getTipoPanel());
 		setBounds(pantalla.width/2-201, pantalla.height/2-226, 432, 402);	
@@ -97,30 +104,32 @@ public class Perfil extends MiJPanel{
 		lUsuario.setBounds(175, 30, 80, 80);
 		panelInferior.add(lUsuario);
 
-		nombre = new JLabel("Nombre: ");
-		nombre.setBounds(50, 140, 100, 30);
+		nombre = new JLabel("Nombre: "+user.getUserName());
+		nombre.setBounds(50, 140, 350, 35);
 		nombre.setFont(new Font("Arial", Font.BOLD, 18));
 		nombre.setForeground(Color.black);
 		panelInferior.add(nombre);
 
-		nombreUsuario = new JLabel("Usuario: ");
-		nombreUsuario.setBounds(50, 200, 100, 30);
+		nombreUsuario = new JLabel("Usuario: "+user.getUserNick());
+		nombreUsuario.setBounds(50, 200, 350, 35);
 		nombreUsuario.setFont(new Font("Arial", Font.BOLD, 18));
 		nombreUsuario.setForeground(Color.black);
 		panelInferior.add(nombreUsuario);
 		
-		rol = new JLabel("Rol: ");
-		rol.setBounds(50, 260, 100, 30);
+		rol = new JLabel("Rol: "+roleUser.getRoleName());
+		rol.setBounds(50, 260, 350, 35);
 		rol.setFont(new Font("Arial", Font.BOLD, 18));
 		rol.setForeground(Color.black);
 		panelInferior.add(rol);
 
 		btnCerrarSesion = new JButton("Cerrar Sesión");
-		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 15));
+		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 16));
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				padre.dispose();
+				Login l = new Login();
+				l.setVisible(true);
 			}
 		});
 		btnCerrarSesion.addMouseListener(new MouseAdapter() {

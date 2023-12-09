@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,6 +22,17 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.MatteBorder;
 
+import services.ActivityServices;
+import services.ContractServices;
+import services.EventServices;
+import services.HotelChainServices;
+import services.PlaceServices;
+import services.ProvinceServices;
+import services.RoleServices;
+import services.SeasonServices;
+import services.ServicesLocator;
+import services.UserServices;
+import services.VehicleServices;
 import utils.ActivityTableModel;
 import utils.ContractTableModel;
 import utils.EventTableModel;
@@ -43,12 +56,43 @@ import utils.VehicleTableModel;
 
 import javax.swing.SwingConstants;
 
+import dto.ActivityDTO;
+import dto.HotelChainDTO;
+import dto.HotelDTO;
+import dto.PlaceDTO;
+import dto.ProvinceDTO;
+import dto.RoleDTO;
+import dto.RoomDTO;
+import dto.UserDTO;
+
 public class Gestion extends MiJPanel{
+
+	private ActivityServices activityServices = ServicesLocator.getActivityServices();
+	private ContractServices contractServices = ServicesLocator.getContractServices();
+	private EventServices eventServices = ServicesLocator.getEventServices();
+	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
+	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
+	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
+	private RoleServices roleServices = ServicesLocator.getRoleServices();
+	private SeasonServices seasonServices = ServicesLocator.getSeasonServices();
+	private UserServices userServices = ServicesLocator.getUserServices();
+	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
+
+	private ArrayList<ActivityDTO> listaActividades;
+	private ArrayList<HotelChainDTO> listaCadenasHoteleras;
+	private ArrayList<RoomDTO> listaHabitaciones;
+	private ArrayList<HotelDTO> listaHoteles;
+	private ArrayList<PlaceDTO> listaLugares;
+	private ArrayList<ProvinceDTO> listaProvincias;
+	private ArrayList<RoleDTO> listaRoles;
+	private ArrayList<UserDTO> listaUsuarios;
+
+	private int pos = -1;;
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
-	
+
 	private Gestion este;
 	private Principal padre;
 
@@ -61,7 +105,7 @@ public class Gestion extends MiJPanel{
 	private JButton btnAgregar;
 	private JButton btnEliminar;
 	private JButton btnEditar;
-	
+
 	private boolean esGestorAgencia;
 	/*
 	 * Gestor de agencia
@@ -104,15 +148,21 @@ public class Gestion extends MiJPanel{
 	private TouristPackageTableModel touristPackageTableModel;
 	private TransportTableModel transportTableModel;
 	
-	public Gestion(Principal p){
+
+	private UserDTO user;
+	private RoleDTO roleUser;
+
+	public Gestion(Principal p, UserDTO u, RoleDTO r){
 		este = this;
 		padre = p;
+		user = u;
+		roleUser = r;
 		setTipoPanel(Paneles.PANEL_GESTION);
 		padre.setPanelAbierto(getTipoPanel());
 		setBounds(pantalla.width/2-601, pantalla.height/2-376, 1202, 702);
 		setBackground(Color.darkGray);
 		setLayout(null);
-		
+
 		panelSuperior = new JPanel(null);
 		panelSuperior.setBounds(1, 1, 1200, 30);
 		panelSuperior.setBackground(colorAzul);
@@ -149,19 +199,19 @@ public class Gestion extends MiJPanel{
 		btnCerrar.setContentAreaFilled(false);
 		btnCerrar.setModel(new MyButtonModel());
 		panelSuperior.add(btnCerrar);
-		
+
 		panelInferior = new JPanel(null);
 		panelInferior.setBounds(1, 31, 1200, 670);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
-		
+
 		crearTabla();
 
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBackground(Color.white);
 		scrollPane.getViewport().setBackground(Color.white);
 		panelInferior.add(scrollPane);
-		
+
 		btnVer = new JButton("Ver");
 		btnVer.addMouseListener(new MouseAdapter() {
 			@Override
@@ -180,7 +230,7 @@ public class Gestion extends MiJPanel{
 		btnVer.setFocusable(false);
 		btnVer.setBorderPainted(false);
 		panelInferior.add(btnVer);
-		
+
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -204,8 +254,13 @@ public class Gestion extends MiJPanel{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
-		
+
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionEliminar();
+			}
+		});
 		btnEliminar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -223,7 +278,7 @@ public class Gestion extends MiJPanel{
 		btnEliminar.setFocusable(false);
 		btnEliminar.setBorderPainted(false);
 		panelInferior.add(btnEliminar);
-		
+
 		btnEditar = new JButton("Editar");
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -242,10 +297,13 @@ public class Gestion extends MiJPanel{
 		btnEditar.setFocusable(false);
 		btnEditar.setBorderPainted(false);
 		panelInferior.add(btnEditar);
-		
-		vistaGestorDeAgencia();
+
+		if(roleUser.getRoleName().equals("Gestor de Agencia"))
+			vistaGestorDeAgencia();
+		else if(roleUser.getRoleName().equals("Gestor de Ventas"))
+			vistaGestorDeVentas();
 	}
-	
+
 	public void vistaGestorDeAgencia(){
 		esGestorAgencia = true;
 		scrollPane.setBounds(300, 20, 880, 580);
@@ -253,8 +311,8 @@ public class Gestion extends MiJPanel{
 		btnAgregar.setBounds(525, 615, 205, 35);
 		btnEliminar.setBounds(750, 615, 205, 35);
 		btnEditar.setBounds(975, 615, 205, 35);
-		
-		
+
+
 		btnCadenas = new JButton("  Cadenas Hoteleras");
 		btnCadenas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -268,7 +326,7 @@ public class Gestion extends MiJPanel{
 				btnTemporadas.setBorderPainted(false);
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
-				
+
 				btnVer.setVisible(true);
 				btnAgregar.setVisible(true);
 				btnEliminar.setVisible(true);
@@ -288,7 +346,7 @@ public class Gestion extends MiJPanel{
 		btnCadenas.setContentAreaFilled(false);
 		btnCadenas.setBorderPainted(true);
 		panelInferior.add(btnCadenas);
-		
+
 		btnHabitaciones = new JButton("  Habitaciones");
 		btnHabitaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -322,7 +380,7 @@ public class Gestion extends MiJPanel{
 		btnHabitaciones.setContentAreaFilled(false);
 		btnHabitaciones.setBorderPainted(false);
 		panelInferior.add(btnHabitaciones);
-		
+
 		btnHoteles = new JButton("  Hoteles");
 		btnHoteles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -356,7 +414,7 @@ public class Gestion extends MiJPanel{
 		btnHoteles.setContentAreaFilled(false);
 		btnHoteles.setBorderPainted(false);
 		panelInferior.add(btnHoteles);
-		
+
 		btnLugares = new JButton("  Lugares");
 		btnLugares.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -390,7 +448,7 @@ public class Gestion extends MiJPanel{
 		btnLugares.setContentAreaFilled(false);
 		btnLugares.setBorderPainted(false);
 		panelInferior.add(btnLugares);
-		
+
 		btnRoles = new JButton("  Roles");
 		btnRoles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -424,7 +482,7 @@ public class Gestion extends MiJPanel{
 		btnRoles.setContentAreaFilled(false);
 		btnRoles.setBorderPainted(false);
 		panelInferior.add(btnRoles);
-		
+
 		btnPlanAlimenticio = new JButton("  Planes Alimenticios");
 		btnPlanAlimenticio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -458,7 +516,7 @@ public class Gestion extends MiJPanel{
 		btnPlanAlimenticio.setContentAreaFilled(false);
 		btnPlanAlimenticio.setBorderPainted(false);
 		panelInferior.add(btnPlanAlimenticio);
-		
+
 		btnProvincias = new JButton("  Provincias");
 		btnProvincias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -492,7 +550,7 @@ public class Gestion extends MiJPanel{
 		btnProvincias.setContentAreaFilled(false);
 		btnProvincias.setBorderPainted(false);
 		panelInferior.add(btnProvincias);
-		
+
 		btnTemporadas = new JButton("  Temporadas");
 		btnTemporadas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -526,7 +584,7 @@ public class Gestion extends MiJPanel{
 		btnTemporadas.setContentAreaFilled(false);
 		btnTemporadas.setBorderPainted(false);
 		panelInferior.add(btnTemporadas);
-		
+
 		btnUsuarios = new JButton("  Usuarios");
 		btnUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -560,7 +618,7 @@ public class Gestion extends MiJPanel{
 		btnUsuarios.setContentAreaFilled(false);
 		btnUsuarios.setBorderPainted(false);
 		panelInferior.add(btnUsuarios);
-		
+
 		btnVehiculos = new JButton("  Vehiculos");
 		btnVehiculos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -594,10 +652,10 @@ public class Gestion extends MiJPanel{
 		btnVehiculos.setContentAreaFilled(false);
 		btnVehiculos.setBorderPainted(false);
 		panelInferior.add(btnVehiculos);
-		
+
 		ponerCadenasHoteleras();
 	}
-	
+
 	public void vistaGestorDeVentas(){
 		esGestorAgencia = false;
 		scrollPane.setBounds(330, 20, 850, 580);
@@ -605,7 +663,7 @@ public class Gestion extends MiJPanel{
 		btnAgregar.setBounds(548, 615, 196, 35);
 		btnEliminar.setBounds(766, 615, 196, 35);
 		btnEditar.setBounds(984, 615, 196, 35);
-		
+
 		btnActividades = new JButton("  Actividades");
 		btnActividades.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -616,7 +674,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(false);
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
-				
+
 				ponerActividades();
 			}
 		});
@@ -631,7 +689,7 @@ public class Gestion extends MiJPanel{
 		btnActividades.setContentAreaFilled(false);
 		btnActividades.setBorderPainted(true);
 		panelInferior.add(btnActividades);
-		
+
 		btnContratos = new JButton("  Contratos");
 		btnContratos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -642,7 +700,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(false);
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
-				
+
 				ponerContratos();
 			}
 		});
@@ -657,7 +715,7 @@ public class Gestion extends MiJPanel{
 		btnContratos.setContentAreaFilled(false);
 		btnContratos.setBorderPainted(false);
 		panelInferior.add(btnContratos);
-		
+
 		btnEventos = new JButton("  Eventos");
 		btnEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -668,7 +726,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(false);
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
-				
+
 				ponerEventos();
 			}
 		});
@@ -683,7 +741,7 @@ public class Gestion extends MiJPanel{
 		btnEventos.setContentAreaFilled(false);
 		btnEventos.setBorderPainted(false);
 		panelInferior.add(btnEventos);
-		
+
 		btnHospedajes = new JButton("  Hospedajes");
 		btnHospedajes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -694,7 +752,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(false);
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
-				
+
 				ponerHospedajes();
 			}
 		});
@@ -709,7 +767,7 @@ public class Gestion extends MiJPanel{
 		btnHospedajes.setContentAreaFilled(false);
 		btnHospedajes.setBorderPainted(false);
 		panelInferior.add(btnHospedajes);
-		
+
 		btnModalidades = new JButton("  Modalidades de Transporte");
 		btnModalidades.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -720,7 +778,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(true);
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
-				
+
 				ponerModalidades();
 			}
 		});
@@ -735,7 +793,7 @@ public class Gestion extends MiJPanel{
 		btnModalidades.setContentAreaFilled(false);
 		btnModalidades.setBorderPainted(false);
 		panelInferior.add(btnModalidades);
-		
+
 		btnPaquetes = new JButton("  Paquetes Turísticos");
 		btnPaquetes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -746,7 +804,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(false);
 				btnPaquetes.setBorderPainted(true);
 				btnTransportes.setBorderPainted(false);
-				
+
 				ponerPaquetes();
 			}
 		});
@@ -761,7 +819,7 @@ public class Gestion extends MiJPanel{
 		btnPaquetes.setContentAreaFilled(false);
 		btnPaquetes.setBorderPainted(false);
 		panelInferior.add(btnPaquetes);
-		
+
 		btnTransportes = new JButton("  Transportes");
 		btnTransportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -772,7 +830,7 @@ public class Gestion extends MiJPanel{
 				btnModalidades.setBorderPainted(false);
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(true);
-				
+
 				ponerTransportes();
 			}
 		});
@@ -787,11 +845,12 @@ public class Gestion extends MiJPanel{
 		btnTransportes.setContentAreaFilled(false);
 		btnTransportes.setBorderPainted(false);
 		panelInferior.add(btnTransportes);
-		
+
 		ponerActividades();
 	}
 
 	public void ponerActividades(){
+		pos = -1;
 		activityTableModel = new ActivityTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -801,8 +860,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(activityTableModel);
 	}
-	
+
 	public void ponerContratos(){
+		pos = -1;
 		contractTableModel = new ContractTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -812,8 +872,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(contractTableModel);
 	}
-	
+
 	public void ponerEventos(){
+		pos = -1;
 		eventTableModel = new EventTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -823,8 +884,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(eventTableModel);
 	}
-	
+
 	public void ponerHospedajes(){
+		pos = -1;
 		lodgingTableModel = new LodgingTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -834,8 +896,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(lodgingTableModel);
 	}
-	
+
 	public void ponerModalidades(){
+		pos = -1;
 		transportModalityTableModel = new TransportModalityTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -845,8 +908,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(transportModalityTableModel);
 	}
-	
+
 	public void ponerPaquetes(){
+		pos = -1;
 		touristPackageTableModel = new TouristPackageTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -856,8 +920,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(touristPackageTableModel);
 	}
-	
+
 	public void ponerTransportes(){
+		pos = -1;
 		transportTableModel = new TransportTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -867,8 +932,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(transportTableModel);
 	}
-	
+
 	public void ponerCadenasHoteleras(){
+		pos = -1;
 		hotelChainTableModel = new HotelChainTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -877,9 +943,23 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(hotelChainTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(580);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		try {
+			listaCadenasHoteleras = hotelChainServices.selectAllHotelChains();
+			for(HotelChainDTO h : listaCadenasHoteleras){
+				String[] datos = {String.valueOf(h.getHotelChainCode()), h.getHotelChainName()};
+				hotelChainTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void ponerHabitacion(){
+		pos = -1;
 		roomTableModel = new RoomTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -889,8 +969,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(roomTableModel);
 	}
-	
+
 	public void ponerHotel(){
+		pos = -1;
 		hotelTableModel = new HotelTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -900,8 +981,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(hotelTableModel);
 	}
-	
+
 	public void ponerLugares(){
+		pos = -1;
 		placeTableModel = new PlaceTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -910,9 +992,28 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(placeTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(180);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(260);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(220);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(220);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaLugares = placeServices.selectAllPlaces();
+			for(PlaceDTO p : listaLugares){
+				String[] datos = {String.valueOf(p.getPlaceCode()), p.getPlaceName(), p.getTypeOfService(), 
+						String.valueOf(p.getCostPerPerson())};
+				placeTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void ponerRoles(){
+		pos = -1;
 		roleTableModel = new RoleTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -921,9 +1022,23 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(roleTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(580);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		try {
+			listaRoles = roleServices.selectAllRoles();
+			for(RoleDTO r : listaRoles){
+				String[] datos = {r.getRoleName(), r.getRoleDescription()};
+				roleTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void ponerPlanesAlimenticios(){
+		pos = -1;
 		foodPlanTableModel = new FoodPlanTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -933,8 +1048,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(foodPlanTableModel);
 	}
-	
+
 	public void ponerProvincias(){
+		pos = -1;
 		provinceTableModel = new ProvinceTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -943,9 +1059,23 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(provinceTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(200);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(680);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		try{
+			listaProvincias = provinceServices.selectAllProvinces();
+			for(ProvinceDTO p : listaProvincias){
+				String[] datos = {String.valueOf(p.getProvinceCode()), p.getProviceName()};
+				provinceTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void ponerTemporadas(){
+		pos = -1;
 		seasonTableModel = new SeasonTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -955,8 +1085,9 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(seasonTableModel);
 	}
-	
+
 	public void ponerUsuarios(){
+		pos = -1;
 		userTableModel = new UserTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -965,9 +1096,28 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(userTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(300);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(240);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(240);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaUsuarios = userServices.selectAllUsers();
+			for(UserDTO u : listaUsuarios){
+				String rol = roleServices.findRole(u.getRoleCode()).getRoleName();
+				String[] datos = {String.valueOf(u.getUserCode()), u.getUserName(), u.getUserNick(), rol};
+				userTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void ponerVehiculos(){
+		pos = -1;
 		vehicleTableModel = new VehicleTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -977,18 +1127,24 @@ public class Gestion extends MiJPanel{
 		};
 		table.setModel(vehicleTableModel);
 	}
-	
+
 	private void crearTabla(){
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pos = table.getSelectedRow();
+			}
+		});
 		table.setFocusable(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
-		table.setRowHeight(30);
+		table.setRowHeight(40);
 		table.setForeground(Color.BLACK);
-		table.setFont(new Font("Arial", Font.PLAIN, 15));
+		table.setFont(new Font("Arial", Font.PLAIN, 16));
 		table.setBackground(Color.WHITE);
 	}
-	
+
 	private void accionAgregar(){
 		if(esGestorAgencia){
 			if(btnCadenas.isBorderPainted()){
@@ -1036,27 +1192,113 @@ public class Gestion extends MiJPanel{
 		}
 		else{
 			if(btnActividades.isBorderPainted()){
-				
+				padre.getPanelPrincipal().remove(este);
+				AgregarActividad panel = new AgregarActividad(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnContratos.isBorderPainted()){
-				
+
 			}
 			else if(btnEventos.isBorderPainted()){
-				
+				padre.getPanelPrincipal().remove(este);
+				AgregarEvento panel = new AgregarEvento(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnHospedajes.isBorderPainted()){
-				
+
 			}
 			else if(btnModalidades.isBorderPainted()){
-				
+
 			}
 			else if(btnPaquetes.isBorderPainted()){
-				
+
 			}
 			else if(btnTransportes.isBorderPainted()){
-				
+
 			}
 		}
 		btnAgregar.setBackground(colorAzul);
+	}
+
+	private void accionEliminar(){
+		btnEliminar.setBackground(colorAzul);
+		padre.getPanelPrincipal().remove(este);
+		padre.getPanelPrincipal().repaint();
+
+		try{
+			if(pos != -1){
+				String mensaje = "";
+				boolean eliminado = false;
+				if(esGestorAgencia){
+					if(btnCadenas.isBorderPainted()){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta cadena hotelera?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							hotelChainServices.deleteHotelChain(listaCadenasHoteleras.get(pos).getHotelChainCode());
+							ponerCadenasHoteleras();
+							mensaje = "La Cadena Hotelera fue eliminada con éxito";
+						}
+					}
+					else if(btnHabitaciones.isBorderPainted()){
+
+					}
+					else if(btnHoteles.isBorderPainted()){
+
+					}
+					else if(btnLugares.isBorderPainted()){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea de eliminar este lugar?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							placeServices.deletePlace(listaLugares.get(pos).getPlaceCode());
+							ponerLugares();
+							mensaje = "El lugar fue eliminado con éxito";
+						}
+					}
+					else if(btnProvincias.isBorderPainted()){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea de eliminar esta provincia?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							provinceServices.deleteProvince(listaProvincias.get(pos).getProvinceCode());
+							ponerProvincias();
+							mensaje = "La provincia fue eliminada con éxito";
+						}
+					}
+					else if(btnUsuarios.isBorderPainted()){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este usuario?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							userServices.deleteUser(listaUsuarios.get(pos).getUserCode());
+							ponerUsuarios();
+							mensaje = "El usuario fue eliminado con éxito";
+						}
+					}
+					else if(btnVehiculos.isBorderPainted()){
+
+					}
+					if(eliminado){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, mensaje, MensajeAviso.CORRECTO);
+						ma.setVisible(true);
+					}
+				}
+				else{
+					if(btnActividades.isBorderPainted()){
+						ponerActividades();
+					}
+				}
+			}
+			else{
+				MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para eliminar", MensajeAviso.ERROR);
+				ma.setVisible(true);
+			}
+		}
+		catch(SQLException | ClassNotFoundException e){
+			e.printStackTrace();
+		}
 	}
 }

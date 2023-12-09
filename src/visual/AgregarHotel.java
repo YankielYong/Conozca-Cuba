@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,6 +22,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import dto.HotelChainDTO;
+import dto.ProvinceDTO;
+import services.HotelChainServices;
+import services.ProvinceServices;
+import services.ServicesLocator;
 import utils.ComboBoxModel;
 import utils.MiJPanel;
 import utils.MyButtonModel;
@@ -27,6 +34,12 @@ import utils.Paneles;
 import utils.PropiedadesComboBox;
 
 public class AgregarHotel extends MiJPanel{
+	
+	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
+	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
+	
+	private ArrayList<HotelChainDTO> listaCadenasHoteleras;
+	private ArrayList<ProvinceDTO> listaProvincias;
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -210,7 +223,6 @@ public class AgregarHotel extends MiJPanel{
 		cbCadena.setBounds(183, 260, 307, 30);
 		cbCadena.setBackground(Color.white);
 		cbCadena.setFocusable(false);
-		cbCadena.setModel(ComboBoxModel.cadenasHotelerasModel());
 		cbCadena.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbCadena.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		cbCadena.setUI(PropiedadesComboBox.createUI(getRootPane(), cbCadena.getBounds()));
@@ -226,7 +238,6 @@ public class AgregarHotel extends MiJPanel{
 		cbProvincia.setBounds(130, 300, 360, 30);
 		cbProvincia.setBackground(Color.white);
 		cbProvincia.setFocusable(false);
-		cbProvincia.setModel(ComboBoxModel.provinciasModel());
 		cbProvincia.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbProvincia.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		cbProvincia.setUI(PropiedadesComboBox.createUI(getRootPane(), cbProvincia.getBounds()));
@@ -432,5 +443,21 @@ public class AgregarHotel extends MiJPanel{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
+		
+		llenarComboBox();
+	}
+	
+	private void llenarComboBox(){
+		try {
+			listaCadenasHoteleras = hotelChainServices.selectAllHotelChains();
+			listaProvincias = provinceServices.selectAllProvinces();
+			
+			for(HotelChainDTO h : listaCadenasHoteleras)
+				cbCadena.addItem(h.getHotelChainName());
+			for(ProvinceDTO p : listaProvincias)
+				cbProvincia.addItem(p.getProviceName());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

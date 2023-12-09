@@ -13,4 +13,6 @@ public class Paneles {
 	public static int PANEL_AGREGAR_LUGAR = 14;
 	public static int PANEL_AGREGAR_VEHICULO = 15;
 	public static int PANEL_AGREGAR_HABITACION = 16;
+	public static int PANEL_AGREGAR_EVENTO = 17;
+	public static int PANEL_AGREGAR_ACTIVIDAD = 18;
 }

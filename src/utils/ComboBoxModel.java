@@ -13,25 +13,50 @@ public class ComboBoxModel {
 		model.addElement("5 Estrellas");
 		return model;
 	}
-	
-	public static DefaultComboBoxModel<String> cadenasHotelerasModel(){
-		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-		model.addElement("Iberostar");
-		model.addElement("Meliá");
-		return model;
-	}
-	
-	public static DefaultComboBoxModel<String> provinciasModel(){
-		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-		model.addElement("La Habana");
-		model.addElement("Matanzas");
-		return model;
-	}
 
 	public static DefaultComboBoxModel<String> localizacionesModel(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Ciudad");
 		model.addElement("Playa");
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<String> tiposServiciosModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Entretenimiento");
+		model.addElement("Gastronómico");
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<Integer> diasModel(int dias){
+		DefaultComboBoxModel<Integer> model = new DefaultComboBoxModel<Integer>();
+		for(int i=1; i<=dias; i++)
+			model.addElement(i);
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<Integer> yearsModel(){
+		DefaultComboBoxModel<Integer> model = new DefaultComboBoxModel<Integer>();
+		for(int i=2020; i<=2045; i++)
+			model.addElement(i);
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<Integer> mesesModel(){
+		DefaultComboBoxModel<Integer> model = new DefaultComboBoxModel<Integer>();
+		model.addElement(1);		model.addElement(2);
+		model.addElement(3);		model.addElement(4);
+		model.addElement(5);		model.addElement(6);
+		model.addElement(7);		model.addElement(8);
+		model.addElement(9);		model.addElement(10);
+		model.addElement(11);		model.addElement(12);
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<String> meridianosModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("AM");
+		model.addElement("PM");
 		return model;
 	}
 }

@@ -9,28 +9,42 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import services.ServicesLocator;
+import services.UserServices;
+import utils.MD5;
 import utils.MyButtonModel;
+import utils.Validaciones;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.border.MatteBorder;
 
+import dto.UserDTO;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) {
 		Login l = new Login();
-		l.setVisible(true);
+		//l.setVisible(true);
 	}
+	
+	private UserServices userServices = ServicesLocator.getUserServices();
+	private ArrayList<UserDTO> listaUsuarios;
+	private UserDTO user;
 
 	/*
 	 * Utils
@@ -39,6 +53,8 @@ public class Login extends JFrame {
 	private int yMouse;
 	private Color colorAzul = new Color(59, 165, 187);
 	private Color colorFondoBotones = new Color(58, 239, 235);
+	private ImageIcon pOculta = new ImageIcon(getClass().getResource("/visual/imagenes/contraseña oculta.png"));
+	private ImageIcon pVisible = new ImageIcon(getClass().getResource("/visual/imagenes/contraseña visible.png"));
 
 	private JPanel contentPane;
 	/*
@@ -53,12 +69,16 @@ public class Login extends JFrame {
 	private JPanel panelInferior;
 	private JTextField txtUsuario;
 	private JPasswordField txtPassword;
+	private JButton btnMostrarPass;
 	private JButton btnIniciarSesion;
-	
+
 	private boolean userChanged = false;
 	private boolean passChanged = false;
+	
+	private Login este;
 
 	public Login() {
+		este = this;
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,6 +108,12 @@ public class Login extends JFrame {
 		panelSuperior.setBounds(1, 1, 650, 30);
 		panelSuperior.setBackground(colorAzul);
 		contentPane.add(panelSuperior);
+		
+		JLabel lblNombre = new JLabel("Iniciar Sesión");
+		lblNombre.setForeground(Color.black);
+		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNombre.setBounds(10, 0, 200, 30);
+		panelSuperior.add(lblNombre);
 
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/minimize.png"));
 		Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -168,7 +194,7 @@ public class Login extends JFrame {
 		panelInferior.setBounds(271, 31, 380, 370);
 		panelInferior.setBackground(Color.white);
 		contentPane.add(panelInferior);
-		
+
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
 		image = img.getImage().getScaledInstance(280, 85, Image.SCALE_SMOOTH);
 		Icon iconLogo = new ImageIcon(image);
@@ -178,6 +204,16 @@ public class Login extends JFrame {
 		panelInferior.add(logo);
 
 		txtUsuario = new JTextField("Usuario");
+		txtUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarAccion(1, e.getKeyCode());
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumerosSignos(e);
+			}
+		});
 		txtUsuario.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -197,13 +233,23 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtUsuario.setForeground(Color.gray);
-		txtUsuario.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
+		txtUsuario.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		txtUsuario.setBounds(60, 160, 260, 30);
 		panelInferior.add(txtUsuario);
 
 		txtPassword = new JPasswordField("Contraseña");
+		txtPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarAccion(2, e.getKeyCode());
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumerosYTodosSignos(e);
+			}
+		});
 		txtPassword.addFocusListener(new FocusAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -211,7 +257,8 @@ public class Login extends JFrame {
 				if(txtPassword.getText().equals("Contraseña") && !passChanged){
 					txtPassword.setText("");
 					passChanged = true;
-					txtPassword.setEchoChar('●');
+					if(btnMostrarPass.getIcon().equals(pOculta))
+						txtPassword.setEchoChar('●');
 					txtPassword.setForeground(Color.black);
 				}
 			}
@@ -227,18 +274,53 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtPassword.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPassword.setForeground(Color.gray);
 		txtPassword.setEchoChar((char) 0);
-		txtPassword.setBorder(new MatteBorder(0, 0, 2, 0, colorAzul));
-		txtPassword.setBounds(60, 230, 260, 30);
+		txtPassword.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		txtPassword.setBounds(60, 230, 225, 30);
 		panelInferior.add(txtPassword);
+
+		btnMostrarPass = new JButton(pOculta);
+		btnMostrarPass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(passChanged){
+					if(txtPassword.getEchoChar() == '●'){
+						txtPassword.setEchoChar((char) 0);
+						btnMostrarPass.setIcon(pVisible);
+					}
+					else{
+						txtPassword.setEchoChar('●');
+						btnMostrarPass.setIcon(pOculta);
+					}
+				}
+				else
+					btnMostrarPass.setIcon(pOculta);
+			}
+		});
+		btnMostrarPass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnMostrarPass.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnMostrarPass.setContentAreaFilled(false);
+			}
+		});
+		btnMostrarPass.setModel(new MyButtonModel());
+		btnMostrarPass.setBounds(285, 230, 35, 30);
+		btnMostrarPass.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		btnMostrarPass.setBackground(colorAzul);
+		btnMostrarPass.setFocusable(false);
+		btnMostrarPass.setContentAreaFilled(false);
+		panelInferior.add(btnMostrarPass);
 
 		btnIniciarSesion = new JButton("Iniciar Sesión");
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				iniciarSesion();
 			}
 		});
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {
@@ -253,14 +335,106 @@ public class Login extends JFrame {
 		});
 		btnIniciarSesion.setModel(new MyButtonModel());
 		btnIniciarSesion.setBounds(60, 305, 260, 30);
-		btnIniciarSesion.setFont(new Font("Arial", Font.BOLD, 13));
+		btnIniciarSesion.setFont(new Font("Arial", Font.BOLD, 16));
 		btnIniciarSesion.setBackground(colorAzul);
 		btnIniciarSesion.setForeground(Color.black);
 		btnIniciarSesion.setFocusable(false);
 		btnIniciarSesion.setBorderPainted(false);
 		panelInferior.add(btnIniciarSesion);
 
+		try {
+			listaUsuarios = userServices.selectAllUsers();
+			if(listaUsuarios.size()==0)
+				userServices.insertUser("Yankiel Yong Martínez", "el_yanko", "yankiel123", 1);
+		} catch (ClassNotFoundException | SQLException e1) {
+			e1.printStackTrace();
+		}
 
-
+		iniciarPatricia();
 	}
+	
+	@SuppressWarnings("deprecation")
+	private void iniciarSesion(){
+		este.setVisible(false);
+		String usuario = "";
+		String pass = "";
+		try{
+			if(userChanged) usuario = txtUsuario.getText();
+			if(passChanged) pass = txtPassword.getText();
+			Validaciones.usuario(null, usuario, pass);
+			boolean esta = false;
+			for(int i=0; i<listaUsuarios.size() && !esta; i++){
+				UserDTO u = listaUsuarios.get(i);
+				if(u.getUserNick().equals(usuario)){
+					if(MD5.encrypt(pass).equals(u.getUserPassword())){
+						esta = true;
+						user = u;
+					}
+					else{
+						throw new IllegalArgumentException("La contraseña es incorrecta, rectifique");
+					}
+				}
+			}
+			if(esta){
+				este.dispose();
+				Principal p = new Principal(user);
+				p.setVisible(true);
+			}
+			else
+				throw new IllegalArgumentException("El usuario no existe en la base de datos");
+		}
+		catch(IllegalArgumentException e1){
+			MensajeAviso ma = new MensajeAviso(este, null, null, e1.getMessage(), MensajeAviso.ERROR);
+			if(e1.getMessage().equals("La contraseña debe tener al menos caracteres")){
+				ma.agrandar(15);
+			}
+			ma.setVisible(true);
+		}
+	}
+	
+	private void realizarAccion(int numTxt, int key){
+		switch(numTxt) {
+		case 1:
+			switch(key){
+			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_ENTER: txtPassword.requestFocus(); break;
+			}
+			break;
+		case 2:
+			switch(key){
+			case KeyEvent.VK_UP: txtUsuario.requestFocus(); break;
+			case KeyEvent.VK_ENTER: iniciarSesion(); break;
+			}
+			break;
+		}
+	}
+	
+	private void iniciarYankiel(){
+		UserDTO usu = null;
+		for(int i=0; i<listaUsuarios.size(); i++){
+			UserDTO u = listaUsuarios.get(i);
+			if(u.getUserNick().equals("el_yanko")){
+				usu = u;
+				break;
+			}
+		}
+		dispose();
+		Principal p = new Principal(usu);
+		p.setVisible(true);
+	}
+	
+	private void iniciarPatricia(){
+		UserDTO usu = null;
+		for(int i=0; i<listaUsuarios.size(); i++){
+			UserDTO u = listaUsuarios.get(i);
+			if(u.getUserNick().equals("patrybarrios")){
+				usu = u;
+				break;
+			}
+		}
+		dispose();
+		Principal p = new Principal(usu);
+		p.setVisible(true);
+	}
+	
 }
