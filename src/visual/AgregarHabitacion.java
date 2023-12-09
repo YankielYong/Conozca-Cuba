@@ -7,8 +7,12 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,13 +23,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import dto.FoodPlanDTO;
+import services.FoodPlanServices;
+import services.RoomServices;
+import services.ServicesLocator;
 import utils.ComboBoxModel;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
 import utils.PropiedadesComboBox;
+import utils.Validaciones;
 
 public class AgregarHabitacion extends MiJPanel{
+	
+	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
+	private RoomServices roomServices = ServicesLocator.getRoomServices();
+	
+	private ArrayList<FoodPlanDTO> listaPlanes;
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,10 +56,10 @@ public class AgregarHabitacion extends MiJPanel{
 	private JButton btnAgregar;
 	
 	private Principal padre;
-	private MiJPanel anterior;
+	private Gestion anterior;
 	private AgregarHabitacion este;
 	
-	public AgregarHabitacion(Principal p, MiJPanel a){
+	public AgregarHabitacion(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
@@ -155,7 +169,7 @@ public class AgregarHabitacion extends MiJPanel{
 		cbTipo.setBounds(194, 110, 196, 30);
 		cbTipo.setBackground(Color.white);
 		cbTipo.setFocusable(false);
-		cbTipo.setModel(ComboBoxModel.catHoteleraModel());
+		cbTipo.setModel(ComboBoxModel.habitacionesModel());
 		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipo.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		cbTipo.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
@@ -171,7 +185,6 @@ public class AgregarHabitacion extends MiJPanel{
 		cbPlan.setBounds(175, 160, 215, 30);
 		cbPlan.setBackground(Color.white);
 		cbPlan.setFocusable(false);
-		cbPlan.setModel(ComboBoxModel.catHoteleraModel());
 		cbPlan.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbPlan.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		cbPlan.setUI(PropiedadesComboBox.createUI(getRootPane(), cbPlan.getBounds()));
@@ -184,6 +197,12 @@ public class AgregarHabitacion extends MiJPanel{
 		panelInferior.add(recargo);
 		
 		txtRecargo = new JTextField();
+		txtRecargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeroYUnaComa(e, txtRecargo.getText());
+			}
+		});
 		txtRecargo.setBounds(224, 210, 166, 30);
 		txtRecargo.setForeground(Color.black);
 		txtRecargo.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -194,7 +213,23 @@ public class AgregarHabitacion extends MiJPanel{
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				try{
+					String tipo = (String)cbTipo.getSelectedItem();
+					int codF = listaPlanes.get(cbPlan.getSelectedIndex()).getFoodPlanCode();
+					String recargo = txtRecargo.getText();
+					if(recargo.isEmpty()) throw new IllegalArgumentException("El campo de recargo de habitación esta vacío");
+					if(recargo.charAt(recargo.length()-1)=='.') recargo = recargo.substring(0, recargo.length()-1);
+					double rec = Double.valueOf(recargo);
+					roomServices.insertRoom(tipo, rec, codF);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La habitación fue agregada con éxito", MensajeAviso.CORRECTO);
+					ma.setVisible(true);
+					anterior.ponerHabitacion();
+				} catch (IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					ma.setVisible(true);
+				}
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
@@ -215,5 +250,18 @@ public class AgregarHabitacion extends MiJPanel{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
+		
+		llenarComboBox();
+	}
+	
+	private void llenarComboBox(){
+		try {
+			listaPlanes = foodPlanServices.selectAllFoddPlans();
+			
+			for(FoodPlanDTO f : listaPlanes)
+				cbPlan.addItem(f.getTypeOfFoodPlan());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

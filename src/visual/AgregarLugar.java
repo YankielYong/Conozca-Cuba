@@ -214,7 +214,7 @@ public class AgregarLugar extends MiJPanel{
 				}
 				else{
 					String ca = txtCosto.getText();
-					if(ca.charAt(ca.length()-1)==','){
+					if(ca.charAt(ca.length()-1)=='.'){
 						ca = ca.substring(0, ca.length()-1);
 						txtCosto.setText(ca);
 					}
@@ -250,6 +250,7 @@ public class AgregarLugar extends MiJPanel{
 					String costo = "";
 					if(nameChanged) cadena = txtNombre.getText();
 					if(costChanged) costo = txtCosto.getText();
+					else throw new IllegalArgumentException("El campo del costo está vacío");
 					double cos = Double.valueOf(costo);
 					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
 					Validaciones.lugar(cadena);

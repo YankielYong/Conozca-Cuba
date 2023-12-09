@@ -28,6 +28,15 @@ public class ComboBoxModel {
 		return model;
 	}
 	
+	public static DefaultComboBoxModel<String> habitacionesModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Simple");
+		model.addElement("Doble");
+		model.addElement("Suite");
+		model.addElement("Junior Suite");
+		return model;
+	}
+	
 	public static DefaultComboBoxModel<Integer> diasModel(int dias){
 		DefaultComboBoxModel<Integer> model = new DefaultComboBoxModel<Integer>();
 		for(int i=1; i<=dias; i++)

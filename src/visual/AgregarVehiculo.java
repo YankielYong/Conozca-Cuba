@@ -7,8 +7,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,11 +21,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import services.ServicesLocator;
+import services.VehicleServices;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
+import utils.Validaciones;
 
 public class AgregarVehiculo extends MiJPanel{
+	
+	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,10 +50,10 @@ public class AgregarVehiculo extends MiJPanel{
 	private JButton btnAgregar;
 	
 	private Principal padre;
-	private MiJPanel anterior;
+	private Gestion anterior;
 	private AgregarVehiculo este;
 	
-	public AgregarVehiculo(Principal p, MiJPanel a){
+	public AgregarVehiculo(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
@@ -160,6 +168,12 @@ public class AgregarVehiculo extends MiJPanel{
 		panelInferior.add(chapa);
 		
 		txtChapa = new JTextField();
+		txtChapa.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.chapa(e);
+			}
+		});
 		txtChapa.setBounds(110, 110, 280, 30);
 		txtChapa.setForeground(Color.black);
 		txtChapa.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -173,6 +187,12 @@ public class AgregarVehiculo extends MiJPanel{
 		panelInferior.add(marca);
 		
 		txtMarca = new JTextField();
+		txtMarca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumeros(e);
+			}
+		});
 		txtMarca.setBounds(108, 150, 282, 30);
 		txtMarca.setForeground(Color.black);
 		txtMarca.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -186,6 +206,12 @@ public class AgregarVehiculo extends MiJPanel{
 		panelInferior.add(fabricacion);
 		
 		txtFabricacion = new JTextField();
+		txtFabricacion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtFabricacion.setBounds(200, 190, 190, 30);
 		txtFabricacion.setForeground(Color.black);
 		txtFabricacion.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -199,6 +225,12 @@ public class AgregarVehiculo extends MiJPanel{
 		panelInferior.add(capSin);
 		
 		txtCapSinEq = new JTextField();
+		txtCapSinEq.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtCapSinEq.setBounds(242, 230, 148, 30);
 		txtCapSinEq.setForeground(Color.black);
 		txtCapSinEq.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -212,6 +244,12 @@ public class AgregarVehiculo extends MiJPanel{
 		panelInferior.add(capCon);
 		
 		txtCapConEq = new JTextField();
+		txtCapConEq.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtCapConEq.setBounds(247, 270, 143, 30);
 		txtCapConEq.setForeground(Color.black);
 		txtCapConEq.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -225,6 +263,12 @@ public class AgregarVehiculo extends MiJPanel{
 		panelInferior.add(capTotal);
 		
 		txtCapTotal = new JTextField();
+		txtCapTotal.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtCapTotal.setBounds(178, 310, 212, 30);
 		txtCapTotal.setForeground(Color.black);
 		txtCapTotal.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -235,7 +279,35 @@ public class AgregarVehiculo extends MiJPanel{
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				try{
+					String chapa = txtChapa.getText();
+					String marca = txtMarca.getText();
+					String yFab = txtFabricacion.getText();
+					String capS = txtCapSinEq.getText();
+					String capC = txtCapConEq.getText();
+					String capT = txtCapTotal.getText();
+					Validaciones.vehiculo(chapa, marca, yFab, capS, capC, capT);
+					int yFabr = Integer.valueOf(yFab);
+					int capSE = Integer.valueOf(capS);
+					int capCE = Integer.valueOf(capC);
+					int capTT = Integer.valueOf(capT);
+					vehicleServices.insertVehicle(chapa, marca, yFabr, capSE, capCE, capTT);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El vehículo fue agregado con éxito", MensajeAviso.CORRECTO);
+					ma.setVisible(true);
+					anterior.ponerVehiculos();
+				}
+				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					if(e1.getMessage().equals("El campo de la capacidad sin equipajes está vacío"))
+						ma.agrandar(40);
+					if(e1.getMessage().equals("El campo de la capacidad con equipajes está vacío"))
+						ma.agrandar(45);
+					if(e1.getMessage().equals("No puede tener más capacidad con equipaje que sin equipaje"))
+						ma.agrandar(130);
+					ma.setVisible(true);
+				}
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {

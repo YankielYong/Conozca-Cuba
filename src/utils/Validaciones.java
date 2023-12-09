@@ -1,6 +1,7 @@
 package utils;
 
 import java.awt.event.KeyEvent;
+import java.util.Date;
 
 public class Validaciones {
 
@@ -54,6 +55,40 @@ public class Validaciones {
 		}
 		if(pass.length() < 8)
 			throw new IllegalArgumentException("La contraseña debe tener al menos caracteres");
+	}
+	
+	public static void actividad(Date fecha, String desc) throws IllegalArgumentException{
+		if(fecha.compareTo(new Date())<0) throw new IllegalArgumentException("La fecha introducida ya ha pasado, rectifique");
+		try{
+			noVacio(desc);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de descripción"+e.getMessage());
+		}
+	}
+	
+	public static void vehiculo(String chapa, String marca, String yFab, String capS, String capC, String capT) 
+			throws IllegalArgumentException{
+		try{noVacio(chapa);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la chapa"+e.getMessage());}
+		try{noVacio(marca);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la marca"+e.getMessage());}
+		try{noVacio(yFab);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del año de fabricación"+e.getMessage());}
+		try{noVacio(capS);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la capacidad sin equipajes"+e.getMessage());}
+		try{noVacio(capC);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la capacidad con equipajes"+e.getMessage());}
+		try{noVacio(capT);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la capacidad total"+e.getMessage());}
+		
+		int yFabr = Integer.valueOf(yFab);
+		int capSE = Integer.valueOf(capS);
+		int capCE = Integer.valueOf(capC);
+		int capTT = Integer.valueOf(capT);
+		
+		if(yFabr>2023) throw new IllegalArgumentException("El año de fabricación no es válido");
+		if(capCE > capSE) throw new IllegalArgumentException("No puede tener más capacidad con equipaje que sin equipaje");
 	}
 
 	public static void soloLetras(KeyEvent e){
@@ -115,6 +150,13 @@ public class Validaciones {
 		int key = e.getKeyChar();
 		boolean valido = (key>=48&&key<=57) || key==32 || (key>=65&&key<=90) || (key>=97&&key<=122) || key==225 || key==233 || key==241 ||
 				key==237 || key==243 || key==250 || key==193 || key==201 || key==205 || key==211 || key==218 || key==209;
+		if(!valido)
+			e.consume();
+	}
+	
+	public static void chapa(KeyEvent e){
+		int key = e.getKeyChar();
+		boolean valido = (key>=48&&key<=57) || (key>=65&&key<=90);
 		if(!valido)
 			e.consume();
 	}

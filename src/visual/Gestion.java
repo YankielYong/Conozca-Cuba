@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -21,14 +22,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import services.ActivityServices;
 import services.ContractServices;
 import services.EventServices;
+import services.FoodPlanServices;
 import services.HotelChainServices;
 import services.PlaceServices;
 import services.ProvinceServices;
 import services.RoleServices;
+import services.RoomServices;
 import services.SeasonServices;
 import services.ServicesLocator;
 import services.UserServices;
@@ -57,35 +61,49 @@ import utils.VehicleTableModel;
 import javax.swing.SwingConstants;
 
 import dto.ActivityDTO;
+import dto.ContractDTO;
+import dto.EventDTO;
+import dto.FoodPlanDTO;
 import dto.HotelChainDTO;
 import dto.HotelDTO;
 import dto.PlaceDTO;
 import dto.ProvinceDTO;
 import dto.RoleDTO;
 import dto.RoomDTO;
+import dto.SeasonDTO;
 import dto.UserDTO;
+import dto.VehicleDTO;
 
 public class Gestion extends MiJPanel{
 
 	private ActivityServices activityServices = ServicesLocator.getActivityServices();
 	private ContractServices contractServices = ServicesLocator.getContractServices();
 	private EventServices eventServices = ServicesLocator.getEventServices();
+	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
 	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
 	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
 	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
 	private RoleServices roleServices = ServicesLocator.getRoleServices();
+	private RoomServices roomServices = ServicesLocator.getRoomServices();
 	private SeasonServices seasonServices = ServicesLocator.getSeasonServices();
 	private UserServices userServices = ServicesLocator.getUserServices();
 	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
 
 	private ArrayList<ActivityDTO> listaActividades;
 	private ArrayList<HotelChainDTO> listaCadenasHoteleras;
+	private ArrayList<ContractDTO> listaContratos;
+	private ArrayList<EventDTO> listaEventos;
 	private ArrayList<RoomDTO> listaHabitaciones;
 	private ArrayList<HotelDTO> listaHoteles;
 	private ArrayList<PlaceDTO> listaLugares;
+	private ArrayList<FoodPlanDTO> listaPlanesAlimenticios;
 	private ArrayList<ProvinceDTO> listaProvincias;
 	private ArrayList<RoleDTO> listaRoles;
+	private ArrayList<SeasonDTO> listaTemporadas;
 	private ArrayList<UserDTO> listaUsuarios;
+	private ArrayList<VehicleDTO> listaVehiculos;
+	
+	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 
 	private int pos = -1;;
 
@@ -859,6 +877,28 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(activityTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(220);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(110);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(450);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaActividades = activityServices.selectAllActivity();
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat format2 = new SimpleDateFormat("hh:mm a");
+			for(ActivityDTO a : listaActividades){
+				String[] datos = {String.valueOf(a.getActivityCode()), 
+						format.format(a.getActivityDate())+"     "+format2.format(a.getActivityDate()),
+						String.valueOf(a.getActivityPrice()), a.getActivityDescription()};
+				activityTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerContratos(){
@@ -943,6 +983,7 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(hotelChainTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(580);
@@ -968,6 +1009,26 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(roomTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(230);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(300);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaHabitaciones = roomServices.selectAllRooms();
+			for(RoomDTO r : listaHabitaciones){
+				FoodPlanDTO f = foodPlanServices.findFoodPlan(r.getFoodPlanCode());
+				String[] datos = {String.valueOf(r.getRoomCode()), r.getRoomType(), 
+						f.getTypeOfFoodPlan(), String.valueOf(r.getSurchargeRoom())};
+				roomTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerHotel(){
@@ -992,6 +1053,7 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(placeTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(0).setPreferredWidth(180);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(260);
@@ -1047,6 +1109,20 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(foodPlanTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(200);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(680);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		try{
+			listaPlanesAlimenticios = foodPlanServices.selectAllFoddPlans();
+			for(FoodPlanDTO f : listaPlanesAlimenticios){
+				String[] datos = {String.valueOf(f.getFoodPlanCode()), f.getTypeOfFoodPlan()};
+				foodPlanTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerProvincias(){
@@ -1059,6 +1135,7 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(provinceTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(0).setPreferredWidth(200);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(680);
@@ -1084,6 +1161,30 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(seasonTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(4).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(400);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setPreferredWidth(150);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		try{
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM");
+			listaTemporadas = seasonServices.selectAllSeasons();
+			for(SeasonDTO s : listaTemporadas){
+				String[] datos = {String.valueOf(s.getSeasonCode()), s.getSeasonName(), s.getSeasonDescription(),
+						format.format(s.getSeasonStartDate()), format.format(s.getSeasonEndDate())};
+				seasonTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerUsuarios(){
@@ -1096,6 +1197,7 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(userTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(300);
@@ -1126,6 +1228,26 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(vehicleTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(140);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(270);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(270);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(200);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaVehiculos = vehicleServices.selectAllVehicles();
+			for(VehicleDTO v : listaVehiculos){
+				String[] datos = {String.valueOf(v.getVehicleCode()), v.getVehiclePlate(), v.getVehicleBrand(),
+						String.valueOf(v.getYearOfProduction())};
+				vehicleTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void crearTabla(){
@@ -1143,6 +1265,7 @@ public class Gestion extends MiJPanel{
 		table.setForeground(Color.BLACK);
 		table.setFont(new Font("Arial", Font.PLAIN, 16));
 		table.setBackground(Color.WHITE);
+		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 
 	private void accionAgregar(){
@@ -1239,17 +1362,24 @@ public class Gestion extends MiJPanel{
 						if(eliminado){
 							hotelChainServices.deleteHotelChain(listaCadenasHoteleras.get(pos).getHotelChainCode());
 							ponerCadenasHoteleras();
-							mensaje = "La Cadena Hotelera fue eliminada con éxito";
+							mensaje = "La cadena hotelera fue eliminada con éxito";
 						}
 					}
 					else if(btnHabitaciones.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta habitación?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							roomServices.deleteRoom(listaHabitaciones.get(pos).getRoomCode());
+							ponerHabitacion();
+							mensaje = "La habitación fue eliminada con éxito";
+						}
 					}
 					else if(btnHoteles.isBorderPainted()){
 
 					}
 					else if(btnLugares.isBorderPainted()){
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea de eliminar este lugar?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este lugar?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
@@ -1259,7 +1389,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnProvincias.isBorderPainted()){
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea de eliminar esta provincia?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta provincia?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
@@ -1279,7 +1409,14 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnVehiculos.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este vehículo?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							vehicleServices.deleteVehicle(listaVehiculos.get(pos).getVehicleCode());
+							ponerVehiculos();
+							mensaje = "El vehículo fue eliminado con éxito";
+						}
 					}
 					if(eliminado){
 						MensajeAviso ma = new MensajeAviso(null, padre, este, mensaje, MensajeAviso.CORRECTO);
@@ -1288,7 +1425,36 @@ public class Gestion extends MiJPanel{
 				}
 				else{
 					if(btnActividades.isBorderPainted()){
-						ponerActividades();
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta actividad?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							activityServices.deleteActivity(listaActividades.get(pos).getActivityCode());
+							ponerActividades();
+							mensaje = "La actividad fue eliminada con éxito";
+						}
+					}
+					else if(btnContratos.isBorderPainted()){
+						
+					}
+					else if(btnEventos.isBorderPainted()){
+						
+					}
+					else if(btnHospedajes.isBorderPainted()){
+						
+					}
+					else if(btnModalidades.isBorderPainted()){
+						
+					}
+					else if(btnPaquetes.isBorderPainted()){
+						
+					}
+					else if(btnTransportes.isBorderPainted()){
+						
+					}
+					if(eliminado){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, mensaje, MensajeAviso.CORRECTO);
+						ma.setVisible(true);
 					}
 				}
 			}
