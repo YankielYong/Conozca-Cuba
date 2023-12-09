@@ -1333,7 +1333,10 @@ public class Gestion extends MiJPanel{
 
 			}
 			else if(btnModalidades.isBorderPainted()){
-
+				padre.getPanelPrincipal().remove(este);
+				AgregarModalidad panel = new AgregarModalidad(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnPaquetes.isBorderPainted()){
 

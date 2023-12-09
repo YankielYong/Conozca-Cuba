@@ -28,6 +28,22 @@ public class ComboBoxModel {
 		return model;
 	}
 	
+	public static DefaultComboBoxModel<String> contratosModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Hotelero");
+		model.addElement("Transporte");
+		model.addElement("Servicios Complementarios");
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<String> modalidadesModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Costo por kilometraje");
+		model.addElement("Costo por horas y kilómetros");
+		model.addElement("Costo por recorridos establecidos");
+		return model;
+	}
+	
 	public static DefaultComboBoxModel<String> habitacionesModel(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Simple");

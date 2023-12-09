@@ -160,6 +160,14 @@ public class Validaciones {
 		if(!valido)
 			e.consume();
 	}
+	
+	public static void letrasNumerosSignosEspacio(KeyEvent e){
+		int key = e.getKeyChar();
+		boolean valido = (key>=32&&key<=90) || (key>=97&&key<=122) || (key>=48&&key<=57) || key==241 || key==209 
+				|| key==46 || key==95;
+		if(!valido)
+			e.consume();
+	}
 
 	public static void letrasNumerosSignos(KeyEvent e){
 		int key = e.getKeyChar();

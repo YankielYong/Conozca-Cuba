@@ -64,6 +64,7 @@ public class Principal extends JFrame{
 	private AgregarHabitacion panelAgregarHabitacion;
 	private AgregarEvento panelAgregarEvento;
 	private AgregarActividad panelAgregarActividad;
+	private AgregarModalidad panelAgregarModalidad;
 	private InfoHotel panelInfoHotel;
 	private InfoPaquete panelInfoPaquete;
 
@@ -173,6 +174,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarEvento);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
 					panelPrincipal.remove(panelAgregarActividad);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
+					panelPrincipal.remove(panelAgregarModalidad);
 
 				if(panelAbierto != Paneles.PANEL_PERFIL){
 					panelPerfil = new Perfil(este, user, roleUser);
@@ -229,6 +232,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarEvento);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
 					panelPrincipal.remove(panelAgregarActividad);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
+					panelPrincipal.remove(panelAgregarModalidad);
 
 				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
 					panelDescubrir = new Descubrir(este);
@@ -281,6 +286,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarEvento);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
 					panelPrincipal.remove(panelAgregarActividad);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
+					panelPrincipal.remove(panelAgregarModalidad);
 
 				if(panelAbierto != Paneles.PANEL_GESTION){
 					panelGestion = new Gestion(este, user, roleUser);
@@ -375,6 +382,10 @@ public class Principal extends JFrame{
 
 	public void setPanelAgregarActividad(AgregarActividad panelAgregarActividad) {
 		this.panelAgregarActividad = panelAgregarActividad;
+	}
+
+	public void setPanelAgregarModalidad(AgregarModalidad panelAgregarModalidad) {
+		this.panelAgregarModalidad = panelAgregarModalidad;
 	}
 
 	public void setPanelAbierto(int panel){
