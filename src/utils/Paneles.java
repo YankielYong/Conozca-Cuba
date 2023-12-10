@@ -19,5 +19,7 @@ public class Paneles {
 	public static int PANEL_VER_VEHICULO = 19;
 	public static int PANEL_VER_USUARIO = 20;
 	public static int PANEL_VER_HABITACION = 21;
-
+	public static int PANEL_VER_LUGAR = 22;
+	public static int PANEL_VER_ACTIVIDAD = 23;
+public static int PANEL_VER_MODALIDAD = 24;
 }
