@@ -67,6 +67,9 @@ public class Principal extends JFrame{
 	private AgregarModalidad panelAgregarModalidad;
 	private InfoHotel panelInfoHotel;
 	private InfoPaquete panelInfoPaquete;
+	private VerVehiculo panelVerVehiculo;
+	private VerUsuario panelVerUsuario;
+	private VerHabitacion panelVerHabitacion;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -176,6 +179,10 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarActividad);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
 					panelPrincipal.remove(panelAgregarModalidad);
+				else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
+					panelPrincipal.remove(panelVerVehiculo);
+				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
+					panelPrincipal.remove(panelVerUsuario);
 
 				if(panelAbierto != Paneles.PANEL_PERFIL){
 					panelPerfil = new Perfil(este, user, roleUser);
@@ -234,6 +241,10 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarActividad);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
 					panelPrincipal.remove(panelAgregarModalidad);
+				else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
+					panelPrincipal.remove(panelVerVehiculo);
+				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
+					panelPrincipal.remove(panelVerUsuario);
 
 				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
 					panelDescubrir = new Descubrir(este);
@@ -288,6 +299,10 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarActividad);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
 					panelPrincipal.remove(panelAgregarModalidad);
+				else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
+					panelPrincipal.remove(panelVerVehiculo);
+				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
+					panelPrincipal.remove(panelVerUsuario);
 
 				if(panelAbierto != Paneles.PANEL_GESTION){
 					panelGestion = new Gestion(este, user, roleUser);
@@ -384,8 +399,20 @@ public class Principal extends JFrame{
 		this.panelAgregarActividad = panelAgregarActividad;
 	}
 
+	public void setPanelVerVehiculo(VerVehiculo panelVerVehiculo) {
+		this.panelVerVehiculo = panelVerVehiculo;
+	}
+
 	public void setPanelAgregarModalidad(AgregarModalidad panelAgregarModalidad) {
 		this.panelAgregarModalidad = panelAgregarModalidad;
+	}
+
+	public void setPanelVerUsuario(VerUsuario panelVerUsuario) {
+		this.panelVerUsuario = panelVerUsuario;
+	}
+
+	public void setPanelVerHabitacion(VerHabitacion panelVerHabitacion) {
+		this.panelVerHabitacion = panelVerHabitacion;
 	}
 
 	public void setPanelAbierto(int panel){

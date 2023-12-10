@@ -102,7 +102,7 @@ public class Gestion extends MiJPanel{
 	private ArrayList<SeasonDTO> listaTemporadas;
 	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<VehicleDTO> listaVehiculos;
-	
+
 	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 
 	private int pos = -1;;
@@ -165,7 +165,7 @@ public class Gestion extends MiJPanel{
 	private TransportModalityTableModel transportModalityTableModel;
 	private TouristPackageTableModel touristPackageTableModel;
 	private TransportTableModel transportTableModel;
-	
+
 
 	private UserDTO user;
 	private RoleDTO roleUser;
@@ -231,6 +231,12 @@ public class Gestion extends MiJPanel{
 		panelInferior.add(scrollPane);
 
 		btnVer = new JButton("Ver");
+		btnVer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				accionVer();
+			}
+		});
 		btnVer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -1438,22 +1444,22 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnContratos.isBorderPainted()){
-						
+
 					}
 					else if(btnEventos.isBorderPainted()){
-						
+
 					}
 					else if(btnHospedajes.isBorderPainted()){
-						
+
 					}
 					else if(btnModalidades.isBorderPainted()){
-						
+
 					}
 					else if(btnPaquetes.isBorderPainted()){
-						
+
 					}
 					else if(btnTransportes.isBorderPainted()){
-						
+
 					}
 					if(eliminado){
 						MensajeAviso ma = new MensajeAviso(null, padre, este, mensaje, MensajeAviso.CORRECTO);
@@ -1468,6 +1474,40 @@ public class Gestion extends MiJPanel{
 		}
 		catch(SQLException | ClassNotFoundException e){
 			e.printStackTrace();
+		}
+	}
+
+	private void accionVer(){
+		btnVer.setBackground(colorAzul);
+		padre.getPanelPrincipal().remove(este);
+		padre.getPanelPrincipal().repaint();
+
+		if(pos!=-1){
+			if(esGestorAgencia){
+				if(btnUsuarios.isBorderPainted()){
+					VerUsuario panel = new VerUsuario(padre, este, listaUsuarios.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnVehiculos.isBorderPainted()){
+					VerVehiculo panel = new VerVehiculo(padre, este, listaVehiculos.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnHabitaciones.isBorderPainted()){
+					VerHabitacion panel = new VerHabitacion(padre, este, listaHabitaciones.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				
+			}
+			else{
+
+			}
+		}
+		else{
+			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para eliminar", MensajeAviso.ERROR);
+			ma.setVisible(true);
 		}
 	}
 }
