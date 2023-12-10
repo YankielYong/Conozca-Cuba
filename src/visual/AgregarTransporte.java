@@ -296,7 +296,7 @@ public class AgregarTransporte extends MiJPanel{
 					}
 					String borrower = (String)cbTranportista.getSelectedItem();
 					transportServices.insertTransport(vehiculo, modalidad, borrower);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue agregado con éxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El transporte fue agregado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerTransportes();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

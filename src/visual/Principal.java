@@ -79,6 +79,8 @@ public class Principal extends JFrame{
 	private VerLugar panelVerLugar;
 	private VerActividad panelVerActividad;
 	private VerModalidad panelVerModalidad;
+	private VerTransporte panelVerTransporte;
+	private VerHospedaje panelVerHospedaje;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -490,6 +492,15 @@ public class Principal extends JFrame{
 	public void setPanelVerModalidad(VerModalidad panelVerModalidad) {
 		this.panelVerModalidad = panelVerModalidad;
 	}
+	
+	public void setPanelVerTransporte(VerTransporte panelVerTransporte) {
+		this.panelVerTransporte = panelVerTransporte;
+	}
+
+	public void setPanelVerHospedaje(VerHospedaje panelVerHospedaje) {
+		this.panelVerHospedaje = panelVerHospedaje;
+	}
+
 	public void setPanelConsultarLugares(ConsultarLugares panelConsultarLugares) {
 		this.panelConsultarLugares = panelConsultarLugares;
 	}
