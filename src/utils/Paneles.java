@@ -16,4 +16,8 @@ public class Paneles {
 	public static int PANEL_AGREGAR_HABITACION = 16;
 	public static int PANEL_AGREGAR_EVENTO = 17;
 	public static int PANEL_AGREGAR_ACTIVIDAD = 18;
+	public static int PANEL_VER_VEHICULO = 19;
+	public static int PANEL_VER_USUARIO = 20;
+	public static int PANEL_VER_HABITACION = 21;
+
 }
