@@ -1540,9 +1540,25 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
-				
+				else if(btnLugares.isBorderPainted()){
+					VerLugar panel = new VerLugar(padre, este, listaLugares.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 			else{
+				if(btnActividades.isBorderPainted()){
+					VerActividad panel = new VerActividad(padre, este, listaActividades.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else{
+					if(btnModalidades.isBorderPainted()){
+						VerModalidad panel = new VerModalidad(padre, este, listaModalidades.get(pos));
+						padre.getPanelPrincipal().add(panel);
+						padre.getPanelPrincipal().repaint();
+					}
+				}
 
 			}
 		}

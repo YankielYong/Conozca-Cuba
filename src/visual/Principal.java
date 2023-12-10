@@ -70,6 +70,9 @@ public class Principal extends JFrame{
 	private VerVehiculo panelVerVehiculo;
 	private VerUsuario panelVerUsuario;
 	private VerHabitacion panelVerHabitacion;
+	private VerLugar panelVerLugar;
+	private VerActividad panelVerActividad;
+	private VerModalidad panelVerModalidad;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -413,6 +416,19 @@ public class Principal extends JFrame{
 
 	public void setPanelVerHabitacion(VerHabitacion panelVerHabitacion) {
 		this.panelVerHabitacion = panelVerHabitacion;
+	}
+
+	public void setPanelVerLugar(VerLugar panelVerLugar) {
+		this.panelVerLugar = panelVerLugar;
+	}
+
+	public void setPanelVerActividad(VerActividad panelVerActividad) {
+		this.panelVerActividad = panelVerActividad;
+	}
+	
+
+	public void setPanelVerModalidad(VerModalidad panelVerModalidad) {
+		this.panelVerModalidad = panelVerModalidad;
 	}
 
 	public void setPanelAbierto(int panel){

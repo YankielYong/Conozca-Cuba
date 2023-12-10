@@ -10,33 +10,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
-
-
-
-import java.sql.SQLException;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
-
-
-
 import dto.FoodPlanDTO;
+import dto.PlaceDTO;
 import dto.RoomDTO;
-import services.FoodPlanServices;
-import services.ServicesLocator;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
-public class VerHabitacion extends MiJPanel {
-	
-	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
+
+public class VerLugar extends MiJPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -50,19 +37,17 @@ public class VerHabitacion extends MiJPanel {
 
 	private Principal padre;
 	private Gestion anterior;
-	private VerHabitacion este;
-	private RoomDTO habit;
-	private FoodPlanDTO planA;
+	private VerLugar este;
+	private PlaceDTO lugar;
 
-	public VerHabitacion(Principal p, Gestion a, RoomDTO r){
+	public VerLugar(Principal p, Gestion a,PlaceDTO pl ){
 		este = this;
 		padre = p;
 		anterior = a;
-		habit=r;
-		buscarPlanAlimenticio();
-		setTipoPanel(Paneles.PANEL_VER_HABITACION);
+		lugar=pl;
+		setTipoPanel(Paneles.PANEL_VER_LUGAR);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelVerHabitacion(este);
+		padre.setPanelVerLugar(este);
 		setBounds(pantalla.width/2-221, pantalla.height/2-206, 442, 362);
 		setBackground(Color.darkGray);
 		setLayout(null);
@@ -72,12 +57,12 @@ public class VerHabitacion extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Información Habitación");
+		lblNombre = new JLabel("Información Lugar");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
 		panelSuperior.add(lblNombre);
-
+		
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
 		Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 		Icon iconCerrar = new ImageIcon(image);
@@ -156,36 +141,29 @@ public class VerHabitacion extends MiJPanel {
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("Código: "+habit.getRoomCode());
+		JLabel codigo = new JLabel("Código: "+lugar.getPlaceCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(codigo);
 		
-		JLabel tipo = new JLabel("Tipo de Habitación: "+habit.getRoomType());
-		tipo.setBounds(50, 160, 290, 30);
+		JLabel nombre = new JLabel("Nombre: "+lugar.getPlaceName());
+		nombre.setBounds(50, 160, 290, 30);
+		nombre.setForeground(Color.black);
+		nombre.setFont(new Font("Arial", Font.BOLD, 16));
+		panelInferior.add(nombre);
+
+		JLabel costoPorPersona = new JLabel("Costo por persona: "+lugar.getCostPerPerson());
+		costoPorPersona.setBounds(50, 210, 290, 30);
+		costoPorPersona.setForeground(Color.black);
+		costoPorPersona.setFont(new Font("Arial", Font.BOLD, 16));
+		panelInferior.add(costoPorPersona);
+
+		JLabel tipo = new JLabel("Tipo de servicio: "+lugar.getTypeOfService());
+		tipo.setBounds(50, 260, 290, 30);
 		tipo.setForeground(Color.black);
 		tipo.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(tipo);
 
-		JLabel plan = new JLabel("Plan Alimenticio: "+planA.getTypeOfFoodPlan());
-		plan.setBounds(50, 210, 290, 30);
-		plan.setForeground(Color.black);
-		plan.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(plan);
-
-		JLabel recargo = new JLabel("Recargo de Habitación: "+habit.getSurchargeRoom());
-		recargo.setBounds(50, 260, 290, 30);
-		recargo.setForeground(Color.black);
-		recargo.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(recargo);
-
-	}
-	private void buscarPlanAlimenticio(){
-		try {
-			planA = foodPlanServices.findFoodPlan(habit.getFoodPlanCode());
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
 	}
 }
