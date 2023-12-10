@@ -36,6 +36,8 @@ public class Paneles {
 	public static int PANEL_VER_EVENTO = 32;
 	public static int PANEL_EDITAR_CADENA_HOTELERA = 33;
 	public static int PANEL_EDITAR_HABITACION = 34;
-	public static int PANEL_EDITAR_LUGAR = 40;
+	public static int PANEL_EDITAR_MODALIDAD = 35;
+	public static int PANEL_EDITAR_HOTEL = 36;
+	public static int PANEL_EDITAR_LUGAR = 37;
 	
 }

@@ -1769,10 +1769,19 @@ public class Gestion extends MiJPanel{
 					EditarLugar panel = new EditarLugar(padre, este, listaLugares.get(pos));
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
+				}	
+				else if(btnHoteles.isBorderPainted()){
+					EditarHotel panel = new EditarHotel(padre, este, listaHoteles.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
 				}
 			}
 			else{
-				
+				if(btnModalidades.isBorderPainted()){
+					EditarModalidad panel = new EditarModalidad(padre, este, listaModalidades.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 		}
 		else{
