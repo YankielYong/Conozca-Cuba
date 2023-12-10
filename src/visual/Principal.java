@@ -87,6 +87,8 @@ public class Principal extends JFrame{
 	private VerHospedaje panelVerHospedaje;
 	private VerEvento panelVerEvento;
 	private EditarCadenaHotelera panelEditarCadenaHotelera;
+	private EditarHabitacion panelEditarHabitacion;
+	private EditarLugar panelEditarLugar;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -330,6 +332,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarHospedaje);
 				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
 					panelPrincipal.remove(panelVerEvento);
+				else if(panelAbierto == Paneles.PANEL_EDITAR_HABITACION)
+					panelPrincipal.remove(panelEditarHabitacion);
 
 				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
 					panelDescubrir = new Descubrir(este);
@@ -422,6 +426,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelAgregarHospedaje);
 				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
 					panelPrincipal.remove(panelVerEvento);
+				else if(panelAbierto == Paneles.PANEL_EDITAR_HABITACION)
+					panelPrincipal.remove(panelEditarHabitacion);
 
 				if(panelAbierto != Paneles.PANEL_GESTION){
 					panelGestion = new Gestion(este, user, roleUser);
@@ -588,6 +594,11 @@ public class Principal extends JFrame{
 	public void setPanelAgregarHospedaje(AgregarHospedaje panelAgregarHospedaje) {
 		this.panelAgregarHospedaje = panelAgregarHospedaje;
 	}
+	
+
+	public void setPanelEditarHabitacion(EditarHabitacion panelEditarHabitacion) {
+		this.panelEditarHabitacion = panelEditarHabitacion;
+	}
 
 	public void setPanelConsultarHoteles(ConsultarHoteles panelConsultarHoteles) {
 		this.panelConsultarHoteles = panelConsultarHoteles;
@@ -606,6 +617,10 @@ public class Principal extends JFrame{
 	public void setPanelEditarCadenaHotelera(
 			EditarCadenaHotelera panelEditarCadenaHotelera) {
 		this.panelEditarCadenaHotelera = panelEditarCadenaHotelera;
+	}
+
+	public void setPanelEditarLugar(EditarLugar panelEditarLugar) {
+		this.panelEditarLugar = panelEditarLugar;
 	}
 
 	public void setPanelAbierto(int panel){

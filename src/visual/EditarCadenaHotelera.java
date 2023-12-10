@@ -55,7 +55,7 @@ public class EditarCadenaHotelera extends MiJPanel{
 		padre = p;
 		anterior = a;
 		hotelChain = h;
-		setTipoPanel(Paneles.PANEL_EDITA_CADENA_HOTELERA);
+		setTipoPanel(Paneles.PANEL_EDITAR_CADENA_HOTELERA);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelEditarCadenaHotelera(este);
 		setBounds(pantalla.width/2-181, pantalla.height/2-153, 362, 257);

@@ -1760,6 +1760,16 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
+				else if(btnHabitaciones.isBorderPainted()){
+					EditarHabitacion panel = new EditarHabitacion(padre, este, listaHabitaciones.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnLugares.isBorderPainted()){
+					EditarLugar panel = new EditarLugar(padre, este, listaLugares.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 			else{
 				
