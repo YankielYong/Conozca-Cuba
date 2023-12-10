@@ -71,6 +71,7 @@ import dto.EventDTO;
 import dto.FoodPlanDTO;
 import dto.HotelChainDTO;
 import dto.HotelDTO;
+import dto.LodgingDTO;
 import dto.PlaceDTO;
 import dto.ProvinceDTO;
 import dto.RoleDTO;
@@ -116,6 +117,7 @@ public class Gestion extends MiJPanel{
 	private ArrayList<TransportDTO> listaTransportes;
 	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<VehicleDTO> listaVehiculos;
+	private ArrayList<LodgingDTO>listaHospedajes;
 
 	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 
@@ -1612,12 +1614,21 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
-				else{
-					if(btnModalidades.isBorderPainted()){
-						VerModalidad panel = new VerModalidad(padre, este, listaModalidades.get(pos));
-						padre.getPanelPrincipal().add(panel);
-						padre.getPanelPrincipal().repaint();
-					}
+				else if(btnModalidades.isBorderPainted()){
+					VerModalidad panel = new VerModalidad(padre, este, listaModalidades.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+
+				else if(btnTransportes.isBorderPainted()){
+					VerTransporte panel = new VerTransporte(padre, este, listaTransportes.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnHospedajes.isBorderPainted()){
+					VerHospedaje panel = new VerHospedaje(padre, este,listaHospedajes.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
 				}
 
 			}

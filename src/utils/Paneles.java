@@ -26,5 +26,7 @@ public class Paneles {
 	public static int PANEL_VER_HABITACION = 21;
 	public static int PANEL_VER_LUGAR = 22;
 	public static int PANEL_VER_ACTIVIDAD = 23;
-public static int PANEL_VER_MODALIDAD = 24;
+	public static int PANEL_VER_MODALIDAD = 24;
+	public static int PANEL_VER_TRANSPORTE = 25;
+	public static int PANEL_VER_HOSPEDAJE = 26;
 }
