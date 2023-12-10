@@ -21,6 +21,7 @@ import dto.RoleDTO;
 import dto.UserDTO;
 import services.RoleServices;
 import services.ServicesLocator;
+import utils.ConsultarModalidades;
 import utils.MyButtonModel;
 import utils.Paneles;
 
@@ -65,6 +66,11 @@ public class Principal extends JFrame{
 	private AgregarEvento panelAgregarEvento;
 	private AgregarActividad panelAgregarActividad;
 	private AgregarModalidad panelAgregarModalidad;
+	private AgregarTransporte panelAgregarTransporte;
+	private ConsultarLugares panelConsultarLugares;
+	private ConsultarActividades panelConsultarActividades;
+	private ConsultarVehiculos panelConsultarVehiculos;
+	private ConsultarModalidades panelConsultarModalidades;
 	private InfoHotel panelInfoHotel;
 	private InfoPaquete panelInfoPaquete;
 	private VerVehiculo panelVerVehiculo;
@@ -186,6 +192,24 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelVerVehiculo);
 				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
 					panelPrincipal.remove(panelVerUsuario);
+				else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
+					panelPrincipal.remove(panelVerHabitacion);
+				else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
+					panelPrincipal.remove(panelVerLugar);
+				else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
+					panelPrincipal.remove(panelVerModalidad);
+				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
+					panelPrincipal.remove(panelVerActividad);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
+					panelPrincipal.remove(panelConsultarLugares);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
+					panelPrincipal.remove(panelConsultarActividades);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
+					panelPrincipal.remove(panelConsultarVehiculos);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
+					panelPrincipal.remove(panelConsultarModalidades);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
+					panelPrincipal.remove(panelAgregarTransporte);
 
 				if(panelAbierto != Paneles.PANEL_PERFIL){
 					panelPerfil = new Perfil(este, user, roleUser);
@@ -248,6 +272,24 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelVerVehiculo);
 				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
 					panelPrincipal.remove(panelVerUsuario);
+				else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
+					panelPrincipal.remove(panelVerHabitacion);
+				else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
+					panelPrincipal.remove(panelVerLugar);
+				else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
+					panelPrincipal.remove(panelVerModalidad);
+				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
+					panelPrincipal.remove(panelVerActividad);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
+					panelPrincipal.remove(panelConsultarLugares);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
+					panelPrincipal.remove(panelConsultarActividades);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
+					panelPrincipal.remove(panelConsultarVehiculos);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
+					panelPrincipal.remove(panelConsultarModalidades);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
+					panelPrincipal.remove(panelAgregarTransporte);
 
 				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
 					panelDescubrir = new Descubrir(este);
@@ -306,6 +348,24 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelVerVehiculo);
 				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
 					panelPrincipal.remove(panelVerUsuario);
+				else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
+					panelPrincipal.remove(panelVerHabitacion);
+				else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
+					panelPrincipal.remove(panelVerLugar);
+				else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
+					panelPrincipal.remove(panelVerModalidad);
+				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
+					panelPrincipal.remove(panelVerActividad);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
+					panelPrincipal.remove(panelConsultarLugares);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
+					panelPrincipal.remove(panelConsultarActividades);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
+					panelPrincipal.remove(panelConsultarVehiculos);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
+					panelPrincipal.remove(panelConsultarModalidades);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
+					panelPrincipal.remove(panelAgregarTransporte);
 
 				if(panelAbierto != Paneles.PANEL_GESTION){
 					panelGestion = new Gestion(este, user, roleUser);
@@ -425,10 +485,31 @@ public class Principal extends JFrame{
 	public void setPanelVerActividad(VerActividad panelVerActividad) {
 		this.panelVerActividad = panelVerActividad;
 	}
-	
+
 
 	public void setPanelVerModalidad(VerModalidad panelVerModalidad) {
 		this.panelVerModalidad = panelVerModalidad;
+	}
+	public void setPanelConsultarLugares(ConsultarLugares panelConsultarLugares) {
+		this.panelConsultarLugares = panelConsultarLugares;
+	}
+
+	public void setPanelConsultarActividades(
+			ConsultarActividades panelConsultarActividades) {
+		this.panelConsultarActividades = panelConsultarActividades;
+	}
+
+	public void setPanelAgregarTransporte(AgregarTransporte panelAgregarTransporte) {
+		this.panelAgregarTransporte = panelAgregarTransporte;
+	}
+
+	public void setPanelConsultarVehiculos(
+			ConsultarVehiculos panelConsultarVehiculos) {
+		this.panelConsultarVehiculos = panelConsultarVehiculos;
+	}
+
+	public void setPanelConsultarModalidades(ConsultarModalidades panelConsultarModalidades) {
+		this.panelConsultarModalidades = panelConsultarModalidades;
 	}
 
 	public void setPanelAbierto(int panel){

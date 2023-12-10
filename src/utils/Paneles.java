@@ -5,7 +5,12 @@ public class Paneles {
 	public static int PANEL_PERFIL = 1;
 	public static int PANEL_DESCUBRIR = 2;
 	public static int PANEL_GESTION = 3;
+	public static int PANEL_CONSULTAR_LUGARES = 4;
+	public static int PANEL_CONSULTAR_ACTIVIDADES = 5 ;
+	public static int PANEL_CONSULTAR_VEHICULOS = 6;
+	public static int PANEL_CONSULTAR_MODALIDADES = 7 ;
 
+	public static int PANEL_AGREGAR_TRANSPORTE = 8;
 	public static int PANEL_AGREGAR_MODALIDAD = 9;
 	public static int PANEL_AGREGAR_USUARIO = 10;
 	public static int PANEL_AGREGAR_HOTEL = 11;

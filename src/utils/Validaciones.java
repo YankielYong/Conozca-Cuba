@@ -66,6 +66,36 @@ public class Validaciones {
 			throw new IllegalArgumentException("El campo de descripción"+e.getMessage());
 		}
 	}
+	
+	public static void evento(String lugar, String act) throws IllegalArgumentException{
+		try{
+			noVacio(lugar);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del lugar"+e.getMessage());
+		}
+		try{
+			noVacio(act);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la actividad"+e.getMessage());
+		}
+	}
+	
+	public static void transporte(String vehiculo, String modalidad) throws IllegalArgumentException{
+		try{
+			noVacio(vehiculo);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del vehículo"+e.getMessage());
+		}
+		try{
+			noVacio(modalidad);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la modalidad"+e.getMessage());
+		}
+	}
 
 	public static void vehiculo(String chapa, String marca, String yFab, String capS, String capC, String capT) 
 			throws IllegalArgumentException{

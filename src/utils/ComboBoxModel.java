@@ -21,8 +21,17 @@ public class ComboBoxModel {
 		return model;
 	}
 	
+	public static DefaultComboBoxModel<String> transportistasModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Gaviota");
+		model.addElement("Panataxi");
+		model.addElement("Taxi Ok");
+		return model;
+	}
+	
 	public static DefaultComboBoxModel<String> tiposServiciosModel(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Aprendizaje");
 		model.addElement("Entretenimiento");
 		model.addElement("Gastronómico");
 		return model;

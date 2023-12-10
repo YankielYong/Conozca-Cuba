@@ -39,6 +39,7 @@ import services.RoomServices;
 import services.SeasonServices;
 import services.ServicesLocator;
 import services.TransportModalityServices;
+import services.TransportServices;
 import services.UserServices;
 import services.VehicleServices;
 import utils.ActivityTableModel;
@@ -75,6 +76,7 @@ import dto.ProvinceDTO;
 import dto.RoleDTO;
 import dto.RoomDTO;
 import dto.SeasonDTO;
+import dto.TransportDTO;
 import dto.TransportModalityDTO;
 import dto.UserDTO;
 import dto.VehicleDTO;
@@ -95,6 +97,7 @@ public class Gestion extends MiJPanel{
 	private RoomServices roomServices = ServicesLocator.getRoomServices();
 	private SeasonServices seasonServices = ServicesLocator.getSeasonServices();
 	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
+	private TransportServices transportServices = ServicesLocator.getTransportServices();
 	private UserServices userServices = ServicesLocator.getUserServices();
 	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
 
@@ -110,6 +113,7 @@ public class Gestion extends MiJPanel{
 	private ArrayList<ProvinceDTO> listaProvincias;
 	private ArrayList<RoleDTO> listaRoles;
 	private ArrayList<SeasonDTO> listaTemporadas;
+	private ArrayList<TransportDTO> listaTransportes;
 	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<VehicleDTO> listaVehiculos;
 
@@ -361,7 +365,7 @@ public class Gestion extends MiJPanel{
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
 
-				btnVer.setVisible(true);
+				btnVer.setVisible(false);
 				btnAgregar.setVisible(true);
 				btnEliminar.setVisible(true);
 				btnEditar.setVisible(true);
@@ -565,7 +569,7 @@ public class Gestion extends MiJPanel{
 				btnUsuarios.setBorderPainted(false);
 				btnVehiculos.setBorderPainted(false);
 
-				btnVer.setVisible(true);
+				btnVer.setVisible(false);
 				btnAgregar.setVisible(true);
 				btnEliminar.setVisible(true);
 				btnEditar.setVisible(true);
@@ -939,6 +943,24 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(eventTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(400);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(400);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		try{
+			listaEventos = eventServices.selectAllEvents();
+			for(EventDTO e : listaEventos){
+				ActivityDTO act = activityServices.findActivity(e.getActivityCode());
+				PlaceDTO lug = placeServices.findPlace(e.getPlaceCode());
+				String[] datos = {String.valueOf(e.getEventCode()), lug.getPlaceName(), act.getActivityDescription()};
+				eventTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerHospedajes(){
@@ -1001,6 +1023,27 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(transportTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(120);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(250);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(250);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(260);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try {
+			listaTransportes = transportServices.selectAllTransports();
+			for(TransportDTO t : listaTransportes){
+				VehicleDTO v = vehicleServices.findVehicle(t.getVehicleCode());
+				TransportModalityDTO tm = transportModalityServices.findTransportModality(t.getModalityCode());
+				String[] datos = {String.valueOf(t.getTransportCode()), v.getVehicleBrand(), tm.getModalityType(),
+						t.getTransportBorrower()};
+				transportTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerCadenasHoteleras(){
@@ -1372,7 +1415,10 @@ public class Gestion extends MiJPanel{
 
 			}
 			else if(btnTransportes.isBorderPainted()){
-
+				padre.getPanelPrincipal().remove(este);
+				AgregarTransporte panel = new AgregarTransporte(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 		}
 		btnAgregar.setBackground(colorAzul);
@@ -1471,7 +1517,14 @@ public class Gestion extends MiJPanel{
 
 					}
 					else if(btnEventos.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este evento?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							eventServices.deleteEvent(listaEventos.get(pos).getEventCode());
+							ponerEventos();
+							mensaje = "El evento fue eliminado con éxito";
+						}
 					}
 					else if(btnHospedajes.isBorderPainted()){
 
@@ -1499,7 +1552,14 @@ public class Gestion extends MiJPanel{
 
 					}
 					else if(btnTransportes.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este transporte?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							transportServices.deleteTransport(listaTransportes.get(pos).getTransportCode());
+							ponerTransportes();
+							mensaje = "El transporte fue eliminado con éxito";
+						}
 					}
 					if(eliminado){
 						MensajeAviso ma = new MensajeAviso(null, padre, este, mensaje, MensajeAviso.CORRECTO);

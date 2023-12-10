@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,33 +12,34 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
-import services.ActivityServices;
-import services.EventServices;
-import services.PlaceServices;
 import services.ServicesLocator;
+import services.TransportModalityServices;
+import services.TransportServices;
+import services.VehicleServices;
+import utils.ConsultarModalidades;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
+import utils.PropiedadesComboBox;
 import utils.Validaciones;
 
-import java.awt.Insets;
-import java.sql.SQLException;
+public class AgregarTransporte extends MiJPanel{
+	
+	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
+	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
+	private TransportServices transportServices = ServicesLocator.getTransportServices();
 
-public class AgregarEvento extends MiJPanel{
-	
-	private ActivityServices activityServices = ServicesLocator.getActivityServices();
-	private EventServices eventServices = ServicesLocator.getEventServices();
-	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
-	
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
@@ -47,24 +49,25 @@ public class AgregarEvento extends MiJPanel{
 	private JLabel lblNombre;
 	private JPanel panelInferior;
 	private JButton btnAtras;
-	private JTextField txtLugar;
-	private JButton btnLugares;
-	private JButton btnActividades;
-	private JTextField txtActividad;
+	private JTextField txtVehiculo;
+	private JButton btnVehiculo;
+	private JTextField txtModalidad;
+	private JButton btnModalidad;
+	private JComboBox<String> cbTranportista;
 	private JButton btnAgregar;
 	
 	private Principal padre;
 	private Gestion anterior;
-	private AgregarEvento este;
+	private AgregarTransporte este;
 	
-	public AgregarEvento(Principal p, Gestion a){
+	public AgregarTransporte(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
-		setTipoPanel(Paneles.PANEL_AGREGAR_EVENTO);
+		setTipoPanel(Paneles.PANEL_AGREGAR_TRANSPORTE);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelAgregarEvento(este);
-		setBounds(pantalla.width/2-201, pantalla.height/2-186, 402, 312);
+		padre.setPanelAgregarTransporte(este);
+		setBounds(pantalla.width/2-201, pantalla.height/2-206, 402, 362);
 		setBackground(Color.darkGray);
 		setLayout(null);
 		
@@ -73,7 +76,7 @@ public class AgregarEvento extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Agregar Evento");
+		lblNombre = new JLabel("Agregar Transporte");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -112,7 +115,7 @@ public class AgregarEvento extends MiJPanel{
 		panelSuperior.add(btnCerrar);
 		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 400, 280);
+		panelInferior.setBounds(1, 31, 400, 330);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 		
@@ -157,134 +160,146 @@ public class AgregarEvento extends MiJPanel{
 		logo.setBounds(75, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel lugar = new JLabel("Código del Lugar:");
-		lugar.setBounds(50, 110, 132, 30);
-		lugar.setForeground(Color.black);
-		lugar.setFont(new Font("Arial", Font.PLAIN, 16));
-		panelInferior.add(lugar);
+		JLabel vehi = new JLabel("Código del Vehículo:");
+		vehi.setBounds(50, 110, 150, 30);
+		vehi.setForeground(Color.black);
+		vehi.setFont(new Font("Arial", Font.PLAIN, 16));
+		panelInferior.add(vehi);
 		
-		txtLugar = new JTextField();
-		txtLugar.addKeyListener(new KeyAdapter() {
+		txtVehiculo = new JTextField();
+		txtVehiculo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				Validaciones.soloNumeros(e);
 			}
 		});
-		txtLugar.setBounds(182, 110, 108, 30);
-		txtLugar.setForeground(Color.black);
-		txtLugar.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtLugar.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
-		panelInferior.add(txtLugar);
+		txtVehiculo.setBounds(200, 110, 90, 30);
+		txtVehiculo.setForeground(Color.black);
+		txtVehiculo.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtVehiculo.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		panelInferior.add(txtVehiculo);
 		
-		btnLugares = new JButton("Ver");
-		btnLugares.addActionListener(new ActionListener() {
+		btnVehiculo = new JButton("Ver");
+		btnVehiculo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				btnLugares.setBackground(colorAzul);
+				btnVehiculo.setBackground(colorAzul);
 				padre.getPanelPrincipal().remove(este);
-				ConsultarLugares panel = new ConsultarLugares(padre, este);
+				ConsultarVehiculos panel = new ConsultarVehiculos(padre, este);
 				padre.getPanelPrincipal().add(panel);
 				padre.getPanelPrincipal().repaint();
 			}
 		});
-		btnLugares.addMouseListener(new MouseAdapter() {
+		btnVehiculo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLugares.setBackground(new Color(40, 113, 128));
+				btnVehiculo.setBackground(new Color(40, 113, 128));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLugares.setBackground(colorAzul);
+				btnVehiculo.setBackground(colorAzul);
 			}
 		});
-		btnLugares.setBounds(300, 110, 50, 30);
-		btnLugares.setModel(new MyButtonModel());
-		btnLugares.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnLugares.setMargin(new Insets(2, 5, 2, 5));
-		btnLugares.setBackground(colorAzul);
-		btnLugares.setForeground(Color.black);
-		btnLugares.setFocusable(false);
-		btnLugares.setBorderPainted(false);
-		panelInferior.add(btnLugares);
+		btnVehiculo.setBounds(300, 110, 50, 30);
+		btnVehiculo.setModel(new MyButtonModel());
+		btnVehiculo.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnVehiculo.setMargin(new Insets(2, 5, 2, 5));
+		btnVehiculo.setBackground(colorAzul);
+		btnVehiculo.setForeground(Color.black);
+		btnVehiculo.setFocusable(false);
+		btnVehiculo.setBorderPainted(false);
+		panelInferior.add(btnVehiculo);
 		
-		JLabel actividad = new JLabel("Código de la Actividad:");
-		actividad.setBounds(50, 160, 170, 30);
-		actividad.setForeground(Color.black);
-		actividad.setFont(new Font("Arial", Font.PLAIN, 16));
-		panelInferior.add(actividad);
+		JLabel modali = new JLabel("Código de la Modalidad:");
+		modali.setBounds(50, 160, 180, 30);
+		modali.setForeground(Color.black);
+		modali.setFont(new Font("Arial", Font.PLAIN, 16));
+		panelInferior.add(modali);
 		
-		txtActividad = new JTextField();
-		txtActividad.addKeyListener(new KeyAdapter() {
+		txtModalidad = new JTextField();
+		txtModalidad.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				Validaciones.soloNumeros(e);
 			}
 		});
-		txtActividad.setBounds(220, 160, 70, 30);
-		txtActividad.setForeground(Color.black);
-		txtActividad.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtActividad.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
-		panelInferior.add(txtActividad);
+		txtModalidad.setBounds(230, 160, 60, 30);
+		txtModalidad.setForeground(Color.black);
+		txtModalidad.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtModalidad.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		panelInferior.add(txtModalidad);
 		
-		btnActividades = new JButton("Ver");
-		btnActividades.addActionListener(new ActionListener() {
+		btnModalidad = new JButton("Ver");
+		btnModalidad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				btnLugares.setBackground(colorAzul);
+				btnModalidad.setBackground(colorAzul);
 				padre.getPanelPrincipal().remove(este);
-				ConsultarActividades panel = new ConsultarActividades(padre, este);
+				ConsultarModalidades panel = new ConsultarModalidades(padre, este);
 				padre.getPanelPrincipal().add(panel);
 				padre.getPanelPrincipal().repaint();
 			}
 		});
-		btnActividades.addMouseListener(new MouseAdapter() {
+		btnModalidad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnActividades.setBackground(new Color(40, 113, 128));
+				btnModalidad.setBackground(new Color(40, 113, 128));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnActividades.setBackground(colorAzul);
+				btnModalidad.setBackground(colorAzul);
 			}
 		});
-		btnActividades.setBounds(300, 160, 50, 30);
-		btnActividades.setModel(new MyButtonModel());
-		btnActividades.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnActividades.setMargin(new Insets(2, 5, 2, 5));
-		btnActividades.setBackground(colorAzul);
-		btnActividades.setForeground(Color.black);
-		btnActividades.setFocusable(false);
-		btnActividades.setBorderPainted(false);
-		panelInferior.add(btnActividades);
+		btnModalidad.setBounds(300, 160, 50, 30);
+		btnModalidad.setModel(new MyButtonModel());
+		btnModalidad.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnModalidad.setMargin(new Insets(2, 5, 2, 5));
+		btnModalidad.setBackground(colorAzul);
+		btnModalidad.setForeground(Color.black);
+		btnModalidad.setFocusable(false);
+		btnModalidad.setBorderPainted(false);
+		panelInferior.add(btnModalidad);
 		
-		btnAgregar = new JButton("Agregar Evento");
+		cbTranportista = new JComboBox<String>();
+		cbTranportista.setBounds(50, 210, 300, 30);
+		cbTranportista.setBackground(Color.white);
+		cbTranportista.setFocusable(false);
+		cbTranportista.setForeground(Color.black);
+		cbTranportista.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbTranportista.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		cbTranportista.setModel(utils.ComboBoxModel.transportistasModel());
+		cbTranportista.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTranportista.getBounds()));
+		panelInferior.add(cbTranportista);
+		
+		btnAgregar = new JButton("Agregar");
+		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				padre.getPanelPrincipal().remove(este);
 				padre.getPanelPrincipal().repaint();
 				try{
-					String lug = txtLugar.getText();
-					String act = txtActividad.getText();
-					Validaciones.evento(lug, act);
-					int lugar = Integer.valueOf(lug);
-					int activ = Integer.valueOf(act);
+					String veh = txtVehiculo.getText();
+					String mod = txtModalidad.getText();
+					Validaciones.transporte(veh, mod);
+					int vehiculo = Integer.valueOf(veh);
+					int modalidad = Integer.valueOf(mod);
 					try{
-						placeServices.findPlace(lugar);
+						vehicleServices.findVehicle(vehiculo);
 					} catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ningún lugar con ese código");
+						throw new IllegalArgumentException("No existe ningún vehículo con ese código");
 					}
 					try{
-						activityServices.findActivity(activ);
+						transportModalityServices.findTransportModality(modalidad);
 					} catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ninguna actividad con ese código");
+						throw new IllegalArgumentException("No existe ninguna modalidad con ese código");
 					}
-					eventServices.insertEvent(lugar, activ);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El evento fue registrado con éxito", MensajeAviso.CORRECTO);
+					String borrower = (String)cbTranportista.getSelectedItem();
+					transportServices.insertTransport(vehiculo, modalidad, borrower);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue agregado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
-					anterior.ponerEventos();
-				}
-				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					anterior.ponerTransportes();
+				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
 					ma.setVisible(true);
 				}
@@ -300,9 +315,8 @@ public class AgregarEvento extends MiJPanel{
 				btnAgregar.setBackground(colorAzul);
 			}
 		});
-		btnAgregar.setBounds(50, 220, 300, 35);
 		btnAgregar.setModel(new MyButtonModel());
-		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
+		btnAgregar.setBounds(50, 270, 300, 35);
 		btnAgregar.setBackground(colorAzul);
 		btnAgregar.setForeground(Color.black);
 		btnAgregar.setFocusable(false);
