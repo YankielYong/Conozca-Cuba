@@ -10,76 +10,68 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
+import dto.FoodPlanDTO;
+import dto.RoomDTO;
 import services.FoodPlanServices;
-import services.HotelServices;
 import services.RoomServices;
-import services.SeasonServices;
 import services.ServicesLocator;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
-import dto.FoodPlanDTO;
-import dto.HotelDTO;
-import dto.LodgingDTO;
-import dto.RoomDTO;
-import dto.SeasonDTO;
+import utils.RoomTableModel;
 
-public class VerHospedaje extends MiJPanel{
-	private RoomServices roomServices = ServicesLocator.getRoomServices();
-	private HotelServices hotelServices = ServicesLocator.getHotelServices();
-	private SeasonServices seasonServices = ServicesLocator.getSeasonServices();
+public class ConsultarHabitaciones extends MiJPanel{
+
 	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
-
+	private RoomServices roomServices = ServicesLocator.getRoomServices();
+	
+	private ArrayList<RoomDTO> listaHabitaciones;
+	
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 
 	private JPanel panelSuperior;
 	private JButton btnCerrar;
-	private JLabel lblNombre;
 	private JPanel panelInferior;
 	private JButton btnAtras;
-
+	private JScrollPane scrollPane;
+	private JTable table;
+	private RoomTableModel tableModel;
+	
 	private Principal padre;
-	private Gestion anterior;
-	private VerHospedaje este;
-	private LodgingDTO aloj;
-	private HotelDTO h;
-	private RoomDTO habit;
-	private SeasonDTO t;
-	private FoodPlanDTO planA;
-
-	public VerHospedaje(Principal p, Gestion a, LodgingDTO r){
+	private MiJPanel anterior;
+	private ConsultarHabitaciones este;
+	
+	public ConsultarHabitaciones(Principal p, MiJPanel a){
 		este = this;
 		padre = p;
 		anterior = a;
-		aloj=r;
-		buscarPlanAlimenticio();
-		setTipoPanel(Paneles.PANEL_VER_HOSPEDAJE);
+		setTipoPanel(Paneles.PANEL_CONSULTAR_HABITACIONES);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelVerHospedaje(este);
-		setBounds(pantalla.width/2-221, pantalla.height/2-226, 442, 402);
+		padre.setPanelConsultarHabitaciones(este);
+		setBounds(pantalla.width/2-301, pantalla.height/2-276, 602, 502);
 		setBackground(Color.darkGray);
 		setLayout(null);
-
+		
 		panelSuperior = new JPanel(null);
-		panelSuperior.setBounds(1, 1, 440, 30);
+		panelSuperior.setBounds(1, 1, 600, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
-
-		lblNombre = new JLabel("Información Hospedaje");
-		lblNombre.setForeground(Color.black);
-		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNombre.setBounds(10, 0, 200, 30);
-		panelSuperior.add(lblNombre);
-
+		
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
 		Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 		Icon iconCerrar = new ImageIcon(image);
@@ -104,23 +96,23 @@ public class VerHospedaje extends MiJPanel{
 				btnCerrar.setContentAreaFilled(false);
 			}
 		});
-		btnCerrar.setBounds(395, 0, 45, 30);
+		btnCerrar.setBounds(555, 0, 45, 30);
 		btnCerrar.setBackground(Color.red);
 		btnCerrar.setFocusable(false);
 		btnCerrar.setBorderPainted(false);
 		btnCerrar.setContentAreaFilled(false);
 		btnCerrar.setModel(new MyButtonModel());
 		panelSuperior.add(btnCerrar);
-
+		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 440, 370);
+		panelInferior.setBounds(1, 31, 600, 470);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
-
+		
 		img = new ImageIcon(getClass().getResource("/visual/imagenes/atras.png"));
 		image = img.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
 		Icon iconAtras = new ImageIcon(image);
-
+		
 		btnAtras = new JButton(iconAtras);
 		btnAtras.addActionListener(new ActionListener() {
 			@Override
@@ -149,58 +141,57 @@ public class VerHospedaje extends MiJPanel{
 		btnAtras.setContentAreaFilled(false);
 		btnAtras.setModel(new MyButtonModel());
 		panelInferior.add(btnAtras);
-
-		img = new ImageIcon(getClass().getResource("/visual/imagenes/logo cc.png"));
-		image = img.getImage().getScaledInstance(250, 76, Image.SCALE_SMOOTH);
-		Icon iconLogo = new ImageIcon(image);
-
-		JLabel logo = new JLabel(iconLogo);
-		logo.setBounds(90, 10, 250, 76);
-		panelInferior.add(logo);
-
-		JLabel codigo = new JLabel("Código: "+aloj.getLodgingCode());
-		codigo.setBounds(50, 110, 290, 30);
-		codigo.setForeground(Color.black);
-		codigo.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(codigo);
 		
-		JLabel hot = new JLabel("Hotel: "+h.getHotelName());
-		hot.setBounds(50, 150, 290, 30);
-		hot.setForeground(Color.black);
-		hot.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(hot);
+		JLabel lblLugares = new JLabel("Habitaciones");
+		lblLugares.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLugares.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblLugares.setForeground(Color.black);
+		lblLugares.setFont(new Font("Arial", Font.BOLD, 22));
+		lblLugares.setBounds(200, 0, 200, 50);
+		panelInferior.add(lblLugares);
 		
-		JLabel temp = new JLabel("Temporada: "+t.getSeasonName());
-		temp.setBounds(50, 190, 290, 30);
-		temp.setForeground(Color.black);
-		temp.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(temp);
-
-		JLabel hab = new JLabel("Habitación: "+habit.getRoomType());
-		hab.setBounds(50, 230, 290, 30);
-		hab.setForeground(Color.black);
-		hab.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(hab);
+		table = new JTable();
+		table.setFocusable(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setRowHeight(40);
+		table.setForeground(Color.BLACK);
+		table.setFont(new Font("Arial", Font.PLAIN, 16));
+		table.setBackground(Color.WHITE);
 		
-		JLabel plan = new JLabel("Plan Alimenticio: "+planA.getTypeOfFoodPlan());
-		plan.setBounds(50, 270, 290, 30);
-		plan.setForeground(Color.black);
-		plan.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(plan);
-
-		JLabel precio = new JLabel("Precio: "+aloj.getLodgingPrice());
-		precio.setBounds(50, 310, 290, 30);
-		precio.setForeground(Color.black);
-		precio.setFont(new Font("Arial", Font.BOLD, 16));
-		panelInferior.add(precio);
-
-	}
-	private void buscarPlanAlimenticio(){
-		try {
-			h = hotelServices.findHotel(aloj.getHotelCode());
-			t = seasonServices.findSeason(aloj.getSeasonCode());
-			habit = roomServices.findRoom(aloj.getRoomCode());
-			planA = foodPlanServices.findFoodPlan(habit.getFoodPlanCode());
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBackground(Color.white);
+		scrollPane.getViewport().setBackground(Color.white);
+		scrollPane.setBounds(30, 50, 540, 390);
+		panelInferior.add(scrollPane);
+		
+		tableModel = new RoomTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		table.setModel(tableModel);
+		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
+		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(60);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(160);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(200);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(120);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaHabitaciones = roomServices.selectAllRooms();
+			for(RoomDTO r : listaHabitaciones){
+				FoodPlanDTO f = foodPlanServices.findFoodPlan(r.getFoodPlanCode());
+				String[] datos = {String.valueOf(r.getRoomCode()), r.getRoomType(), 
+						f.getTypeOfFoodPlan(), String.valueOf(r.getSurchargeRoom())};
+				tableModel.addRow(datos);
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

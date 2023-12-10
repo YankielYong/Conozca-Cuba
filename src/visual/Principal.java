@@ -67,12 +67,16 @@ public class Principal extends JFrame{
 	private AgregarActividad panelAgregarActividad;
 	private AgregarModalidad panelAgregarModalidad;
 	private AgregarTransporte panelAgregarTransporte;
+	private AgregarHospedaje panelAgregarHospedaje;
 	private ConsultarLugares panelConsultarLugares;
 	private ConsultarActividades panelConsultarActividades;
 	private ConsultarVehiculos panelConsultarVehiculos;
 	private ConsultarModalidades panelConsultarModalidades;
-	private InfoHotel panelInfoHotel;
-	private InfoPaquete panelInfoPaquete;
+	private ConsultarHoteles panelConsultarHoteles;
+	private ConsultarHabitaciones panelConsultarHabitaciones;
+	private ConsultarTemporadas panelConsultarTemporadas;
+	private VerHotel panelVerHotel;
+	private InfoPaquete panelVerPaquete;
 	private VerVehiculo panelVerVehiculo;
 	private VerUsuario panelVerUsuario;
 	private VerHabitacion panelVerHabitacion;
@@ -202,6 +206,12 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelVerModalidad);
 				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
 					panelPrincipal.remove(panelVerActividad);
+				else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
+					panelPrincipal.remove(panelVerHotel);
+				else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
+					panelPrincipal.remove(panelVerTransporte);
+				else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
+					panelPrincipal.remove(panelVerHospedaje);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
 					panelPrincipal.remove(panelConsultarLugares);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
@@ -210,8 +220,16 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelConsultarVehiculos);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
 					panelPrincipal.remove(panelConsultarModalidades);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
+					panelPrincipal.remove(panelConsultarHoteles);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
+					panelPrincipal.remove(panelConsultarHabitaciones);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
+					panelPrincipal.remove(panelConsultarTemporadas);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
 					panelPrincipal.remove(panelAgregarTransporte);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
+					panelPrincipal.remove(panelAgregarHospedaje);
 
 				if(panelAbierto != Paneles.PANEL_PERFIL){
 					panelPerfil = new Perfil(este, user, roleUser);
@@ -282,6 +300,12 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelVerModalidad);
 				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
 					panelPrincipal.remove(panelVerActividad);
+				else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
+					panelPrincipal.remove(panelVerHotel);
+				else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
+					panelPrincipal.remove(panelVerTransporte);
+				else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
+					panelPrincipal.remove(panelVerHospedaje);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
 					panelPrincipal.remove(panelConsultarLugares);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
@@ -290,8 +314,16 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelConsultarVehiculos);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
 					panelPrincipal.remove(panelConsultarModalidades);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
+					panelPrincipal.remove(panelConsultarHoteles);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
+					panelPrincipal.remove(panelConsultarHabitaciones);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
+					panelPrincipal.remove(panelConsultarTemporadas);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
 					panelPrincipal.remove(panelAgregarTransporte);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
+					panelPrincipal.remove(panelAgregarHospedaje);
 
 				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
 					panelDescubrir = new Descubrir(este);
@@ -358,6 +390,12 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelVerModalidad);
 				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
 					panelPrincipal.remove(panelVerActividad);
+				else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
+					panelPrincipal.remove(panelVerHotel);
+				else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
+					panelPrincipal.remove(panelVerTransporte);
+				else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
+					panelPrincipal.remove(panelVerHospedaje);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
 					panelPrincipal.remove(panelConsultarLugares);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
@@ -366,8 +404,16 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelConsultarVehiculos);
 				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
 					panelPrincipal.remove(panelConsultarModalidades);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
+					panelPrincipal.remove(panelConsultarHoteles);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
+					panelPrincipal.remove(panelConsultarHabitaciones);
+				else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
+					panelPrincipal.remove(panelConsultarTemporadas);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
 					panelPrincipal.remove(panelAgregarTransporte);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
+					panelPrincipal.remove(panelAgregarHospedaje);
 
 				if(panelAbierto != Paneles.PANEL_GESTION){
 					panelGestion = new Gestion(este, user, roleUser);
@@ -521,6 +567,28 @@ public class Principal extends JFrame{
 
 	public void setPanelConsultarModalidades(ConsultarModalidades panelConsultarModalidades) {
 		this.panelConsultarModalidades = panelConsultarModalidades;
+	}
+
+	public void setPanelVerHotel(VerHotel panelVerHotel) {
+		this.panelVerHotel = panelVerHotel;
+	}
+
+	public void setPanelAgregarHospedaje(AgregarHospedaje panelAgregarHospedaje) {
+		this.panelAgregarHospedaje = panelAgregarHospedaje;
+	}
+
+	public void setPanelConsultarHoteles(ConsultarHoteles panelConsultarHoteles) {
+		this.panelConsultarHoteles = panelConsultarHoteles;
+	}
+
+	public void setPanelConsultarHabitaciones(
+			ConsultarHabitaciones panelConsultarHabitaciones) {
+		this.panelConsultarHabitaciones = panelConsultarHabitaciones;
+	}
+
+	public void setPanelConsultarTemporadas(
+			ConsultarTemporadas panelConsultarTemporadas) {
+		this.panelConsultarTemporadas = panelConsultarTemporadas;
 	}
 
 	public void setPanelAbierto(int panel){

@@ -71,12 +71,12 @@ public class VerTransporte extends MiJPanel {
 		setTipoPanel(Paneles.PANEL_VER_TRANSPORTE);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelVerTransporte(este);
-		setBounds(pantalla.width/2-221, pantalla.height/2-301, 442, 582);
+		setBounds(pantalla.width/2-231, pantalla.height/2-301, 462, 582);
 		setBackground(Color.darkGray);
 		setLayout(null);
 
 		panelSuperior = new JPanel(null);
-		panelSuperior.setBounds(1, 1, 440, 30);
+		panelSuperior.setBounds(1, 1, 460, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
@@ -110,7 +110,7 @@ public class VerTransporte extends MiJPanel {
 				btnCerrar.setContentAreaFilled(false);
 			}
 		});
-		btnCerrar.setBounds(395, 0, 45, 30);
+		btnCerrar.setBounds(415, 0, 45, 30);
 		btnCerrar.setBackground(Color.red);
 		btnCerrar.setFocusable(false);
 		btnCerrar.setBorderPainted(false);
@@ -119,7 +119,7 @@ public class VerTransporte extends MiJPanel {
 		panelSuperior.add(btnCerrar);
 
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 440, 550);
+		panelInferior.setBounds(1, 31, 460, 550);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 
@@ -254,6 +254,10 @@ public class VerTransporte extends MiJPanel {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		setBounds(pantalla.width/2-246, pantalla.height/2-301, 492, 552);
+		btnCerrar.setBounds(445, 0, 45, 30);
+		panelSuperior.setBounds(1, 1, 490, 30);
+		panelInferior.setBounds(1, 31, 490, 520);
 		JLabel km = new JLabel("Costo por kilómetro: "+k.getCostPerKm());
 		km.setBounds(50, 415, 340, 30);
 		km.setForeground(Color.black);
@@ -311,10 +315,10 @@ public class VerTransporte extends MiJPanel {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		setBounds(pantalla.width/2-246, pantalla.height/2-315, 492, 582);
+		setBounds(pantalla.width/2-246, pantalla.height/2-301, 492, 552);
 		btnCerrar.setBounds(445, 0, 45, 30);
 		panelSuperior.setBounds(1, 1, 490, 30);
-		panelInferior.setBounds(1, 31, 490, 550);
+		panelInferior.setBounds(1, 31, 490, 520);
 		JLabel desc = new JLabel("Descripción del recorrido: "+t.getTourDescription());
 		desc.setBounds(50, 415, 340, 30);
 		desc.setForeground(Color.black);

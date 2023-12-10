@@ -1,4 +1,11 @@
+<<<<<<< Updated upstream
 /services
 /utils
 /visual
 /dto
+=======
+/dto
+/services
+/utils
+/visual
+>>>>>>> Stashed changes

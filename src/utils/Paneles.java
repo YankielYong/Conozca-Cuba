@@ -9,7 +9,6 @@ public class Paneles {
 	public static int PANEL_CONSULTAR_ACTIVIDADES = 5 ;
 	public static int PANEL_CONSULTAR_VEHICULOS = 6;
 	public static int PANEL_CONSULTAR_MODALIDADES = 7 ;
-
 	public static int PANEL_AGREGAR_TRANSPORTE = 8;
 	public static int PANEL_AGREGAR_MODALIDAD = 9;
 	public static int PANEL_AGREGAR_USUARIO = 10;
@@ -29,4 +28,9 @@ public class Paneles {
 	public static int PANEL_VER_MODALIDAD = 24;
 	public static int PANEL_VER_TRANSPORTE = 25;
 	public static int PANEL_VER_HOSPEDAJE = 26;
+	public static int PANEL_VER_HOTEL = 27;
+	public static int PANEL_AGREGAR_HOSPEDAJE = 28;
+	public static int PANEL_CONSULTAR_HOTELES = 29;
+	public static int PANEL_CONSULTAR_HABITACIONES = 30;
+	public static int PANEL_CONSULTAR_TEMPORADAS = 31;
 }

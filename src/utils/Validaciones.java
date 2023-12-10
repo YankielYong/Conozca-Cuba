@@ -96,6 +96,17 @@ public class Validaciones {
 			throw new IllegalArgumentException("El campo de la modalidad"+e.getMessage());
 		}
 	}
+	
+	public static void hospedaje(String hotel, String habitacion, String temporada, String precio) throws IllegalArgumentException{
+		try{noVacio(hotel);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del hotel"+e.getMessage());}
+		try{noVacio(habitacion);}catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la habitación"+e.getMessage());}
+		try{noVacio(temporada);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la temporada"+e.getMessage());}
+		try{noVacio(precio);}catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del precio"+e.getMessage());}
+	}
 
 	public static void vehiculo(String chapa, String marca, String yFab, String capS, String capC, String capT) 
 			throws IllegalArgumentException{
@@ -149,6 +160,33 @@ public class Validaciones {
 		try{noVacio(costoRIV);} catch(IllegalArgumentException e){
 			throw new IllegalArgumentException("El campo del costo por recorrido ida y vuelta"+e.getMessage());}
 	}
+	
+	public static void hotel(String nombre, String direccion, String telefono, String fax, String correo, String cantP,
+			String cantH, String distC, String distA){
+		try{noVacio(nombre);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del nombre del hotel"+e.getMessage());}
+		try{noVacio(direccion);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la dirección del hotel"+e.getMessage());}
+		try{noVacio(telefono);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del teléfono del hotel"+e.getMessage());}
+		try{noVacio(fax);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del fax del hotel"+e.getMessage());}
+		try{noVacio(correo);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del correo del hotel"+e.getMessage());}
+		try{noVacio(cantP);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la cantidad de pisos del hotel"+e.getMessage());}
+		try{noVacio(cantH);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la cantidad de habitaciones del hotel"+e.getMessage());}
+		try{noVacio(distC);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de distancia a la ciudad más cercana"+e.getMessage());}
+		try{noVacio(distA);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de distancia al aereopuerto"+e.getMessage());}
+	}
+	
+	public static void direccion(String dir){
+		try{noVacio(dir);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la descripción del hotel"+e.getMessage());}
+	}
 
 	public static void soloLetras(KeyEvent e){
 		int key = e.getKeyChar();
@@ -192,7 +230,7 @@ public class Validaciones {
 	public static void soloNumeroYUnaComa(KeyEvent e, String c){
 		int key = e.getKeyChar();
 		boolean valido;
-		boolean hayComa = c.contains(",");
+		boolean hayComa = c.contains(".");
 		if(!hayComa){
 			if(c.length()==0)
 				valido = (key>=48&&key<=57);

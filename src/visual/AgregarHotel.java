@@ -7,10 +7,15 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -25,6 +30,7 @@ import javax.swing.border.MatteBorder;
 import dto.HotelChainDTO;
 import dto.ProvinceDTO;
 import services.HotelChainServices;
+import services.HotelServices;
 import services.ProvinceServices;
 import services.ServicesLocator;
 import utils.ComboBoxModel;
@@ -32,10 +38,12 @@ import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
 import utils.PropiedadesComboBox;
+import utils.Validaciones;
 
 public class AgregarHotel extends MiJPanel{
 	
 	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
+	private HotelServices hotelServices = ServicesLocator.getHotelServices();
 	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
 	
 	private ArrayList<HotelChainDTO> listaCadenasHoteleras;
@@ -73,10 +81,10 @@ public class AgregarHotel extends MiJPanel{
 	private JButton btnAgregar;
 	
 	private Principal padre;
-	private MiJPanel anterior;
+	private Gestion anterior;
 	private AgregarHotel este;
 	
-	public AgregarHotel(Principal p, MiJPanel a){
+	public AgregarHotel(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
@@ -191,6 +199,12 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(nombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.letrasNumeros(e);
+			}
+		});
 		txtNombre.setBounds(120, 180, 370, 30);
 		txtNombre.setForeground(Color.black);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -206,6 +220,7 @@ public class AgregarHotel extends MiJPanel{
 		cbCategoria = new JComboBox<String>();
 		cbCategoria.setBounds(135, 220, 355, 30);
 		cbCategoria.setBackground(Color.white);
+		cbCategoria.setForeground(Color.black);
 		cbCategoria.setFocusable(false);
 		cbCategoria.setModel(ComboBoxModel.catHoteleraModel());
 		cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -222,6 +237,7 @@ public class AgregarHotel extends MiJPanel{
 		cbCadena = new JComboBox<String>();
 		cbCadena.setBounds(183, 260, 307, 30);
 		cbCadena.setBackground(Color.white);
+		cbCadena.setForeground(Color.black);
 		cbCadena.setFocusable(false);
 		cbCadena.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbCadena.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
@@ -237,6 +253,7 @@ public class AgregarHotel extends MiJPanel{
 		cbProvincia = new JComboBox<String>();
 		cbProvincia.setBounds(130, 300, 360, 30);
 		cbProvincia.setBackground(Color.white);
+		cbProvincia.setForeground(Color.black);
 		cbProvincia.setFocusable(false);
 		cbProvincia.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbProvincia.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
@@ -265,6 +282,7 @@ public class AgregarHotel extends MiJPanel{
 		cbLocalizacion = new JComboBox<String>();
 		cbLocalizacion.setBounds(150, 380, 340, 30);
 		cbLocalizacion.setBackground(Color.white);
+		cbLocalizacion.setForeground(Color.black);
 		cbLocalizacion.setFocusable(false);
 		cbLocalizacion.setModel(ComboBoxModel.localizacionesModel());
 		cbLocalizacion.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -279,6 +297,12 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(telefono);
 		
 		txtTelefono = new JTextField();
+		txtTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtTelefono.setBounds(123, 420, 367, 30);
 		txtTelefono.setForeground(Color.black);
 		txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -373,6 +397,12 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(cantPisos);
 		
 		txtCantPisos = new JTextField();
+		txtCantPisos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtCantPisos.setBounds(680, 380, 270, 30);
 		txtCantPisos.setForeground(Color.black);
 		txtCantPisos.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -386,6 +416,12 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(totalHab);
 		
 		txtCantHab = new JTextField();
+		txtCantHab.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeros(e);
+			}
+		});
 		txtCantHab.setBounds(710, 420, 240, 30);
 		txtCantHab.setForeground(Color.black);
 		txtCantHab.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -399,6 +435,24 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(distCiudad);
 		
 		txtDistCiudad = new JTextField();
+		txtDistCiudad.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeroYUnaComa(e, txtDistCiudad.getText());
+			}
+		});
+		txtDistCiudad.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!txtDistCiudad.getText().equals("")){
+					String ca = txtDistCiudad.getText();
+					if(ca.charAt(ca.length()-1)=='.'){
+						ca = ca.substring(0, ca.length()-1);
+						txtDistCiudad.setText(ca);
+					}
+				}
+			}
+		});
 		txtDistCiudad.setBounds(835, 460, 115, 30);
 		txtDistCiudad.setForeground(Color.black);
 		txtDistCiudad.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -412,6 +466,24 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(distAereopuerto);
 		
 		txtDistAereopuerto = new JTextField();
+		txtDistAereopuerto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Validaciones.soloNumeroYUnaComa(e, txtDistAereopuerto.getText());
+			}
+		});
+		txtDistAereopuerto.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!txtDistAereopuerto.getText().equals("")){
+					String ca = txtDistAereopuerto.getText();
+					if(ca.charAt(ca.length()-1)=='.'){
+						ca = ca.substring(0, ca.length()-1);
+						txtDistAereopuerto.setText(ca);
+					}
+				}
+			}
+		});
 		txtDistAereopuerto.setBounds(770, 500, 180, 30);
 		txtDistAereopuerto.setForeground(Color.black);
 		txtDistAereopuerto.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -422,7 +494,47 @@ public class AgregarHotel extends MiJPanel{
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
+				try{
+					String nombre = txtNombre.getText();
+					String categ = (String)cbCategoria.getSelectedItem();
+					int categoria = obtenerCategoria(categ);
+					int cadenaHotelera = listaCadenasHoteleras.get(cbCadena.getSelectedIndex()).getHotelChainCode();
+					int provincia = listaProvincias.get(cbProvincia.getSelectedIndex()).getProvinceCode();
+					String direccion = txtDireccion.getText();
+					String localizacion = (String)cbLocalizacion.getSelectedItem();
+					String telefono = txtTelefono.getText();
+					String fax = txtFax.getText();
+					String correo = txtCorreo.getText();
+					String cantP = txtCantPisos.getText();
+					String cantH = txtCantHab.getText();
+					String distC = txtDistCiudad.getText();
+					String distA = txtDistAereopuerto.getText();
+					Validaciones.hotel(nombre, direccion, telefono, fax, correo, cantP, cantH, distC, distA);
+					String modalidades = obtenerModalidades();
+					int cantPisos = Integer.valueOf(cantP);
+					int cantHabitaciones = Integer.valueOf(cantH);
+					double distCiudad = Double.valueOf(distC);
+					double distAereopuerto = Double.valueOf(distA);
+					hotelServices.insertHotel(nombre, direccion, categoria, telefono, fax, correo, localizacion,
+							modalidades, cantHabitaciones, cantPisos, distCiudad, distAereopuerto, 
+							cadenaHotelera, provincia);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hotel fue agregado con éxito", MensajeAviso.CORRECTO);
+					ma.setVisible(true);
+					anterior.ponerHotel();
+				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					if(e1.getMessage().equals("El campo de la cantidad de pisos del hotel está vacío"))
+						ma.agrandar(60);
+					if(e1.getMessage().equals("El campo de la cantidad de habitaciones del hotel está vacío"))
+						ma.agrandar(120);
+					if(e1.getMessage().equals("El campo de distancia a la ciudad más cercana está vacío"))
+						ma.agrandar(100);
+					if(e1.getMessage().equals("El campo de distancia al aereopuerto está vacío"))
+						ma.agrandar(40);
+					ma.setVisible(true);
+				}
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
@@ -445,6 +557,410 @@ public class AgregarHotel extends MiJPanel{
 		panelInferior.add(btnAgregar);
 		
 		llenarComboBox();
+	}
+	
+	private int obtenerCategoria(String cat){
+		int categ = 0;
+		if(cat.equals("1 Estrella"))
+			categ = 1;
+		else if(cat.equals("2 Estrellas"))
+			categ = 2;
+		else if(cat.equals("3 Estrellas"))
+			categ = 3;
+		else if(cat.equals("4 Estrellas"))
+			categ = 4;
+		else if(cat.equals("5 Estrellas"))
+			categ = 5;
+		return categ;
+	}
+	
+	private String obtenerModalidades(){
+		String mod = "";
+		if(mLunaMiel.isSelected()){
+			mod += "Luna de miel";
+			if(mGolf.isSelected()){
+				mod += ", Golf";
+				if(mEcoturismo.isSelected()){
+					mod += ", Ecoturismo";
+					if(mHistorico.isSelected()){
+						mod += ", Histórico";
+						if(mVerano.isSelected()){
+							mod += ", Verano";
+							if(mNavidad.isSelected()){
+								mod += ", Navidad";
+								if(mTodoIncluido.isSelected()){
+									mod += ", Todo Incluido";
+								}
+							}
+							else if(mTodoIncluido.isSelected()){
+								mod += ", Todo Incluido";
+							}
+						}
+						else if(mNavidad.isSelected()){
+							mod += ", Navidad";
+							if(mTodoIncluido.isSelected()){
+								mod += ", Todo Incluido";
+							}
+						}
+						else if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mVerano.isSelected()){
+						mod += ", Verano";
+						if(mNavidad.isSelected()){
+							mod += ", Navidad";
+							if(mTodoIncluido.isSelected()){
+								mod += ", Todo Incluido";
+							}
+						}
+						else if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mHistorico.isSelected()){
+					mod += ", Histórico";
+					if(mVerano.isSelected()){
+						mod += ", Verano";
+						if(mNavidad.isSelected()){
+							mod += ", Navidad";
+							if(mTodoIncluido.isSelected()){
+								mod += ", Todo Incluido";
+							}
+						}
+						else if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mVerano.isSelected()){
+					mod += ", Verano";
+					if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mEcoturismo.isSelected()){
+				mod += ", Ecoturismo";
+				if(mHistorico.isSelected()){
+					mod += ", Histórico";
+					if(mVerano.isSelected()){
+						mod += ", Verano";
+						if(mNavidad.isSelected()){
+							mod += ", Navidad";
+							if(mTodoIncluido.isSelected()){
+								mod += ", Todo Incluido";
+							}
+						}
+						else if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mVerano.isSelected()){
+					mod += ", Verano";
+					if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mHistorico.isSelected()){
+				mod += ", Histórico";
+				if(mVerano.isSelected()){
+					mod += ", Verano";
+					if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mVerano.isSelected()){
+				mod += ", Verano";
+				if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mNavidad.isSelected()){
+				mod += ", Navidad";
+				if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mTodoIncluido.isSelected()){
+				mod += ", Todo Incluido";
+			}
+		}
+		else if(mGolf.isSelected()){
+			mod += "Golf";
+			if(mEcoturismo.isSelected()){
+				mod += ", Ecoturismo";
+				if(mHistorico.isSelected()){
+					mod += ", Histórico";
+					if(mVerano.isSelected()){
+						mod += ", Verano";
+						if(mNavidad.isSelected()){
+							mod += ", Navidad";
+							if(mTodoIncluido.isSelected()){
+								mod += ", Todo Incluido";
+							}
+						}
+						else if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mVerano.isSelected()){
+					mod += ", Verano";
+					if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mHistorico.isSelected()){
+				mod += ", Histórico";
+				if(mVerano.isSelected()){
+					mod += ", Verano";
+					if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mVerano.isSelected()){
+				mod += ", Verano";
+				if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mNavidad.isSelected()){
+				mod += ", Navidad";
+				if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mTodoIncluido.isSelected()){
+				mod += ", Todo Incluido";
+			}
+			
+		}
+		else if(mEcoturismo.isSelected()){
+			mod += "Ecoturismo";
+			if(mHistorico.isSelected()){
+				mod += ", Histórico";
+				if(mVerano.isSelected()){
+					mod += ", Verano";
+					if(mNavidad.isSelected()){
+						mod += ", Navidad";
+						if(mTodoIncluido.isSelected()){
+							mod += ", Todo Incluido";
+						}
+					}
+					else if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mVerano.isSelected()){
+				mod += ", Verano";
+				if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mNavidad.isSelected()){
+				mod += ", Navidad";
+				if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mTodoIncluido.isSelected()){
+				mod += ", Todo Incluido";
+			}
+		}
+		else if(mHistorico.isSelected()){
+			mod += "Histórico";
+			if(mVerano.isSelected()){
+				mod += ", Verano";
+				if(mNavidad.isSelected()){
+					mod += ", Navidad";
+					if(mTodoIncluido.isSelected()){
+						mod += ", Todo Incluido";
+					}
+				}
+				else if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mNavidad.isSelected()){
+				mod += ", Navidad";
+				if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mTodoIncluido.isSelected()){
+				mod += ", Todo Incluido";
+			}
+		}
+		else if(mVerano.isSelected()){
+			mod += "Verano";
+			if(mNavidad.isSelected()){
+				mod += ", Navidad";
+				if(mTodoIncluido.isSelected()){
+					mod += ", Todo Incluido";
+				}
+			}
+			else if(mTodoIncluido.isSelected()){
+				mod += ", Todo Incluido";
+			}
+		}
+		else if(mNavidad.isSelected()){
+			mod += "Navidad";
+			if(mTodoIncluido.isSelected()){
+				mod += ", Todo Incluido";
+			}
+		}
+		else if(mTodoIncluido.isSelected()){
+			mod += "Todo Incluido";
+		}
+		else
+			throw new IllegalArgumentException("No seleccionó ninguna modalidad");
+		return mod;
 	}
 	
 	private void llenarComboBox(){

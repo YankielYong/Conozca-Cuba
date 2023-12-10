@@ -25,19 +25,25 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import services.ActivityServices;
+import services.ContractEventServices;
+import services.ContractLodgingServices;
 import services.ContractServices;
+import services.ContractTransportServices;
 import services.CostPerEstablishedToursServices;
 import services.CostPerHourKilometerServices;
 import services.CostPerKilometerServices;
 import services.EventServices;
 import services.FoodPlanServices;
 import services.HotelChainServices;
+import services.HotelServices;
+import services.LodgingServices;
 import services.PlaceServices;
 import services.ProvinceServices;
 import services.RoleServices;
 import services.RoomServices;
 import services.SeasonServices;
 import services.ServicesLocator;
+import services.TouristPackageServices;
 import services.TransportModalityServices;
 import services.TransportServices;
 import services.UserServices;
@@ -67,6 +73,8 @@ import javax.swing.SwingConstants;
 
 import dto.ActivityDTO;
 import dto.ContractDTO;
+import dto.ContractEventDTO;
+import dto.ContractLodgingDTO;
 import dto.EventDTO;
 import dto.FoodPlanDTO;
 import dto.HotelChainDTO;
@@ -77,6 +85,7 @@ import dto.ProvinceDTO;
 import dto.RoleDTO;
 import dto.RoomDTO;
 import dto.SeasonDTO;
+import dto.TouristPackageDTO;
 import dto.TransportDTO;
 import dto.TransportModalityDTO;
 import dto.UserDTO;
@@ -85,13 +94,18 @@ import dto.VehicleDTO;
 public class Gestion extends MiJPanel{
 
 	private ActivityServices activityServices = ServicesLocator.getActivityServices();
+	private ContractEventServices contractEventServices = ServicesLocator.getContractEventServices();
+	private ContractLodgingServices contractLodgingServices = ServicesLocator.getContractLodgingServices();
 	private ContractServices contractServices = ServicesLocator.getContractServices();
+	private ContractTransportServices contractTransportServices = ServicesLocator.getContractTransportServices();
 	private CostPerEstablishedToursServices costPerEstablishedToursServices = ServicesLocator.getCostPerEstablishedToursServices();
 	private CostPerHourKilometerServices costPerHourKilometerServices = ServicesLocator.getCostPerHourKilometerServices();
 	private CostPerKilometerServices costPerKilometerServices = ServicesLocator.getCostPerKilometerServices();
 	private EventServices eventServices = ServicesLocator.getEventServices();
 	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
 	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
+	private HotelServices hotelServices = ServicesLocator.getHotelServices();
+	private LodgingServices lodgingServices = ServicesLocator.getLodgingServices();
 	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
 	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
 	private RoleServices roleServices = ServicesLocator.getRoleServices();
@@ -99,6 +113,7 @@ public class Gestion extends MiJPanel{
 	private SeasonServices seasonServices = ServicesLocator.getSeasonServices();
 	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
 	private TransportServices transportServices = ServicesLocator.getTransportServices();
+	private TouristPackageServices touristPackageServices = ServicesLocator.getTouristPackageServices();
 	private UserServices userServices = ServicesLocator.getUserServices();
 	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
 
@@ -107,9 +122,11 @@ public class Gestion extends MiJPanel{
 	private ArrayList<ContractDTO> listaContratos;
 	private ArrayList<EventDTO> listaEventos;
 	private ArrayList<RoomDTO> listaHabitaciones;
+	private ArrayList<LodgingDTO> listaHospedajes;
 	private ArrayList<HotelDTO> listaHoteles;
 	private ArrayList<PlaceDTO> listaLugares;
 	private ArrayList<TransportModalityDTO> listaModalidades;
+	private ArrayList<TouristPackageDTO> listaPaquetes;
 	private ArrayList<FoodPlanDTO> listaPlanesAlimenticios;
 	private ArrayList<ProvinceDTO> listaProvincias;
 	private ArrayList<RoleDTO> listaRoles;
@@ -117,7 +134,6 @@ public class Gestion extends MiJPanel{
 	private ArrayList<TransportDTO> listaTransportes;
 	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<VehicleDTO> listaVehiculos;
-	private ArrayList<LodgingDTO>listaHospedajes;
 
 	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 
@@ -975,6 +991,34 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(lodgingTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(5).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(200);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(200);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(230);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		table.getColumnModel().getColumn(5).setPreferredWidth(100);
+		table.getColumnModel().getColumn(5).setResizable(false);
+		try{
+			listaHospedajes = lodgingServices.selectAllLodgings();
+			for(LodgingDTO l : listaHospedajes){
+				HotelDTO ho = hotelServices.findHotel(l.getHotelCode());
+				RoomDTO r = roomServices.findRoom(l.getRoomCode());
+				FoodPlanDTO f = foodPlanServices.findFoodPlan(r.getFoodPlanCode());
+				SeasonDTO s = seasonServices.findSeason(l.getSeasonCode());
+				String[] datos = {String.valueOf(l.getLodgingCode()), ho.getHotelName(), r.getRoomType(),
+						f.getTypeOfFoodPlan(), s.getSeasonName(), String.valueOf(l.getLodgingPrice())};
+				lodgingTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerModalidades(){
@@ -1116,6 +1160,34 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(hotelTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(240);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(120);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(220);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setPreferredWidth(220);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		try{
+			listaHoteles = hotelServices.selectAllHotels();
+			for(HotelDTO h : listaHoteles){
+				HotelChainDTO hc = hotelChainServices.findHotelChain(h.getHotelChainCode());
+				ProvinceDTO pr = provinceServices.findProvince(h.getProvinceCode());
+				String categ = "";
+				if(h.getHotelCategory()==1)
+					categ = "1 Estrella";
+				else
+					categ = h.getHotelCategory()+" Estrellas";
+				String[] datos = {String.valueOf(h.getHotelCode()), h.getHotelName(), categ,
+						hc.getHotelChainName(), pr.getProviceName()};
+				hotelTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerLugares(){
@@ -1405,7 +1477,10 @@ public class Gestion extends MiJPanel{
 				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnHospedajes.isBorderPainted()){
-
+				padre.getPanelPrincipal().remove(este);
+				AgregarHospedaje panel = new AgregarHospedaje(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnModalidades.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
@@ -1457,7 +1532,14 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnHoteles.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este hotel?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							hotelServices.deleteHotel(listaHoteles.get(pos).getHotelCode());
+							ponerHotel();
+							mensaje = "El hotel fue eliminado con éxito";
+						}
 					}
 					else if(btnLugares.isBorderPainted()){
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este lugar?", MensajeAviso.INFORMACION);
@@ -1529,7 +1611,14 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnHospedajes.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este hospedaje?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							lodgingServices.deleteLodging(listaHospedajes.get(pos).getLodgingCode());
+							ponerHospedajes();
+							mensaje = "El hospedaje fue eliminado con éxito";
+						}
 					}
 					else if(btnModalidades.isBorderPainted()){
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta modalidad de transporte?", MensajeAviso.INFORMACION);
@@ -1604,6 +1693,11 @@ public class Gestion extends MiJPanel{
 				}
 				else if(btnLugares.isBorderPainted()){
 					VerLugar panel = new VerLugar(padre, este, listaLugares.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnHoteles.isBorderPainted()){
+					VerHotel panel = new VerHotel(padre, este, listaHoteles.get(pos));
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}

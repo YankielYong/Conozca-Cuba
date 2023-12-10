@@ -13,7 +13,7 @@ public class LodgingServices {
 
 	public void insertLodging(int hotelCode, int seasonCode, int roomCode, double lodgingPrice) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT lodging_insert(?,?)";
+		String query = "SELECT lodging_insert(?,?,?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, hotelCode);
