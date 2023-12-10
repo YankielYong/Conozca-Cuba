@@ -36,7 +36,7 @@ public class PlaceServices {
 	
 	public void updatePlace(int placeCode, String placeName, double costPerPerson, String typeOfService) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT place_update(?,?)";
+		String query = "SELECT place_update(?,?,?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, placeCode);
