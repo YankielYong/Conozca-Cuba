@@ -338,6 +338,11 @@ public class Gestion extends MiJPanel{
 		panelInferior.add(btnEliminar);
 
 		btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionEditar();
+			}
+		});
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -1739,6 +1744,29 @@ public class Gestion extends MiJPanel{
 		}
 		else{
 			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para ver", MensajeAviso.ERROR);
+			ma.setVisible(true);
+		}
+	}
+	
+	private void accionEditar(){
+		btnEditar.setBackground(colorAzul);
+		padre.getPanelPrincipal().remove(este);
+		padre.getPanelPrincipal().repaint();
+
+		if(pos!=-1){
+			if(esGestorAgencia){
+				if(btnCadenas.isBorderPainted()){
+					EditarCadenaHotelera panel = new EditarCadenaHotelera(padre, este, listaCadenasHoteleras.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+			}
+			else{
+				
+			}
+		}
+		else{
+			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para editar", MensajeAviso.ERROR);
 			ma.setVisible(true);
 		}
 	}

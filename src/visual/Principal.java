@@ -86,6 +86,7 @@ public class Principal extends JFrame{
 	private VerTransporte panelVerTransporte;
 	private VerHospedaje panelVerHospedaje;
 	private VerEvento panelVerEvento;
+	private EditarCadenaHotelera panelEditarCadenaHotelera;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -600,6 +601,11 @@ public class Principal extends JFrame{
 	public void setPanelConsultarTemporadas(
 			ConsultarTemporadas panelConsultarTemporadas) {
 		this.panelConsultarTemporadas = panelConsultarTemporadas;
+	}
+
+	public void setPanelEditarCadenaHotelera(
+			EditarCadenaHotelera panelEditarCadenaHotelera) {
+		this.panelEditarCadenaHotelera = panelEditarCadenaHotelera;
 	}
 
 	public void setPanelAbierto(int panel){

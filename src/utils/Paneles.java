@@ -34,4 +34,6 @@ public class Paneles {
 	public static int PANEL_CONSULTAR_HABITACIONES = 30;
 	public static int PANEL_CONSULTAR_TEMPORADAS = 31;
 	public static int PANEL_VER_EVENTO = 32;
+	public static int PANEL_EDITA_CADENA_HOTELERA = 33;
+	
 }
