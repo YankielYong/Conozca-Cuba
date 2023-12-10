@@ -350,7 +350,8 @@ public class Login extends JFrame {
 			e1.printStackTrace();
 		}
 
-		iniciarPatricia();
+		iniciarYankiel();
+		//iniciarPatricia();
 	}
 	
 	@SuppressWarnings("deprecation")

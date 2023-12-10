@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -24,7 +25,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import dto.ProvinceDTO;
 import services.PlaceServices;
+import services.ProvincePlaceServices;
+import services.ProvinceServices;
 import services.ServicesLocator;
 import utils.MiJPanel;
 import utils.MyButtonModel;
@@ -35,6 +39,9 @@ import utils.Validaciones;
 public class AgregarLugar extends MiJPanel{
 	
 	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
+	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
+	private ProvincePlaceServices provincePlaceServices = ServicesLocator.getProvincePlaceServices();
+	private ArrayList<ProvinceDTO> listaProvincias;
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,6 +55,7 @@ public class AgregarLugar extends MiJPanel{
 	private JTextField txtNombre;
 	private JTextField txtCosto;
 	private JComboBox<String> cbTipo;
+	private JComboBox<String> cbProvincia;
 	private JButton btnAgregar;
 	private boolean costChanged = false;
 	private boolean nameChanged = false;
@@ -63,7 +71,7 @@ public class AgregarLugar extends MiJPanel{
 		setTipoPanel(Paneles.PANEL_AGREGAR_LUGAR);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelAgregarLugar(este);
-		setBounds(pantalla.width/2-181, pantalla.height/2-206, 362, 362);
+		setBounds(pantalla.width/2-181, pantalla.height/2-231, 362, 412);
 		setBackground(Color.darkGray);
 		setLayout(null);
 		
@@ -111,7 +119,7 @@ public class AgregarLugar extends MiJPanel{
 		panelSuperior.add(btnCerrar);
 		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 360, 330);
+		panelInferior.setBounds(1, 31, 360, 380);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 		
@@ -237,6 +245,16 @@ public class AgregarLugar extends MiJPanel{
 		cbTipo.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
 		panelInferior.add(cbTipo);
 		
+		cbProvincia = new JComboBox<String>();
+		cbProvincia.setBounds(50, 260, 260, 30);
+		cbProvincia.setBackground(Color.white);
+		cbProvincia.setFocusable(false);
+		cbProvincia.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbProvincia.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		cbProvincia.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
+		panelInferior.add(cbProvincia);
+		llenarComboBox();
+		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
 		btnAgregar.addActionListener(new ActionListener() {
@@ -248,6 +266,7 @@ public class AgregarLugar extends MiJPanel{
 				try{
 					String cadena = "";
 					String costo = "";
+					int prov = listaProvincias.get(cbProvincia.getSelectedIndex()).getProvinceCode();
 					if(nameChanged) cadena = txtNombre.getText();
 					if(costChanged) costo = txtCosto.getText();
 					else throw new IllegalArgumentException("El campo del costo está vacío");
@@ -255,6 +274,8 @@ public class AgregarLugar extends MiJPanel{
 					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
 					Validaciones.lugar(cadena);
 					placeServices.insertPlace(cadena, cos, tipo);
+					int lugar = placeServices.getLastPlaceCode();
+					provincePlaceServices.insertProvincePlace(prov, lugar);
 					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue agregado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerLugares();
@@ -275,11 +296,21 @@ public class AgregarLugar extends MiJPanel{
 			}
 		});
 		btnAgregar.setModel(new MyButtonModel());
-		btnAgregar.setBounds(50, 270, 260, 35);
+		btnAgregar.setBounds(50, 320, 260, 35);
 		btnAgregar.setBackground(colorAzul);
 		btnAgregar.setForeground(Color.black);
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
+	}
+	
+	private void llenarComboBox(){
+		try {
+			listaProvincias = provinceServices.selectAllProvinces();
+			for(ProvinceDTO p : listaProvincias)
+				cbProvincia.addItem(p.getProviceName());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

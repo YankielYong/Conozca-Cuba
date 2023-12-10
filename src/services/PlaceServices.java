@@ -78,5 +78,18 @@ public class PlaceServices {
 		connection.close();
 		return places;
 	}
+	
+	public int getLastPlaceCode() throws SQLException, ClassNotFoundException{
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT place.place_code FROM place ORDER BY place.place_code DESC"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
+		int code = rs.getInt(1);
+		rs.close();
+		statement.close();
+		connection.close();
+		return code;
+	}
 
 }

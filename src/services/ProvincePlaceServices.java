@@ -76,5 +76,32 @@ public class ProvincePlaceServices {
 		connection.close();
 		return provincePlaces;
 	}
+	
+	public int getProvinceCodeFromPlace(int placeCode) throws SQLException, ClassNotFoundException{
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT province_place.province_code FROM province_place WHERE province_place.place_code = '"+placeCode+"'"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
+		int codigo = rs.getInt(1);
+		rs.close();
+		statement.close();
+		connection.close();
+		return codigo;
+	}
+	
+	public int getCode(int provinceCode, int placeCode) throws SQLException, ClassNotFoundException{
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		String query = "SELECT province_place.province_place_code FROM province_place WHERE "
+				+ "province_place.province_code = '"+provinceCode+"' AND province_place.place_code = '"+placeCode+"'"; 
+		ResultSet rs = statement.executeQuery(query);
+		rs.first();
+		int codigo = rs.getInt(1);
+		rs.close();
+		statement.close();
+		connection.close();
+		return codigo;
+	}
 
 }

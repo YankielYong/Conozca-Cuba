@@ -38,6 +38,7 @@ import services.HotelChainServices;
 import services.HotelServices;
 import services.LodgingServices;
 import services.PlaceServices;
+import services.ProvincePlaceServices;
 import services.ProvinceServices;
 import services.RoleServices;
 import services.RoomServices;
@@ -107,6 +108,7 @@ public class Gestion extends MiJPanel{
 	private HotelServices hotelServices = ServicesLocator.getHotelServices();
 	private LodgingServices lodgingServices = ServicesLocator.getLodgingServices();
 	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
+	private ProvincePlaceServices provincePlaceServices = ServicesLocator.getProvincePlaceServices();
 	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
 	private RoleServices roleServices = ServicesLocator.getRoleServices();
 	private RoomServices roomServices = ServicesLocator.getRoomServices();
@@ -1546,7 +1548,11 @@ public class Gestion extends MiJPanel{
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
-							placeServices.deletePlace(listaLugares.get(pos).getPlaceCode());
+							int lugar = listaLugares.get(pos).getPlaceCode();
+							int prov = provincePlaceServices.getProvinceCodeFromPlace(lugar);
+							int prov_lug = provincePlaceServices.getCode(prov, lugar);
+							provincePlaceServices.deleteProvincePlace(prov_lug);
+							placeServices.deletePlace(lugar);
 							ponerLugares();
 							mensaje = "El lugar fue eliminado con éxito";
 						}
