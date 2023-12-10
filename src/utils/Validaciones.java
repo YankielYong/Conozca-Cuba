@@ -56,7 +56,7 @@ public class Validaciones {
 		if(pass.length() < 8)
 			throw new IllegalArgumentException("La contraseña debe tener al menos caracteres");
 	}
-	
+
 	public static void actividad(Date fecha, String desc) throws IllegalArgumentException{
 		if(fecha.compareTo(new Date())<0) throw new IllegalArgumentException("La fecha introducida ya ha pasado, rectifique");
 		try{
@@ -66,7 +66,7 @@ public class Validaciones {
 			throw new IllegalArgumentException("El campo de descripción"+e.getMessage());
 		}
 	}
-	
+
 	public static void vehiculo(String chapa, String marca, String yFab, String capS, String capC, String capT) 
 			throws IllegalArgumentException{
 		try{noVacio(chapa);} catch(IllegalArgumentException e){
@@ -81,14 +81,43 @@ public class Validaciones {
 			throw new IllegalArgumentException("El campo de la capacidad con equipajes"+e.getMessage());}
 		try{noVacio(capT);} catch(IllegalArgumentException e){
 			throw new IllegalArgumentException("El campo de la capacidad total"+e.getMessage());}
-		
+
 		int yFabr = Integer.valueOf(yFab);
 		int capSE = Integer.valueOf(capS);
 		int capCE = Integer.valueOf(capC);
 		int capTT = Integer.valueOf(capT);
-		
+
 		if(yFabr>2023) throw new IllegalArgumentException("El año de fabricación no es válido");
 		if(capCE > capSE) throw new IllegalArgumentException("No puede tener más capacidad con equipaje que sin equipaje");
+	}
+
+	public static void costoKilometraje(String costoKm, String costoKmIV, String costoHrEsp){
+		try{noVacio(costoKm);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por kilómetro"+e.getMessage());}
+		try{noVacio(costoKmIV);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por kilómetro ida y vuelta"+e.getMessage());}
+		try{noVacio(costoHrEsp);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por horas de espera"+e.getMessage());}
+	}
+	
+	public static void costoHorasKilometro(String costoKmR, String costoHr, String costoKmEx, String costoHrEx){
+		try{noVacio(costoKmR);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por kilómetro recorrido"+e.getMessage());}
+		try{noVacio(costoHr);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por hora"+e.getMessage());}
+		try{noVacio(costoKmEx);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por kilómetros extras"+e.getMessage());}
+		try{noVacio(costoHrEx);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por horas extras"+e.getMessage());}
+	}
+	
+	public static void costoRecorrido(String descR, String costoR, String costoRIV){
+		try{noVacio(descR);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de la descripción del recorrido"+e.getMessage());}
+		try{noVacio(costoR);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por recorrido"+e.getMessage());}
+		try{noVacio(costoRIV);} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo del costo por recorrido ida y vuelta"+e.getMessage());}
 	}
 
 	public static void soloLetras(KeyEvent e){
@@ -153,14 +182,14 @@ public class Validaciones {
 		if(!valido)
 			e.consume();
 	}
-	
+
 	public static void chapa(KeyEvent e){
 		int key = e.getKeyChar();
 		boolean valido = (key>=48&&key<=57) || (key>=65&&key<=90);
 		if(!valido)
 			e.consume();
 	}
-	
+
 	public static void letrasNumerosSignosEspacio(KeyEvent e){
 		int key = e.getKeyChar();
 		boolean valido = (key>=32&&key<=90) || (key>=97&&key<=122) || (key>=48&&key<=57) || key==241 || key==209 

@@ -180,7 +180,8 @@ public class MensajeAviso extends JDialog{
 		panelSuperior.setBounds(1, 1, 420+ancho, 30);
 		panelInferior.setBounds(1, 31, 420+ancho, 120);
 		lblMensaje.setBounds(70, 20, 350+ancho, 40);
-		btnAceptar.setBounds(160+ancho/2, 75, 100, 30);
+		btnAceptar.setBounds(160+ancho, 75, 100, 30);
+		btnCancelar.setBounds(280+ancho, 75, 100, 30);
 	}
 
 	public boolean getValor(){

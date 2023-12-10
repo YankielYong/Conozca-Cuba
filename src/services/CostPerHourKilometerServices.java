@@ -13,7 +13,7 @@ public class CostPerHourKilometerServices {
 
 	public void insertCostPerHourKilometer(int modalityCode, double costPerKmTraveled, double costPerHour, double costForExtraKm, double costForExtraHours) 
 			throws SQLException, ClassNotFoundException{
-		String query = "SELECT cost_per_hour_kilometer_insert(?)";
+		String query = "SELECT cost_per_hour_kilometer_insert(?,?,?,?,?)";
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, modalityCode);

@@ -53,15 +53,25 @@ public class AgregarModalidad extends MiJPanel{
 	private JButton btnAtras;
 	private JComboBox<String> cbTipo;
 	private JTextField txtCKm = null;
+	private boolean ckmC = false;
 	private JTextField txtCKmIV = null;
+	private boolean ckmivC = false;
 	private JTextField txtCHrEspera = null;
+	private boolean chresperaC = false;
 	private JTextField txtCKmRec = null;
+	private boolean ckmrecC = false;
 	private JTextField txtCHr = null;
+	private boolean chrC = false;
 	private JTextField txtCKmExtra = null;
+	private boolean ckmextraC = false;
 	private JTextField txtCHrExtra = null;
+	private boolean chrExtraC = false;
 	private JTextField txtDescR = null;
+	private boolean descrC = false;
 	private JTextField txtCostoR = null;
+	private boolean costorC = false;
 	private JTextField txtCostoIVR = null;
+	private boolean costoivrC = false;
 	private JButton btnAgregar;
 
 	private Principal padre;
@@ -196,10 +206,88 @@ public class AgregarModalidad extends MiJPanel{
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
 				try{
-					
-				} catch(IllegalArgumentException e1){
-					
+					String tipo = (String)cbTipo.getSelectedItem();
+					if(tipo.equals("Costo por kilometraje")){
+						String costoKm = "";
+						String costoKmIV = "";
+						String costoHrEsp = "";
+						if(ckmC) costoKm = txtCKm.getText();
+						else throw new IllegalArgumentException("El campo del costo por kilómetro está vacío");
+						if(ckmivC) costoKmIV = txtCKmIV.getText();
+						else throw new IllegalArgumentException("El campo del costo por kilómetro ida y vuelta está vacío");
+						if(chresperaC) costoHrEsp = txtCHrEspera.getText();
+						else throw new IllegalArgumentException("El campo del costo por horas de espera está vacío");
+						Validaciones.costoKilometraje(costoKm, costoKmIV, costoHrEsp);
+						double coskm = Double.valueOf(costoKm);
+						double coskmiv = Double.valueOf(costoKmIV);
+						double coshr = Double.valueOf(costoHrEsp);
+						transportModalityServices.insertTransportModality(tipo);
+						int codigo = transportModalityServices.getLastTransportModalityCode();
+						costPerKilometerServices.insertCostPerKilometer(codigo, coskm, coskmiv, coshr);
+					}
+					else if(tipo.equals("Costo por horas y kilómetros")){
+						String costkmrec = "";
+						String costohr = "";
+						String costokmex = "";
+						String costohrex = "";
+						if(ckmrecC) costkmrec = txtCKmRec.getText();
+						else throw new IllegalArgumentException("El campo del costo por kilómetro recorrido está vacío");
+						if(chrC) costohr = txtCHr.getText();
+						else throw new IllegalArgumentException("El campo del costo por hora está vacío");
+						if(ckmextraC) costokmex = txtCKmExtra.getText();
+						else throw new IllegalArgumentException("El campo del costo por kilómetros extras está vacío");
+						if(chrExtraC) costohrex = txtCHrExtra.getText();
+						else throw new IllegalArgumentException("El campo del costo por horas extras está vacío");
+						Validaciones.costoHorasKilometro(costkmrec, costohr, costokmex, costohrex);
+						double coskmr = Double.valueOf(costkmrec);
+						double coshr = Double.valueOf(costohr);
+						double coskmex = Double.valueOf(costokmex);
+						double coshrex = Double.valueOf(costohrex);
+						transportModalityServices.insertTransportModality(tipo);
+						int codigo = transportModalityServices.getLastTransportModalityCode();
+						costPerHourKilometerServices.insertCostPerHourKilometer(codigo, coskmr, coshr, coskmex, coshrex);
+					}
+					else if(tipo.equals("Costo por recorridos establecidos")){
+						String des = "";
+						String costoR = "";
+						String costoIV = "";
+						if(descrC) des = txtDescR.getText();
+						else throw new IllegalArgumentException("El campo de la descripción del recorrido está vacío");
+						if(costorC) costoR = txtCostoR.getText();
+						else throw new IllegalArgumentException("El campo del costo por recorrido está vacío");
+						if(costoivrC) costoIV = txtCostoIVR.getText();
+						else throw new IllegalArgumentException("El campo del costo por recorrido ida y vuelta está vacío");
+						Validaciones.costoRecorrido(des, costoR, costoIV);
+						double costoRecorrido = Double.valueOf(costoR);
+						double costoRecorridoIV = Double.valueOf(costoIV);
+						transportModalityServices.insertTransportModality(tipo);
+						int codigo = transportModalityServices.getLastTransportModalityCode();
+						costPerEstablishedToursServices.insertCostPerEstablishedTours(codigo, des, costoRecorrido, costoRecorridoIV);
+					}
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La modalidad de transporte fue agregada con éxito", MensajeAviso.CORRECTO);
+					ma.agrandar(45);
+					ma.setVisible(true);
+					anterior.ponerModalidades();
+				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+					if(e1.getMessage().equals("El campo del costo por kilómetro ida y vuelta está vacío"))
+						ma.agrandar(80);
+					if(e1.getMessage().equals("El campo del costo por horas de espera está vacío"))
+						ma.agrandar(50);
+					if(e1.getMessage().equals("El campo del costo por kilómetro recorrido está vacío"))
+						ma.agrandar(70);
+					if(e1.getMessage().equals("El campo del costo por kilómetros extras está vacío"))
+						ma.agrandar(60);
+					if(e1.getMessage().equals("El campo del costo por horas extras está vacío"))
+						ma.agrandar(35);
+					if(e1.getMessage().equals("El campo de la descripción del recorrido está vacío"))
+						ma.agrandar(50);
+					if(e1.getMessage().equals("El campo del costo por recorrido ida y vuelta está vacío"))
+						ma.agrandar(80);
+					ma.setVisible(true);
 				}
 			}
 		});
@@ -251,6 +339,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCKm.getText());
+					ckmC = true;
 				}
 			});
 			txtCKm.addFocusListener(new FocusAdapter() {
@@ -268,6 +357,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCKm.getText().equals("")){
 							txtCKm.setText("Costo Por Kilómetro");
 							txtCKm.setForeground(Color.gray);
+							ckmC = false;
 						}
 						else{
 							String ca = txtCKm.getText();
@@ -290,6 +380,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCKmIV.getText());
+					ckmivC = true;
 				}
 			});
 			txtCKmIV.addFocusListener(new FocusAdapter() {
@@ -307,6 +398,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCKmIV.getText().equals("")){
 							txtCKmIV.setText("Costo Por Kilómetro Ida Y Vuelta");
 							txtCKmIV.setForeground(Color.gray);
+							ckmivC = false;
 						}
 						else{
 							String ca = txtCKmIV.getText();
@@ -329,6 +421,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCHrEspera.getText());
+					chresperaC = true;
 				}
 			});
 			txtCHrEspera.addFocusListener(new FocusAdapter() {
@@ -346,6 +439,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCHrEspera.getText().equals("")){
 							txtCHrEspera.setText("Costo Por Horas De Espera");
 							txtCHrEspera.setForeground(Color.gray);
+							chresperaC = false;
 						}
 						else{
 							String ca = txtCHrEspera.getText();
@@ -397,6 +491,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCKmRec.getText());
+					ckmrecC = true;
 				}
 			});
 			txtCKmRec.addFocusListener(new FocusAdapter() {
@@ -414,6 +509,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCKmRec.getText().equals("")){
 							txtCKmRec.setText("Costo Por Kilómetro Recorrido");
 							txtCKmRec.setForeground(Color.gray);
+							ckmrecC = false;
 						}
 						else{
 							String ca = txtCKmRec.getText();
@@ -436,6 +532,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCHr.getText());
+					chrC = true;
 				}
 			});
 			txtCHr.addFocusListener(new FocusAdapter() {
@@ -453,6 +550,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCHr.getText().equals("")){
 							txtCHr.setText("Costo Por Horas");
 							txtCHr.setForeground(Color.gray);
+							chrC = false;
 						}
 						else{
 							String ca = txtCHr.getText();
@@ -475,6 +573,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCKmExtra.getText());
+					ckmextraC = true;
 				}
 			});
 			txtCKmExtra.addFocusListener(new FocusAdapter() {
@@ -492,6 +591,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCKmExtra.getText().equals("")){
 							txtCKmExtra.setText("Costo Por Kilómetros Extras");
 							txtCKmExtra.setForeground(Color.gray);
+							ckmextraC = false;
 						}
 						else{
 							String ca = txtCKmExtra.getText();
@@ -514,6 +614,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCHrExtra.getText());
+					chrExtraC = true;
 				}
 			});
 			txtCHrExtra.addFocusListener(new FocusAdapter() {
@@ -531,6 +632,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCHrExtra.getText().equals("")){
 							txtCHrExtra.setText("Costo Por Horas Extras");
 							txtCHrExtra.setForeground(Color.gray);
+							chrExtraC = false;
 						}
 						else{
 							String ca = txtCHrExtra.getText();
@@ -584,6 +686,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.letrasNumerosSignosEspacio(e);
+					descrC = true;
 				}
 			});
 			txtDescR.addFocusListener(new FocusAdapter() {
@@ -601,6 +704,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtDescR.getText().equals("")){
 							txtDescR.setText("Descripción Del Recorrido");
 							txtDescR.setForeground(Color.gray);
+							descrC = false;
 						}
 					}
 				}
@@ -611,17 +715,18 @@ public class AgregarModalidad extends MiJPanel{
 			txtDescR.setBounds(50, 160, 280, 30);
 			panelInferior.add(txtDescR);
 
-			txtCostoR = new JTextField("Costo Del Recorrido");
+			txtCostoR = new JTextField("Costo Por Recorrido");
 			txtCostoR.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCostoR.getText());
+					costorC = true;
 				}
 			});
 			txtCostoR.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(FocusEvent e) {
-					if(txtCostoR.getText().equals("Costo Del Recorrido")){
+					if(txtCostoR.getText().equals("Costo Por Recorrido")){
 						txtCostoR.setText("");
 						txtCostoR.setForeground(Color.black);
 					}
@@ -631,8 +736,9 @@ public class AgregarModalidad extends MiJPanel{
 				public void focusLost(FocusEvent e) {
 					if(txtCostoR!=null){
 						if(txtCostoR.getText().equals("")){
-							txtCostoR.setText("Costo Del Recorrido");
+							txtCostoR.setText("Costo Por Recorrido");
 							txtCostoR.setForeground(Color.gray);
+							costorC = false;
 						}
 						else{
 							String ca = txtCostoR.getText();
@@ -655,6 +761,7 @@ public class AgregarModalidad extends MiJPanel{
 				@Override
 				public void keyTyped(KeyEvent e) {
 					Validaciones.soloNumeroYUnaComa(e, txtCostoIVR.getText());
+					costoivrC = true;
 				}
 			});
 			txtCostoIVR.addFocusListener(new FocusAdapter() {
@@ -672,6 +779,7 @@ public class AgregarModalidad extends MiJPanel{
 						if(txtCostoIVR.getText().equals("")){
 							txtCostoIVR.setText("Costo Por Ida Y Vuelta");
 							txtCostoIVR.setForeground(Color.gray);
+							costoivrC = true;
 						}
 						else{
 							String ca = txtCostoIVR.getText();

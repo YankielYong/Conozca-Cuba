@@ -26,6 +26,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import services.ActivityServices;
 import services.ContractServices;
+import services.CostPerEstablishedToursServices;
+import services.CostPerHourKilometerServices;
+import services.CostPerKilometerServices;
 import services.EventServices;
 import services.FoodPlanServices;
 import services.HotelChainServices;
@@ -35,6 +38,7 @@ import services.RoleServices;
 import services.RoomServices;
 import services.SeasonServices;
 import services.ServicesLocator;
+import services.TransportModalityServices;
 import services.UserServices;
 import services.VehicleServices;
 import utils.ActivityTableModel;
@@ -71,6 +75,7 @@ import dto.ProvinceDTO;
 import dto.RoleDTO;
 import dto.RoomDTO;
 import dto.SeasonDTO;
+import dto.TransportModalityDTO;
 import dto.UserDTO;
 import dto.VehicleDTO;
 
@@ -78,6 +83,9 @@ public class Gestion extends MiJPanel{
 
 	private ActivityServices activityServices = ServicesLocator.getActivityServices();
 	private ContractServices contractServices = ServicesLocator.getContractServices();
+	private CostPerEstablishedToursServices costPerEstablishedToursServices = ServicesLocator.getCostPerEstablishedToursServices();
+	private CostPerHourKilometerServices costPerHourKilometerServices = ServicesLocator.getCostPerHourKilometerServices();
+	private CostPerKilometerServices costPerKilometerServices = ServicesLocator.getCostPerKilometerServices();
 	private EventServices eventServices = ServicesLocator.getEventServices();
 	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
 	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
@@ -86,6 +94,7 @@ public class Gestion extends MiJPanel{
 	private RoleServices roleServices = ServicesLocator.getRoleServices();
 	private RoomServices roomServices = ServicesLocator.getRoomServices();
 	private SeasonServices seasonServices = ServicesLocator.getSeasonServices();
+	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
 	private UserServices userServices = ServicesLocator.getUserServices();
 	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
 
@@ -96,6 +105,7 @@ public class Gestion extends MiJPanel{
 	private ArrayList<RoomDTO> listaHabitaciones;
 	private ArrayList<HotelDTO> listaHoteles;
 	private ArrayList<PlaceDTO> listaLugares;
+	private ArrayList<TransportModalityDTO> listaModalidades;
 	private ArrayList<FoodPlanDTO> listaPlanesAlimenticios;
 	private ArrayList<ProvinceDTO> listaProvincias;
 	private ArrayList<RoleDTO> listaRoles;
@@ -953,6 +963,20 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(transportModalityTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(580);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		try{
+			listaModalidades = transportModalityServices.selectAllTransportModality();
+			for(TransportModalityDTO t : listaModalidades){
+				String[] datos = {String.valueOf(t.getModalityCode()), t.getModalityType()};
+				transportModalityTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerPaquetes(){
@@ -1453,7 +1477,23 @@ public class Gestion extends MiJPanel{
 
 					}
 					else if(btnModalidades.isBorderPainted()){
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta modalidad de transporte?", MensajeAviso.INFORMACION);
+						ma.agrandar(40);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							int codigo = listaModalidades.get(pos).getModalityCode();
+							String tipo = listaModalidades.get(pos).getModalityType();
+							if(tipo.equals("Costo por kilometraje"))
+								costPerKilometerServices.deleteCostPerKilometer(codigo);
+							else if(tipo.equals("Costo por horas y kilómetros"))
+								costPerHourKilometerServices.deleteCostPerHourKilometer(codigo);
+							else if(tipo.equals("Costo por recorridos establecidos"))
+								costPerEstablishedToursServices.deleteCostPerEstablishedTours(codigo);
+							transportModalityServices.deleteTransportModality(codigo);
+							ponerModalidades();
+							mensaje = "La modalidad de transporte fue eliminada con éxito";
+						}
 					}
 					else if(btnPaquetes.isBorderPainted()){
 
@@ -1463,6 +1503,7 @@ public class Gestion extends MiJPanel{
 					}
 					if(eliminado){
 						MensajeAviso ma = new MensajeAviso(null, padre, este, mensaje, MensajeAviso.CORRECTO);
+						ma.agrandar(50);
 						ma.setVisible(true);
 					}
 				}
@@ -1506,7 +1547,7 @@ public class Gestion extends MiJPanel{
 			}
 		}
 		else{
-			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para eliminar", MensajeAviso.ERROR);
+			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para ver", MensajeAviso.ERROR);
 			ma.setVisible(true);
 		}
 	}
