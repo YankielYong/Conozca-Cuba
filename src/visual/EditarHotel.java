@@ -381,7 +381,7 @@ public class EditarHotel extends MiJPanel{
 	private String obtenerModalidades(){
 		String mod = "";
 		if(mLunaMiel.isSelected()){
-			mod += "Luna de miel";
+			mod += "Luna de Miel";
 			if(mGolf.isSelected()){
 				mod += ", Golf";
 				if(mEcoturismo.isSelected()){

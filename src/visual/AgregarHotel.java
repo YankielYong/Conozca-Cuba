@@ -15,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -577,7 +576,7 @@ public class AgregarHotel extends MiJPanel{
 	private String obtenerModalidades(){
 		String mod = "";
 		if(mLunaMiel.isSelected()){
-			mod += "Luna de miel";
+			mod += "Luna de Miel";
 			if(mGolf.isSelected()){
 				mod += ", Golf";
 				if(mEcoturismo.isSelected()){
