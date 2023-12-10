@@ -1724,7 +1724,11 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
-
+				else if(btnEventos.isBorderPainted()){
+					VerEvento panel = new VerEvento(padre, este, listaEventos.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 		}
 		else{
