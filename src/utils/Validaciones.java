@@ -1,6 +1,7 @@
 package utils;
 
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Validaciones {
@@ -127,9 +128,13 @@ public class Validaciones {
 		int capSE = Integer.valueOf(capS);
 		int capCE = Integer.valueOf(capC);
 		int capTT = Integer.valueOf(capT);
+		
+		LocalDate f = LocalDate.now();
+		int year = f.getYear();
 
-		if(yFabr>2023) throw new IllegalArgumentException("El año de fabricación no es válido");
+		if(yFabr>year) throw new IllegalArgumentException("El año de fabricación no es válido");
 		if(capCE > capSE) throw new IllegalArgumentException("No puede tener más capacidad con equipaje que sin equipaje");
+		if(capTT < capCE || capTT < capSE) throw new IllegalArgumentException("La capacidad total no puede ser menor que las demás");
 	}
 
 	public static void costoKilometraje(String costoKm, String costoKmIV, String costoHrEsp){

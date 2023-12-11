@@ -16,25 +16,76 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
+import services.ActivityServices;
+import services.EventServices;
+import services.HotelChainServices;
+import services.HotelServices;
+import services.PlaceServices;
+import services.ProvinceServices;
+import services.ServicesLocator;
+import services.TouristPackageServices;
+import services.TransportModalityServices;
+import services.TransportServices;
+import services.VehicleServices;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
+import utils.RoomTableModel;
+import utils.ViewEventTableModel;
+import utils.ViewHotelTableModel;
+import utils.ViewTouristPackageTableModel;
+import utils.ViewTransportTableModel;
 
 import java.awt.Font;
 
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import dto.ActivityDTO;
+import dto.EventDTO;
+import dto.HotelChainDTO;
+import dto.HotelDTO;
+import dto.PlaceDTO;
+import dto.ProvinceDTO;
+import dto.TouristPackageDTO;
+import dto.TransportDTO;
+import dto.TransportModalityDTO;
+import dto.VehicleDTO;
 
 import java.awt.Cursor;
 import java.awt.Component;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Descubrir extends MiJPanel{
+	
+	private ActivityServices activityServices = ServicesLocator.getActivityServices();
+	private EventServices eventServices = ServicesLocator.getEventServices();
+	private HotelChainServices hotelChainServices = ServicesLocator.getHotelChainServices();
+	private HotelServices hotelServices = ServicesLocator.getHotelServices();
+	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
+	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
+	private TouristPackageServices touristPackageServices = ServicesLocator.getTouristPackageServices();
+	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
+	private TransportServices transportServices = ServicesLocator.getTransportServices();
+	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
+	
+	private ArrayList<EventDTO> listaEventos;
+	private ArrayList<HotelDTO> listaHoteles;
+	private ArrayList<TouristPackageDTO> listaPaquetes;
+	private ArrayList<TransportDTO> listaTransportes;
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
+	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
+	private int pos = -1;
 
 	private JPanel panelSuperior;
 	private JButton btnCerrar;
@@ -57,6 +108,14 @@ public class Descubrir extends MiJPanel{
 	private JLabel lblBuscarN;
 	private JLabel lblBuscarP;
 	private JLabel lblBuscarC;
+	
+	private JScrollPane scrollPane;
+	private JTable table;
+	
+	private ViewTouristPackageTableModel touristPackageTableModel;
+	private ViewHotelTableModel hotelTableModel;
+	private ViewEventTableModel eventTableModel;
+	private ViewTransportTableModel transportTableModel;
 
 	public Descubrir(Principal p){
 		padre = p;
@@ -132,6 +191,8 @@ public class Descubrir extends MiJPanel{
 				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
+				
+				ponerPaquetes();
 			}
 		});
 		btnPaquetes.setBounds(20, 10, 275, 50);
@@ -169,6 +230,8 @@ public class Descubrir extends MiJPanel{
 				lblBuscarP.setVisible(true);
 				txtBuscarCadenaHotelera.setVisible(true);
 				lblBuscarC.setVisible(true);
+				
+				ponerHoteles();
 			}
 		});
 		btnHoteles.setBounds(315, 10, 275, 50);
@@ -207,6 +270,8 @@ public class Descubrir extends MiJPanel{
 				lblBuscarP.setVisible(true);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
+				
+				ponerEventos();
 			}
 		});
 		btnEventos.setBounds(610, 10, 275, 50);
@@ -244,6 +309,8 @@ public class Descubrir extends MiJPanel{
 				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
+				
+				ponerTransportes();
 			}
 		});
 		btnTransportes.setBounds(905, 10, 275, 50);
@@ -358,6 +425,152 @@ public class Descubrir extends MiJPanel{
 		lblBuscarC.setBounds(1110, 80, 50, 30);
 		panelInferior.add(lblBuscarC);
 		lblBuscarC.setVisible(false);
+		
+		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pos = table.getSelectedRow();
+			}
+			
+		});
+		table.setFocusable(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setRowHeight(40);
+		table.setForeground(Color.black);
+		table.setFont(new Font("Arial", Font.PLAIN, 16));
+		table.setBackground(Color.WHITE);
+		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBackground(Color.white);
+		scrollPane.setBounds(20, 130, 1160, 500);
+		scrollPane.getViewport().setBackground(Color.white);
+		panelInferior.add(scrollPane);
+		
+		ponerPaquetes();
+	}
+	
+	private void ponerPaquetes(){
+		pos = -1;
+		touristPackageTableModel = new ViewTouristPackageTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		table.setModel(touristPackageTableModel);
+		table.getColumnModel().getColumn(1).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(2).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(4).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(500);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(165);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(165);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(165);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setPreferredWidth(165);
+		table.getColumnModel().getColumn(4).setResizable(false);
+	}
+	
+	private void ponerHoteles(){
+		pos = -1;
+		hotelTableModel = new ViewHotelTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		table.setModel(hotelTableModel);
+		table.getColumnModel().getColumn(1).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(260);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(300);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(300);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		try{
+			listaHoteles = hotelServices.selectAllHotels();
+			for(HotelDTO h : listaHoteles){
+				HotelChainDTO hc = hotelChainServices.findHotelChain(h.getHotelChainCode());
+				ProvinceDTO pr = provinceServices.findProvince(h.getProvinceCode());
+				String categ = "";
+				if(h.getHotelCategory()==1)
+					categ = "1 Estrella";
+				else
+					categ = h.getHotelCategory()+" Estrellas";
+				String[] datos = {h.getHotelName(), categ,
+						hc.getHotelChainName(), pr.getProviceName()};
+				hotelTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void ponerEventos(){
+		pos = -1;
+		eventTableModel = new ViewEventTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		table.setModel(eventTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(400);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(760);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		try{
+			listaEventos = eventServices.selectAllEvents();
+			for(EventDTO e : listaEventos){
+				ActivityDTO act = activityServices.findActivity(e.getActivityCode());
+				PlaceDTO lug = placeServices.findPlace(e.getPlaceCode());
+				String[] datos = {lug.getPlaceName(), act.getActivityDescription()};
+				eventTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void ponerTransportes(){
+		pos = -1;
+		transportTableModel = new ViewTransportTableModel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		table.setModel(transportTableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(400);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(400);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(360);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		try {
+			listaTransportes = transportServices.selectAllTransports();
+			for(TransportDTO t : listaTransportes){
+				VehicleDTO v = vehicleServices.findVehicle(t.getVehicleCode());
+				TransportModalityDTO tm = transportModalityServices.findTransportModality(t.getModalityCode());
+				String[] datos = {v.getVehicleBrand(), tm.getModalityType(),
+						t.getTransportBorrower()};
+				transportTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

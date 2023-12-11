@@ -139,7 +139,7 @@ public class Gestion extends MiJPanel{
 
 	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 
-	private int pos = -1;;
+	private int pos = -1;
 
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -699,7 +699,7 @@ public class Gestion extends MiJPanel{
 				btnVer.setVisible(true);
 				btnAgregar.setVisible(true);
 				btnEliminar.setVisible(true);
-				btnEditar.setVisible(true);
+				btnEditar.setVisible(false);
 				este.repaint();
 				ponerVehiculos();
 			}
@@ -1411,6 +1411,7 @@ public class Gestion extends MiJPanel{
 			public void mouseClicked(MouseEvent e) {
 				pos = table.getSelectedRow();
 			}
+			
 		});
 		table.setFocusable(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1512,13 +1513,14 @@ public class Gestion extends MiJPanel{
 		btnEliminar.setBackground(colorAzul);
 		padre.getPanelPrincipal().remove(este);
 		padre.getPanelPrincipal().repaint();
+		String mensaje = "";
 
 		try{
 			if(pos != -1){
-				String mensaje = "";
 				boolean eliminado = false;
 				if(esGestorAgencia){
 					if(btnCadenas.isBorderPainted()){
+						mensaje = "esta cadena hotelera";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta cadena hotelera?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1529,6 +1531,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnHabitaciones.isBorderPainted()){
+						mensaje = "esta habitación";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta habitación?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1539,6 +1542,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnHoteles.isBorderPainted()){
+						mensaje = "este hotel";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este hotel?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1549,6 +1553,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnLugares.isBorderPainted()){
+						mensaje = "este lugar";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este lugar?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1563,6 +1568,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnProvincias.isBorderPainted()){
+						mensaje = "esta provincia";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta provincia?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1573,6 +1579,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnUsuarios.isBorderPainted()){
+						mensaje = "este usuario";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este usuario?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1583,6 +1590,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnVehiculos.isBorderPainted()){
+						mensaje = "este vehículo";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este vehículo?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1599,6 +1607,7 @@ public class Gestion extends MiJPanel{
 				}
 				else{
 					if(btnActividades.isBorderPainted()){
+						mensaje = "esta actividad";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta actividad?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1609,9 +1618,11 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnContratos.isBorderPainted()){
+						mensaje = "este contrato";
 
 					}
 					else if(btnEventos.isBorderPainted()){
+						mensaje = "este evento";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este evento?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1622,6 +1633,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnHospedajes.isBorderPainted()){
+						mensaje = "este hospedaje";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este hospedaje?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1632,6 +1644,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnModalidades.isBorderPainted()){
+						mensaje = "esta modalidad de transporte";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta modalidad de transporte?", MensajeAviso.INFORMACION);
 						ma.agrandar(40);
 						ma.setVisible(true);
@@ -1651,9 +1664,11 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnPaquetes.isBorderPainted()){
+						mensaje = "este paquete";
 
 					}
 					else if(btnTransportes.isBorderPainted()){
+						mensaje = "este transporte";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este transporte?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1676,7 +1691,8 @@ public class Gestion extends MiJPanel{
 			}
 		}
 		catch(SQLException | ClassNotFoundException e){
-			e.printStackTrace();
+			MensajeAviso ma = new MensajeAviso(null, padre, este, "No fue posible eliminar "+mensaje, MensajeAviso.ERROR);
+			ma.setVisible(true);
 		}
 	}
 

@@ -306,6 +306,8 @@ public class AgregarVehiculo extends MiJPanel{
 						ma.agrandar(45);
 					if(e1.getMessage().equals("No puede tener más capacidad con equipaje que sin equipaje"))
 						ma.agrandar(130);
+					if(e1.getMessage().equals("La capacidad total no puede ser menor que las demás"))
+						ma.agrandar(70);
 					ma.setVisible(true);
 				}
 			}
