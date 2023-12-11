@@ -597,7 +597,7 @@ public class Gestion extends MiJPanel{
 				btnVer.setVisible(false);
 				btnAgregar.setVisible(true);
 				btnEliminar.setVisible(true);
-				btnEditar.setVisible(true);
+				btnEditar.setVisible(false);
 				este.repaint();
 				ponerProvincias();
 			}
@@ -1772,6 +1772,11 @@ public class Gestion extends MiJPanel{
 				}	
 				else if(btnHoteles.isBorderPainted()){
 					EditarHotel panel = new EditarHotel(padre, este, listaHoteles.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}	
+				else if(btnUsuarios.isBorderPainted()){
+					EditarUsuario panel = new EditarUsuario(padre, este, listaUsuarios.get(pos));
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}

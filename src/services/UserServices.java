@@ -50,6 +50,20 @@ public class UserServices {
 		connection.close();
 	}
 	
+	public void updateUserWithoutPassword(int userCode, String userName, String userNick, int roleCode) 
+			throws SQLException, ClassNotFoundException{
+		String query = "SELECT user__update_without_password(?,?,?,?)";
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, userCode);
+		preparedStatement.setString(2, userName);
+		preparedStatement.setString(3, userNick);
+		preparedStatement.setInt(4, roleCode);
+		preparedStatement.execute();
+		preparedStatement.close();
+		connection.close();
+	}
+	
 	public UserDTO findUser(int userCode) throws SQLException, ClassNotFoundException{
 		java.sql.Connection connection = ServicesLocator.getConnection();
 		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
