@@ -36,7 +36,6 @@ import services.VehicleServices;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
-import utils.RoomTableModel;
 import utils.ViewEventTableModel;
 import utils.ViewHotelTableModel;
 import utils.ViewTouristPackageTableModel;
@@ -476,6 +475,17 @@ public class Descubrir extends MiJPanel{
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setPreferredWidth(165);
 		table.getColumnModel().getColumn(4).setResizable(false);
+		try {
+			listaPaquetes = touristPackageServices.selectAllTouristPackages();
+			for(TouristPackageDTO t : listaPaquetes){
+				String[] datos = {t.getPromotionalName(), 
+						String.valueOf(t.getNumberOfPeople()), String.valueOf(t.getNumberOfDays()), 
+						String.valueOf(t.getNumberOfNights()), String.valueOf(t.getPackagePrice())};
+				touristPackageTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void ponerHoteles(){

@@ -200,7 +200,6 @@ public class Gestion extends MiJPanel{
 	private TouristPackageTableModel touristPackageTableModel;
 	private TransportTableModel transportTableModel;
 
-
 	private UserDTO user;
 	private RoleDTO roleUser;
 
@@ -1064,6 +1063,38 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(touristPackageTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(2).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(4).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(5).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(6).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(300);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		table.getColumnModel().getColumn(5).setPreferredWidth(100);
+		table.getColumnModel().getColumn(5).setResizable(false);
+		table.getColumnModel().getColumn(6).setPreferredWidth(100);
+		table.getColumnModel().getColumn(6).setResizable(false);
+		try {
+			listaPaquetes = touristPackageServices.selectAllTouristPackages();
+			for(TouristPackageDTO t : listaPaquetes){
+				String[] datos = {String.valueOf(t.getPackageCode()), t.getPromotionalName(), 
+						String.valueOf(t.getNumberOfPeople()), String.valueOf(t.getNumberOfDays()), 
+						String.valueOf(t.getNumberOfNights()), String.valueOf(t.getPackagePrice()), 
+						String.valueOf(t.getPackageCost())};
+				touristPackageTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerTransportes(){
@@ -1497,7 +1528,10 @@ public class Gestion extends MiJPanel{
 				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnPaquetes.isBorderPainted()){
-
+				padre.getPanelPrincipal().remove(este);
+				AgregarPaquete panel = new AgregarPaquete(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnTransportes.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
@@ -1664,8 +1698,15 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnPaquetes.isBorderPainted()){
-						mensaje = "este paquete";
-
+						mensaje = "este paquete turístico";
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este paquete turístico?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							touristPackageServices.deleteTouristPackage(listaPaquetes.get(pos).getPackageCode());
+							ponerPaquetes();
+							mensaje = "El paquete turístico fue eliminado con éxito";
+						}
 					}
 					else if(btnTransportes.isBorderPainted()){
 						mensaje = "este transporte";

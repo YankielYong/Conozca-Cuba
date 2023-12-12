@@ -68,6 +68,7 @@ public class Principal extends JFrame{
 	private AgregarModalidad panelAgregarModalidad;
 	private AgregarTransporte panelAgregarTransporte;
 	private AgregarHospedaje panelAgregarHospedaje;
+	private AgregarPaquete panelAgregarPaquete;
 	private ConsultarLugares panelConsultarLugares;
 	private ConsultarActividades panelConsultarActividades;
 	private ConsultarVehiculos panelConsultarVehiculos;
@@ -235,6 +236,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelConsultarTemporadas);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
 					panelPrincipal.remove(panelAgregarTransporte);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
+					panelPrincipal.remove(panelAgregarPaquete);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
 					panelPrincipal.remove(panelAgregarHospedaje);
 				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
@@ -341,6 +344,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelConsultarTemporadas);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
 					panelPrincipal.remove(panelAgregarTransporte);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
+					panelPrincipal.remove(panelAgregarPaquete);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
 					panelPrincipal.remove(panelAgregarHospedaje);
 				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
@@ -445,6 +450,8 @@ public class Principal extends JFrame{
 					panelPrincipal.remove(panelConsultarTemporadas);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
 					panelPrincipal.remove(panelAgregarTransporte);
+				else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
+					panelPrincipal.remove(panelAgregarPaquete);
 				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
 					panelPrincipal.remove(panelAgregarHospedaje);
 				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
@@ -665,6 +672,10 @@ public class Principal extends JFrame{
 
 	public void setPanelEditarHotel(EditarHotel panelEditarHotel) {
 		this.panelEditarHotel = panelEditarHotel;
+	}
+
+	public void setPanelAgregarPaquete(AgregarPaquete panelAgregarPaquete) {
+		this.panelAgregarPaquete = panelAgregarPaquete;
 	}
 
 	public void setPanelAbierto(int panel){

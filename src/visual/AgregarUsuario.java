@@ -45,27 +45,14 @@ public class AgregarUsuario extends MiJPanel {
 	private ArrayList<RoleDTO> roles;
 
 	private static final long serialVersionUID = 1L;
-	/*
-	 * Utils
-	 */
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 	private Icon pOculta = new ImageIcon(getClass().getResource("/visual/imagenes/contraseña oculta.png"));
 	private Icon pVisible = new ImageIcon(getClass().getResource("/visual/imagenes/contraseña visible.png"));
 
-	private Principal padre;
-	private AgregarUsuario este;
-	private Gestion anterior;
-
-	/*
-	 * Panel Superior
-	 */
 	private JPanel panelSuperior;
 	private JButton btnCerrar;
 	private JLabel lblNombre;
-	/*
-	 * Panel Inferior
-	 */
 	private JPanel panelInferior;
 	private JButton btnAtras;
 	private JTextField txtNombre;
@@ -74,10 +61,13 @@ public class AgregarUsuario extends MiJPanel {
 	private JPasswordField txtPassword;
 	private JButton btnMostrarPass;
 	private JButton btnRegistrarse;
-
 	private boolean userChanged = false;
 	private boolean nameChanged = false;
 	private boolean passChanged = false;
+
+	private Principal padre;
+	private AgregarUsuario este;
+	private Gestion anterior;
 
 	public AgregarUsuario(Principal p, Gestion a) {
 		anterior = a;
