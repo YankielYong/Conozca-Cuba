@@ -41,6 +41,10 @@ public class Paneles {
 	public static int PANEL_EDITAR_LUGAR = 37;
 	public static int PANEL_EDITAR_USUARIO = 38;
 	public static int PANEL_AGREGAR_PAQUETE = 39;
-	
+	public static int PANEL_AGREGAR_CONTRATO = 40;
+	public static int PANEL_CONSULTAR_HOSPEDAJES = 41;
+	public static int PANEL_CONSULTAR_EVENTOS = 42;
+	public static int PANEL_CONSULTAR_TRANSPORTES = 43;
+	public static int PANEL_CONSULTAR_PAQUETES = 44;
 	
 }

@@ -17,6 +17,7 @@ public class ContractTransportServices {
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, contractCode);
 		preparedStatement.setInt(2, transportCode);
+		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
 	}

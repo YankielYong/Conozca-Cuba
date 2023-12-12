@@ -955,6 +955,23 @@ public class Gestion extends MiJPanel{
 			}
 		};
 		table.setModel(contractTableModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(380);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(400);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		try{
+			listaContratos = contractServices.selectAllContracts();
+			for(ContractDTO c : listaContratos){
+				TouristPackageDTO t = touristPackageServices.findTouristPackage(c.getPackageCode());
+				String[] datos = {String.valueOf(c.getContractCode()), c.getContractType(), t.getPromotionalName()};
+				contractTableModel.addRow(datos);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ponerEventos(){
@@ -1507,7 +1524,10 @@ public class Gestion extends MiJPanel{
 				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnContratos.isBorderPainted()){
-
+				padre.getPanelPrincipal().remove(este);
+				AgregarContrato panel = new AgregarContrato(padre, este);
+				padre.getPanelPrincipal().add(panel);
+				padre.getPanelPrincipal().repaint();
 			}
 			else if(btnEventos.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
@@ -1653,7 +1673,41 @@ public class Gestion extends MiJPanel{
 					}
 					else if(btnContratos.isBorderPainted()){
 						mensaje = "este contrato";
-
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este contrato?", MensajeAviso.INFORMACION);
+						ma.setVisible(true);
+						eliminado = ma.getValor();
+						if(eliminado){
+							ContractDTO c = listaContratos.get(pos);
+							int codigo = c.getContractCode();
+							TouristPackageDTO tp = touristPackageServices.findTouristPackage(c.getPackageCode());
+							String tipo = listaContratos.get(pos).getContractType();
+							if(tipo.equals("Hotelero")){
+								ContractLodgingDTO cl = contractLodgingServices.findContractLodging(codigo);
+								LodgingDTO l = lodgingServices.findLodging(cl.getLodgingCode());
+								contractLodgingServices.deleteContractLodging(codigo);
+								touristPackageServices.updateTouristPackage(tp.getPackageCode(), tp.getPromotionalName(), 
+										tp.getPackagePrice()-(l.getLodgingPrice()*tp.getNumberOfPeople()*tp.getNumberOfNights()), 
+										tp.getPackageCost(), tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
+							}
+							else if(tipo.equals("Transporte")){
+								contractTransportServices.deleteContractTransport(codigo);
+							}
+							else if(tipo.equals("Servicios Complementarios")){
+								ContractEventDTO ce = contractEventServices.findContractEvent(codigo);
+								EventDTO ev = eventServices.findEvent(ce.getEventCode());
+								ActivityDTO ac = activityServices.findActivity(ev.getActivityCode());
+								PlaceDTO p = placeServices.findPlace(ev.getPlaceCode());
+								contractEventServices.deleteContractEvent(codigo);
+								touristPackageServices.updateTouristPackage(tp.getPackageCode(),
+										tp.getPromotionalName(), 
+										tp.getPackagePrice()-(ac.getActivityPrice()*tp.getNumberOfPeople()),
+										tp.getPackageCost()-(p.getCostPerPerson()*tp.getNumberOfPeople()),
+										tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
+							}
+							contractServices.deleteContract(codigo);
+							ponerContratos();
+							mensaje = "El contrato fue eliminado con éxito";
+						}
 					}
 					else if(btnEventos.isBorderPainted()){
 						mensaje = "este evento";

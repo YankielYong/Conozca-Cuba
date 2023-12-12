@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -24,19 +23,26 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import dto.ActivityDTO;
-import services.ActivityServices;
+import dto.TransportDTO;
+import dto.TransportModalityDTO;
+import dto.VehicleDTO;
 import services.ServicesLocator;
-import utils.ActivityTableModel;
+import services.TransportModalityServices;
+import services.TransportServices;
+import services.VehicleServices;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
+import utils.TransportTableModel;
 
-public class ConsultarActividades extends MiJPanel{
+public class ConsultarTransportes extends MiJPanel{
+
+	private TransportServices transportServices = ServicesLocator.getTransportServices();
+	private VehicleServices vehicleServices = ServicesLocator.getVehicleServices();
+	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
 	
-	private ActivityServices activityServices = ServicesLocator.getActivityServices();
-	private ArrayList<ActivityDTO> listaActividades;
-
+	private ArrayList<TransportDTO> listaTransportes;
+	
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
@@ -47,19 +53,19 @@ public class ConsultarActividades extends MiJPanel{
 	private JButton btnAtras;
 	private JScrollPane scrollPane;
 	private JTable table;
-	private ActivityTableModel tableModel;
+	private TransportTableModel tableModel;
 	
 	private Principal padre;
 	private MiJPanel anterior;
-	private ConsultarActividades este;
+	private ConsultarTransportes este;
 	
-	public ConsultarActividades(Principal p, MiJPanel a){
+	public ConsultarTransportes(Principal p, MiJPanel a){
 		este = this;
 		padre = p;
 		anterior = a;
-		setTipoPanel(Paneles.PANEL_CONSULTAR_ACTIVIDADES);
+		setTipoPanel(Paneles.PANEL_CONSULTAR_TRANSPORTES);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelConsultarActividades(este);
+		padre.setPanelConsultarTransportes(este);
 		setBounds(pantalla.width/2-301, pantalla.height/2-276, 602, 502);
 		setBackground(Color.darkGray);
 		setLayout(null);
@@ -139,12 +145,12 @@ public class ConsultarActividades extends MiJPanel{
 		btnAtras.setModel(new MyButtonModel());
 		panelInferior.add(btnAtras);
 		
-		JLabel lblAct = new JLabel("Actividades");
+		JLabel lblAct = new JLabel("Transportes");
 		lblAct.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAct.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAct.setForeground(Color.black);
 		lblAct.setFont(new Font("Arial", Font.BOLD, 22));
-		lblAct.setBounds(240, 0, 120, 50);
+		lblAct.setBounds(200, 0, 200, 50);
 		panelInferior.add(lblAct);
 		
 		table = new JTable();
@@ -167,7 +173,7 @@ public class ConsultarActividades extends MiJPanel{
 		scrollPane.setBounds(30, 50, 540, 390);
 		panelInferior.add(scrollPane);
 		
-		tableModel = new ActivityTableModel(){
+		tableModel = new TransportTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -178,27 +184,25 @@ public class ConsultarActividades extends MiJPanel{
 		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
-		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
-		table.getColumnModel().getColumn(0).setPreferredWidth(60);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setPreferredWidth(200);
+		table.getColumnModel().getColumn(1).setPreferredWidth(170);
 		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setPreferredWidth(80);
+		table.getColumnModel().getColumn(2).setPreferredWidth(170);
 		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setPreferredWidth(200);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		try {
-			listaActividades = activityServices.selectAllActivity();
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			SimpleDateFormat format2 = new SimpleDateFormat("hh:mm a");
-			for(ActivityDTO ac : listaActividades){
-				String[] datos = {String.valueOf(ac.getActivityCode()), 
-						format.format(ac.getActivityDate())+"     "+format2.format(ac.getActivityDate()),
-						String.valueOf(ac.getActivityPrice()), ac.getActivityDescription()};
+			listaTransportes = transportServices.selectAllTransports();
+			for(TransportDTO t : listaTransportes){
+				VehicleDTO v = vehicleServices.findVehicle(t.getVehicleCode());
+				TransportModalityDTO tm = transportModalityServices.findTransportModality(t.getModalityCode());
+				String[] datos = {String.valueOf(t.getTransportCode()), v.getVehicleBrand(), tm.getModalityType(),
+						t.getTransportBorrower()};
 				tableModel.addRow(datos);
 			}
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }

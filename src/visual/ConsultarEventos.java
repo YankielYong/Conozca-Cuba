@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -25,18 +24,25 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import dto.ActivityDTO;
+import dto.EventDTO;
+import dto.PlaceDTO;
 import services.ActivityServices;
+import services.EventServices;
+import services.PlaceServices;
 import services.ServicesLocator;
-import utils.ActivityTableModel;
+import utils.EventTableModel;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
 
-public class ConsultarActividades extends MiJPanel{
-	
-	private ActivityServices activityServices = ServicesLocator.getActivityServices();
-	private ArrayList<ActivityDTO> listaActividades;
+public class ConsultarEventos extends MiJPanel{
 
+	private EventServices eventServices = ServicesLocator.getEventServices();
+	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
+	private ActivityServices activityServices = ServicesLocator.getActivityServices();
+	
+	private ArrayList<EventDTO> listaEventos;
+	
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
@@ -47,19 +53,19 @@ public class ConsultarActividades extends MiJPanel{
 	private JButton btnAtras;
 	private JScrollPane scrollPane;
 	private JTable table;
-	private ActivityTableModel tableModel;
+	private EventTableModel tableModel;
 	
 	private Principal padre;
 	private MiJPanel anterior;
-	private ConsultarActividades este;
+	private ConsultarEventos este;
 	
-	public ConsultarActividades(Principal p, MiJPanel a){
+	public ConsultarEventos(Principal p, MiJPanel a){
 		este = this;
 		padre = p;
 		anterior = a;
-		setTipoPanel(Paneles.PANEL_CONSULTAR_ACTIVIDADES);
+		setTipoPanel(Paneles.PANEL_CONSULTAR_EVENTOS);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelConsultarActividades(este);
+		padre.setPanelConsultarEventos(este);
 		setBounds(pantalla.width/2-301, pantalla.height/2-276, 602, 502);
 		setBackground(Color.darkGray);
 		setLayout(null);
@@ -139,7 +145,7 @@ public class ConsultarActividades extends MiJPanel{
 		btnAtras.setModel(new MyButtonModel());
 		panelInferior.add(btnAtras);
 		
-		JLabel lblAct = new JLabel("Actividades");
+		JLabel lblAct = new JLabel("Eventos");
 		lblAct.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAct.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAct.setForeground(Color.black);
@@ -167,7 +173,7 @@ public class ConsultarActividades extends MiJPanel{
 		scrollPane.setBounds(30, 50, 540, 390);
 		panelInferior.add(scrollPane);
 		
-		tableModel = new ActivityTableModel(){
+		tableModel = new EventTableModel(){
 			private static final long serialVersionUID = 1L;
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -178,27 +184,22 @@ public class ConsultarActividades extends MiJPanel{
 		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
-		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
-		table.getColumnModel().getColumn(0).setPreferredWidth(60);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setPreferredWidth(200);
+		table.getColumnModel().getColumn(1).setPreferredWidth(220);
 		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setPreferredWidth(80);
+		table.getColumnModel().getColumn(2).setPreferredWidth(220);
 		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setPreferredWidth(200);
-		table.getColumnModel().getColumn(3).setResizable(false);
-		try {
-			listaActividades = activityServices.selectAllActivity();
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			SimpleDateFormat format2 = new SimpleDateFormat("hh:mm a");
-			for(ActivityDTO ac : listaActividades){
-				String[] datos = {String.valueOf(ac.getActivityCode()), 
-						format.format(ac.getActivityDate())+"     "+format2.format(ac.getActivityDate()),
-						String.valueOf(ac.getActivityPrice()), ac.getActivityDescription()};
+		try{
+			listaEventos = eventServices.selectAllEvents();
+			for(EventDTO e : listaEventos){
+				ActivityDTO act = activityServices.findActivity(e.getActivityCode());
+				PlaceDTO lug = placeServices.findPlace(e.getPlaceCode());
+				String[] datos = {String.valueOf(e.getEventCode()), lug.getPlaceName(), act.getActivityDescription()};
 				tableModel.addRow(datos);
 			}
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }

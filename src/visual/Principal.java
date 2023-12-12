@@ -69,10 +69,15 @@ public class Principal extends JFrame{
 	private AgregarTransporte panelAgregarTransporte;
 	private AgregarHospedaje panelAgregarHospedaje;
 	private AgregarPaquete panelAgregarPaquete;
+	private AgregarContrato panelAgregarContrato;
 	private ConsultarLugares panelConsultarLugares;
 	private ConsultarActividades panelConsultarActividades;
 	private ConsultarVehiculos panelConsultarVehiculos;
+	private ConsultarPaquetes panelConsultarPaquetes;
 	private ConsultarModalidades panelConsultarModalidades;
+	private ConsultarEventos panelConsultarEventos;
+	private ConsultarHospedajes panelConsultarHospedajes;
+	private ConsultarTransportes panelConsultarTransportes;
 	private ConsultarHoteles panelConsultarHoteles;
 	private ConsultarHabitaciones panelConsultarHabitaciones;
 	private ConsultarTemporadas panelConsultarTemporadas;
@@ -178,81 +183,7 @@ public class Principal extends JFrame{
 		btnPerfil.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(panelAbierto == Paneles.PANEL_DESCUBRIR)
-					panelPrincipal.remove(panelDescubrir);
-				else if(panelAbierto == Paneles.PANEL_GESTION)
-					panelPrincipal.remove(panelGestion);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO)
-					panelPrincipal.remove(panelAgregarUsuario);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL)
-					panelPrincipal.remove(panelAgregarHotel);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA)
-					panelPrincipal.remove(panelAgregarProvincia);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA)
-					panelPrincipal.remove(panelAgregarCadenaHotelera);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_LUGAR)
-					panelPrincipal.remove(panelAgregarLugar);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_VEHICULO)
-					panelPrincipal.remove(panelAgregarVehiculo);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
-					panelPrincipal.remove(panelAgregarHabitacion);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
-					panelPrincipal.remove(panelAgregarEvento);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
-					panelPrincipal.remove(panelAgregarActividad);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
-					panelPrincipal.remove(panelAgregarModalidad);
-				else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
-					panelPrincipal.remove(panelVerVehiculo);
-				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
-					panelPrincipal.remove(panelVerUsuario);
-				else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
-					panelPrincipal.remove(panelVerHabitacion);
-				else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
-					panelPrincipal.remove(panelVerLugar);
-				else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
-					panelPrincipal.remove(panelVerModalidad);
-				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
-					panelPrincipal.remove(panelVerActividad);
-				else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
-					panelPrincipal.remove(panelVerHotel);
-				else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
-					panelPrincipal.remove(panelVerTransporte);
-				else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
-					panelPrincipal.remove(panelVerHospedaje);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
-					panelPrincipal.remove(panelConsultarLugares);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
-					panelPrincipal.remove(panelConsultarActividades);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
-					panelPrincipal.remove(panelConsultarVehiculos);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
-					panelPrincipal.remove(panelConsultarModalidades);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
-					panelPrincipal.remove(panelConsultarHoteles);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
-					panelPrincipal.remove(panelConsultarHabitaciones);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
-					panelPrincipal.remove(panelConsultarTemporadas);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
-					panelPrincipal.remove(panelAgregarTransporte);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
-					panelPrincipal.remove(panelAgregarPaquete);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
-					panelPrincipal.remove(panelAgregarHospedaje);
-				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
-					panelPrincipal.remove(panelVerEvento);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_CADENA_HOTELERA)
-					panelPrincipal.remove(panelEditarCadenaHotelera);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_MODALIDAD)
-					panelPrincipal.remove(panelEditarModalidad);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_HOTEL)
-					panelPrincipal.remove(panelEditarHotel);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_LUGAR)
-					panelPrincipal.remove(panelEditarLugar);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_USUARIO)
-					panelPrincipal.remove(panelEditarUsuario);
-
+				removerPanel();
 				if(panelAbierto != Paneles.PANEL_PERFIL){
 					panelPerfil = new Perfil(este, user, roleUser);
 					panelPrincipal.add(panelPerfil);
@@ -286,83 +217,7 @@ public class Principal extends JFrame{
 		btnDescubrir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(panelAbierto == Paneles.PANEL_PERFIL)
-					panelPrincipal.remove(panelPerfil);
-				else if(panelAbierto == Paneles.PANEL_GESTION)
-					panelPrincipal.remove(panelGestion);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO)
-					panelPrincipal.remove(panelAgregarUsuario);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL)
-					panelPrincipal.remove(panelAgregarHotel);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA)
-					panelPrincipal.remove(panelAgregarProvincia);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA)
-					panelPrincipal.remove(panelAgregarCadenaHotelera);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_LUGAR)
-					panelPrincipal.remove(panelAgregarLugar);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_VEHICULO)
-					panelPrincipal.remove(panelAgregarVehiculo);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
-					panelPrincipal.remove(panelAgregarHabitacion);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
-					panelPrincipal.remove(panelAgregarEvento);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
-					panelPrincipal.remove(panelAgregarActividad);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
-					panelPrincipal.remove(panelAgregarModalidad);
-				else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
-					panelPrincipal.remove(panelVerVehiculo);
-				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
-					panelPrincipal.remove(panelVerUsuario);
-				else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
-					panelPrincipal.remove(panelVerHabitacion);
-				else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
-					panelPrincipal.remove(panelVerLugar);
-				else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
-					panelPrincipal.remove(panelVerModalidad);
-				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
-					panelPrincipal.remove(panelVerActividad);
-				else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
-					panelPrincipal.remove(panelVerHotel);
-				else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
-					panelPrincipal.remove(panelVerTransporte);
-				else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
-					panelPrincipal.remove(panelVerHospedaje);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
-					panelPrincipal.remove(panelConsultarLugares);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
-					panelPrincipal.remove(panelConsultarActividades);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
-					panelPrincipal.remove(panelConsultarVehiculos);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
-					panelPrincipal.remove(panelConsultarModalidades);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
-					panelPrincipal.remove(panelConsultarHoteles);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
-					panelPrincipal.remove(panelConsultarHabitaciones);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
-					panelPrincipal.remove(panelConsultarTemporadas);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
-					panelPrincipal.remove(panelAgregarTransporte);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
-					panelPrincipal.remove(panelAgregarPaquete);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
-					panelPrincipal.remove(panelAgregarHospedaje);
-				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
-					panelPrincipal.remove(panelVerEvento);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_HABITACION)
-					panelPrincipal.remove(panelEditarHabitacion);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_CADENA_HOTELERA)
-					panelPrincipal.remove(panelEditarCadenaHotelera);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_MODALIDAD)
-					panelPrincipal.remove(panelEditarModalidad);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_HOTEL)
-					panelPrincipal.remove(panelEditarHotel);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_LUGAR)
-					panelPrincipal.remove(panelEditarLugar);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_USUARIO)
-					panelPrincipal.remove(panelEditarUsuario);
-
+				removerPanel();
 				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
 					panelDescubrir = new Descubrir(este);
 					panelPrincipal.add(panelDescubrir);
@@ -392,83 +247,7 @@ public class Principal extends JFrame{
 		btnGestion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(panelAbierto == Paneles.PANEL_PERFIL)
-					panelPrincipal.remove(panelPerfil);
-				else if(panelAbierto == Paneles.PANEL_DESCUBRIR)
-					panelPrincipal.remove(panelDescubrir);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO)
-					panelPrincipal.remove(panelAgregarUsuario);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL)
-					panelPrincipal.remove(panelAgregarHotel);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA)
-					panelPrincipal.remove(panelAgregarProvincia);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA)
-					panelPrincipal.remove(panelAgregarCadenaHotelera);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_LUGAR)
-					panelPrincipal.remove(panelAgregarLugar);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_VEHICULO)
-					panelPrincipal.remove(panelAgregarVehiculo);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
-					panelPrincipal.remove(panelAgregarHabitacion);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
-					panelPrincipal.remove(panelAgregarEvento);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
-					panelPrincipal.remove(panelAgregarActividad);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
-					panelPrincipal.remove(panelAgregarModalidad);
-				else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
-					panelPrincipal.remove(panelVerVehiculo);
-				else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
-					panelPrincipal.remove(panelVerUsuario);
-				else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
-					panelPrincipal.remove(panelVerHabitacion);
-				else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
-					panelPrincipal.remove(panelVerLugar);
-				else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
-					panelPrincipal.remove(panelVerModalidad);
-				else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
-					panelPrincipal.remove(panelVerActividad);
-				else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
-					panelPrincipal.remove(panelVerHotel);
-				else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
-					panelPrincipal.remove(panelVerTransporte);
-				else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
-					panelPrincipal.remove(panelVerHospedaje);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
-					panelPrincipal.remove(panelConsultarLugares);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
-					panelPrincipal.remove(panelConsultarActividades);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
-					panelPrincipal.remove(panelConsultarVehiculos);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
-					panelPrincipal.remove(panelConsultarModalidades);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
-					panelPrincipal.remove(panelConsultarHoteles);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
-					panelPrincipal.remove(panelConsultarHabitaciones);
-				else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
-					panelPrincipal.remove(panelConsultarTemporadas);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
-					panelPrincipal.remove(panelAgregarTransporte);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
-					panelPrincipal.remove(panelAgregarPaquete);
-				else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
-					panelPrincipal.remove(panelAgregarHospedaje);
-				else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
-					panelPrincipal.remove(panelVerEvento);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_HABITACION)
-					panelPrincipal.remove(panelEditarHabitacion);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_CADENA_HOTELERA)
-					panelPrincipal.remove(panelEditarCadenaHotelera);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_MODALIDAD)
-					panelPrincipal.remove(panelEditarModalidad);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_HOTEL)
-					panelPrincipal.remove(panelEditarHotel);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_LUGAR)
-					panelPrincipal.remove(panelEditarLugar);
-				else if(panelAbierto == Paneles.PANEL_EDITAR_USUARIO)
-					panelPrincipal.remove(panelEditarUsuario);
-
+				removerPanel();
 				if(panelAbierto != Paneles.PANEL_GESTION){
 					panelGestion = new Gestion(este, user, roleUser);
 					panelPrincipal.add(panelGestion);
@@ -508,6 +287,95 @@ public class Principal extends JFrame{
 			vistaGestorAgencia();
 		else if(roleUser.getRoleName().equals("Gestor de Ventas"))
 			vistaGestorVentas();
+	}
+	
+	private void removerPanel(){
+		if(panelAbierto == Paneles.PANEL_DESCUBRIR)
+			panelPrincipal.remove(panelDescubrir);
+		else if(panelAbierto == Paneles.PANEL_GESTION)
+			panelPrincipal.remove(panelGestion);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_USUARIO)
+			panelPrincipal.remove(panelAgregarUsuario);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_HOTEL)
+			panelPrincipal.remove(panelAgregarHotel);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_PROVINCIA)
+			panelPrincipal.remove(panelAgregarProvincia);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_CADENA_HOTELERA)
+			panelPrincipal.remove(panelAgregarCadenaHotelera);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_LUGAR)
+			panelPrincipal.remove(panelAgregarLugar);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_VEHICULO)
+			panelPrincipal.remove(panelAgregarVehiculo);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_HABITACION)
+			panelPrincipal.remove(panelAgregarHabitacion);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_EVENTO)
+			panelPrincipal.remove(panelAgregarEvento);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_ACTIVIDAD)
+			panelPrincipal.remove(panelAgregarActividad);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_MODALIDAD)
+			panelPrincipal.remove(panelAgregarModalidad);
+		else if(panelAbierto == Paneles.PANEL_VER_VEHICULO)
+			panelPrincipal.remove(panelVerVehiculo);
+		else if(panelAbierto == Paneles.PANEL_VER_USUARIO)
+			panelPrincipal.remove(panelVerUsuario);
+		else if(panelAbierto == Paneles.PANEL_VER_HABITACION)
+			panelPrincipal.remove(panelVerHabitacion);
+		else if(panelAbierto == Paneles.PANEL_VER_LUGAR)
+			panelPrincipal.remove(panelVerLugar);
+		else if(panelAbierto == Paneles.PANEL_VER_MODALIDAD)
+			panelPrincipal.remove(panelVerModalidad);
+		else if(panelAbierto == Paneles.PANEL_VER_ACTIVIDAD)
+			panelPrincipal.remove(panelVerActividad);
+		else if(panelAbierto == Paneles.PANEL_VER_HOTEL)
+			panelPrincipal.remove(panelVerHotel);
+		else if(panelAbierto == Paneles.PANEL_VER_TRANSPORTE)
+			panelPrincipal.remove(panelVerTransporte);
+		else if(panelAbierto == Paneles.PANEL_VER_HOSPEDAJE)
+			panelPrincipal.remove(panelVerHospedaje);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_LUGARES)
+			panelPrincipal.remove(panelConsultarLugares);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_ACTIVIDADES)
+			panelPrincipal.remove(panelConsultarActividades);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_PAQUETES)
+			panelPrincipal.remove(panelConsultarPaquetes);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_VEHICULOS)
+			panelPrincipal.remove(panelConsultarVehiculos);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_MODALIDADES)
+			panelPrincipal.remove(panelConsultarModalidades);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_TRANSPORTES)
+			panelPrincipal.remove(panelConsultarTransportes);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_EVENTOS)
+			panelPrincipal.remove(panelConsultarEventos);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOSPEDAJES)
+			panelPrincipal.remove(panelConsultarHospedajes);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_HOTELES)
+			panelPrincipal.remove(panelConsultarHoteles);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_HABITACIONES)
+			panelPrincipal.remove(panelConsultarHabitaciones);
+		else if(panelAbierto == Paneles.PANEL_CONSULTAR_TEMPORADAS)
+			panelPrincipal.remove(panelConsultarTemporadas);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_TRANSPORTE)
+			panelPrincipal.remove(panelAgregarTransporte);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_PAQUETE)
+			panelPrincipal.remove(panelAgregarPaquete);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_CONTRATO)
+			panelPrincipal.remove(panelAgregarContrato);
+		else if(panelAbierto == Paneles.PANEL_AGREGAR_HOSPEDAJE)
+			panelPrincipal.remove(panelAgregarHospedaje);
+		else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
+			panelPrincipal.remove(panelVerEvento);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_CADENA_HOTELERA)
+			panelPrincipal.remove(panelEditarCadenaHotelera);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_MODALIDAD)
+			panelPrincipal.remove(panelEditarModalidad);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_HOTEL)
+			panelPrincipal.remove(panelEditarHotel);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_LUGAR)
+			panelPrincipal.remove(panelEditarLugar);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_USUARIO)
+			panelPrincipal.remove(panelEditarUsuario);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_HABITACION)
+			panelPrincipal.remove(panelEditarHabitacion);
 	}
 
 	private void vistaGestorVentas(){
@@ -676,6 +544,28 @@ public class Principal extends JFrame{
 
 	public void setPanelAgregarPaquete(AgregarPaquete panelAgregarPaquete) {
 		this.panelAgregarPaquete = panelAgregarPaquete;
+	}
+
+	public void setPanelAgregarContrato(AgregarContrato panelAgregarContrato) {
+		this.panelAgregarContrato = panelAgregarContrato;
+	}
+
+	public void setPanelConsultarEventos(ConsultarEventos panelConsultarEventos) {
+		this.panelConsultarEventos = panelConsultarEventos;
+	}
+
+	public void setPanelConsultarHospedajes(
+			ConsultarHospedajes panelConsultarHospedajes) {
+		this.panelConsultarHospedajes = panelConsultarHospedajes;
+	}
+
+	public void setPanelConsultarPaquetes(ConsultarPaquetes panelConsultarPaquetes) {
+		this.panelConsultarPaquetes = panelConsultarPaquetes;
+	}
+
+	public void setPanelConsultarTransportes(
+			ConsultarTransportes panelConsultarTransportes) {
+		this.panelConsultarTransportes = panelConsultarTransportes;
 	}
 
 	public void setPanelAbierto(int panel){

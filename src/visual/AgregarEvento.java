@@ -230,7 +230,7 @@ public class AgregarEvento extends MiJPanel{
 		btnActividades.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				btnLugares.setBackground(colorAzul);
+				btnActividades.setBackground(colorAzul);
 				padre.getPanelPrincipal().remove(este);
 				ConsultarActividades panel = new ConsultarActividades(padre, este);
 				padre.getPanelPrincipal().add(panel);

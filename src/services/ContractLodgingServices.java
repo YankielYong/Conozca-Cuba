@@ -17,6 +17,7 @@ public class ContractLodgingServices {
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, contractCode);
 		preparedStatement.setInt(2, lodgingCode);
+		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
 	}

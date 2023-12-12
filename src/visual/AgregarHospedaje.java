@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import dto.RoomDTO;
 import services.HotelServices;
 import services.LodgingServices;
 import services.RoomServices;
@@ -79,7 +80,7 @@ public class AgregarHospedaje extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Agregar Transporte");
+		lblNombre = new JLabel("Agregar Hospedaje");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -364,13 +365,14 @@ public class AgregarHospedaje extends MiJPanel{
 					try{hotelServices.findHotel(hotel);} 
 					catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
 						throw new IllegalArgumentException("No existe ningún hotel con ese código");}
-					try{roomServices.findRoom(habitacion);} 
+					RoomDTO r = null;
+					try{r=roomServices.findRoom(habitacion);} 
 					catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
 						throw new IllegalArgumentException("No existe ninguna habitación con ese código");}
 					try{seasonServices.findSeason(temporada);} 
 					catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
 						throw new IllegalArgumentException("No existe ninguna temporada con ese código");}
-					lodgingServices.insertLodging(hotel, temporada, habitacion, precio);
+					lodgingServices.insertLodging(hotel, temporada, habitacion, precio+r.getSurchargeRoom());
 					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hospedaje fue agregado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHospedajes();

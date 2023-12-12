@@ -17,6 +17,7 @@ public class ContractEventServices {
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, contractCode);
 		preparedStatement.setInt(2, eventCode);
+		preparedStatement.execute();
 		preparedStatement.close();
 		connection.close();
 	}

@@ -68,12 +68,23 @@ public class Validaciones {
 		}
 	}
 	
+	public static void contrato(String desc, Date fechaInicio, Date fechaFin, Date fechaConc) throws IllegalArgumentException{
+		if(fechaConc.compareTo(fechaInicio)>0) throw new IllegalArgumentException("La fecha de inicio no puede ser antes de la fecha de conciliación");
+		try{
+			noVacio(desc);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException("El campo de descripción"+e.getMessage());
+		}
+	}
+	
 	public static void paquete(String nombre, int personas, int dias, int noches) throws IllegalArgumentException{
 		try{noVacio(nombre);}catch(IllegalArgumentException e){
 			throw new IllegalArgumentException("El campo de descripción"+e.getMessage());}
 		if(personas < 1) throw new IllegalArgumentException("El paquete debe ser para al menos a 1 persona");
 		if(dias < 2) throw new IllegalArgumentException("El paquete debe ser para al menos a 2 días");
 		if(noches < 1) throw new IllegalArgumentException("El paquete debe ser para al menos a 1 noche");
+		if(dias != noches+1) throw new IllegalArgumentException("Si son "+dias+" días, deberían ser "+(dias-1)+" noches");
 	}
 	
 	public static void evento(String lugar, String act) throws IllegalArgumentException{
