@@ -157,6 +157,14 @@ public class ConsultarEventos extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaEventos.get(pos).getEventCode();
+				if(anterior instanceof AgregarContrato)
+					((AgregarContrato)anterior).setEntidad(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

@@ -163,6 +163,14 @@ public class ConsultarHospedajes extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaHospedajes.get(pos).getLodgingCode();
+				if(anterior instanceof AgregarContrato)
+					((AgregarContrato)anterior).setEntidad(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

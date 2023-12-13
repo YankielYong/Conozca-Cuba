@@ -99,6 +99,7 @@ public class Principal extends JFrame{
 	private EditarHotel panelEditarHotel;
 	private EditarUsuario panelEditarUsuario;
 	private EditarPaquete panelEditarPaquete;
+	private EditarHospedaje panelEditarHospedaje;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -185,11 +186,9 @@ public class Principal extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removerPanel();
-				if(panelAbierto != Paneles.PANEL_PERFIL){
-					panelPerfil = new Perfil(este, user, roleUser);
-					panelPrincipal.add(panelPerfil);
-					panelPrincipal.repaint();
-				}
+				panelPerfil = new Perfil(este, user, roleUser);
+				panelPrincipal.add(panelPerfil);
+				panelPrincipal.repaint();
 			}
 		});
 		btnPerfil.addMouseListener(new MouseAdapter() {
@@ -219,11 +218,9 @@ public class Principal extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removerPanel();
-				if(panelAbierto != Paneles.PANEL_DESCUBRIR){
-					panelDescubrir = new Descubrir(este);
-					panelPrincipal.add(panelDescubrir);
-					panelPrincipal.repaint();
-				}
+				panelDescubrir = new Descubrir(este);
+				panelPrincipal.add(panelDescubrir);
+				panelPrincipal.repaint();
 			}
 		});
 		btnDescubrir.addMouseListener(new MouseAdapter() {
@@ -249,11 +246,9 @@ public class Principal extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removerPanel();
-				if(panelAbierto != Paneles.PANEL_GESTION){
-					panelGestion = new Gestion(este, user, roleUser);
-					panelPrincipal.add(panelGestion);
-					panelPrincipal.repaint();
-				}
+				panelGestion = new Gestion(este, user, roleUser);
+				panelPrincipal.add(panelGestion);
+				panelPrincipal.repaint();
 			}
 		});
 		btnGestion.addMouseListener(new MouseAdapter() {
@@ -289,8 +284,10 @@ public class Principal extends JFrame{
 		else if(roleUser.getRoleName().equals("Gestor de Ventas"))
 			vistaGestorVentas();
 	}
-	
+
 	private void removerPanel(){
+		if(panelAbierto == Paneles.PANEL_PERFIL)
+			panelPrincipal.remove(panelPerfil);
 		if(panelAbierto == Paneles.PANEL_DESCUBRIR)
 			panelPrincipal.remove(panelDescubrir);
 		else if(panelAbierto == Paneles.PANEL_GESTION)
@@ -379,6 +376,8 @@ public class Principal extends JFrame{
 			panelPrincipal.remove(panelEditarHabitacion);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_PAQUETES)
 			panelPrincipal.remove(panelEditarPaquete);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_HOSPEDAJES)
+			panelPrincipal.remove(panelEditarHospedaje);
 	}
 
 	private void vistaGestorVentas(){
@@ -573,6 +572,10 @@ public class Principal extends JFrame{
 
 	public void setPanelEditarPaquete(EditarPaquete panelEditarPaquete) {
 		this.panelEditarPaquete = panelEditarPaquete;
+	}
+
+	public void setPanelEditarHospedaje(EditarHospedaje panelEditarHospedaje) {
+		this.panelEditarHospedaje = panelEditarHospedaje;
 	}
 
 	public void setPanelAbierto(int panel){

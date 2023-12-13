@@ -150,6 +150,14 @@ public class ConsultarPaquetes extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaPaquetes.get(pos).getPackageCode();
+				if(anterior instanceof AgregarContrato)
+					((AgregarContrato)anterior).setPaquete(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

@@ -639,4 +639,12 @@ public class AgregarContrato extends MiJPanel{
 		}
 	}
 	
+	public void setPaquete(int code){
+		txtPaquete.setText(String.valueOf(code));
+	}
+	
+	public void setEntidad(int code){
+		txtEntidad.setText(String.valueOf(code));
+	}
+	
 }

@@ -1946,6 +1946,11 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
+				else if(btnHospedajes.isBorderPainted()){
+					EditarHospedaje panel = new EditarHospedaje(padre, este, listaHospedajes.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 		}
 		else{

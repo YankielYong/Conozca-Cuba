@@ -17,29 +17,35 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
-import dto.FoodPlanDTO;
+import dto.ContractLodgingDTO;
+import dto.LodgingDTO;
 import dto.RoomDTO;
-import services.FoodPlanServices;
+import dto.TouristPackageDTO;
+import services.ContractLodgingServices;
+import services.ContractServices;
+import services.LodgingServices;
 import services.RoomServices;
 import services.ServicesLocator;
+import services.TouristPackageServices;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
-import utils.PropiedadesComboBox;
 import utils.Validaciones;
 
-public class EditarHabitacion extends MiJPanel {
-	
-	private FoodPlanServices foodPlanServices = ServicesLocator.getFoodPlanServices();
+public class EditarHospedaje extends MiJPanel{
+
+	private ContractLodgingServices contractLodgingServices = ServicesLocator.getContractLodgingServices();
+	private ContractServices contractServices = ServicesLocator.getContractServices();
+	private LodgingServices lodgingServices = ServicesLocator.getLodgingServices();
 	private RoomServices roomServices = ServicesLocator.getRoomServices();
-	
-	private ArrayList<FoodPlanDTO> listaPlanes;
+	private TouristPackageServices touristPackageServices = ServicesLocator.getTouristPackageServices();
+	private LodgingDTO ld;
+	private RoomDTO r;
 	
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -51,24 +57,26 @@ public class EditarHabitacion extends MiJPanel {
 	private JPanel panelInferior;
 	private JButton btnAtras;
 	private JButton btnEditar;
-	
-	private JComboBox<String> cbPlan;
-	private JTextField txtRecargo;
+	private JTextField txtPrecio;
 	
 	private Principal padre;
 	private Gestion anterior;
-	private EditarHabitacion este;
-	private RoomDTO habit;
+	private EditarHospedaje este;
 	
-	public EditarHabitacion(Principal p, Gestion a, RoomDTO h){
+	public EditarHospedaje(Principal p, Gestion a, LodgingDTO l){
 		este = this;
 		padre = p;
 		anterior = a;
-		habit = h;
-		setTipoPanel(Paneles.PANEL_EDITAR_HABITACION);
+		ld = l;
+		try {
+			r = roomServices.findRoom(ld.getRoomCode());
+		} catch (ClassNotFoundException | SQLException e2) {
+			e2.printStackTrace();
+		}
+		setTipoPanel(Paneles.PANEL_EDITAR_HOSPEDAJES);
 		padre.setPanelAbierto(getTipoPanel());
-		padre.setPanelEditarHabitacion(este);
-		setBounds(pantalla.width/2-221, pantalla.height/2-281, 442, 312);
+		padre.setPanelEditarHospedaje(este);
+		setBounds(pantalla.width/2-221, pantalla.height/2-156, 442, 262);
 		setBackground(Color.darkGray);
 		setLayout(null);
 		
@@ -77,7 +85,7 @@ public class EditarHabitacion extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Editar Habitación");
+		lblNombre = new JLabel("Editar Hospedaje");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -116,7 +124,7 @@ public class EditarHabitacion extends MiJPanel {
 		panelSuperior.add(btnCerrar);
 		
 		panelInferior = new JPanel(null);
-		panelInferior.setBounds(1, 31, 440, 280);
+		panelInferior.setBounds(1, 31, 440, 230);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 		
@@ -161,40 +169,24 @@ public class EditarHabitacion extends MiJPanel {
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel plan = new JLabel("Plan Alimenticio:");
-		plan.setBounds(50, 110, 125, 30);
-		plan.setForeground(Color.black);
-		plan.setFont(new Font("Arial", Font.PLAIN, 16));
-		panelInferior.add(plan);
+		JLabel pre = new JLabel("Precio sin recargo de habitación:");
+		pre.setBounds(50, 110, 235, 30);
+		pre.setForeground(Color.black);
+		pre.setFont(new Font("Arial", Font.PLAIN, 16));
+		panelInferior.add(pre);
 		
-		cbPlan = new JComboBox<String>();
-		cbPlan.setBounds(175, 110, 215, 30);
-		cbPlan.setBackground(Color.white);
-		cbPlan.setFocusable(false);
-		cbPlan.setForeground(Color.black);
-		cbPlan.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbPlan.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
-		cbPlan.setUI(PropiedadesComboBox.createUI(getRootPane(), cbPlan.getBounds()));
-		panelInferior.add(cbPlan);
-		
-		JLabel recargo = new JLabel("Recargo de Habitación:");
-		recargo.setBounds(50, 160, 174, 30);
-		recargo.setForeground(Color.black);
-		recargo.setFont(new Font("Arial", Font.PLAIN, 16));
-		panelInferior.add(recargo);
-		
-		txtRecargo = new JTextField(String.valueOf(habit.getSurchargeRoom()));
-		txtRecargo.addKeyListener(new KeyAdapter() {
+		txtPrecio = new JTextField(String.valueOf(ld.getLodgingPrice()-r.getSurchargeRoom()));
+		txtPrecio.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				Validaciones.soloNumeroYUnaComa(e, txtRecargo.getText());
+				Validaciones.soloNumeroYUnaComa(e, txtPrecio.getText());
 			}
 		});
-		txtRecargo.setBounds(224, 160, 166, 30);
-		txtRecargo.setForeground(Color.black);
-		txtRecargo.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtRecargo.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
-		panelInferior.add(txtRecargo);
+		txtPrecio.setBounds(285, 110, 105, 30);
+		txtPrecio.setForeground(Color.black);
+		txtPrecio.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtPrecio.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
+		panelInferior.add(txtPrecio);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setFont(new Font("Arial", Font.BOLD, 18));
@@ -204,17 +196,19 @@ public class EditarHabitacion extends MiJPanel {
 				padre.getPanelPrincipal().remove(este);
 				padre.getPanelPrincipal().repaint();
 				try{
-					int code = habit.getRoomCode();
-					String tipo = habit.getRoomType();
-					int codF = listaPlanes.get(cbPlan.getSelectedIndex()).getFoodPlanCode();
-					String recargo = txtRecargo.getText();
-					if(recargo.isEmpty()) throw new IllegalArgumentException("El campo de recargo de habitación esta vacío");
-					if(recargo.charAt(recargo.length()-1)=='.') recargo = recargo.substring(0, recargo.length()-1);
-					double rec = Double.valueOf(recargo);
-					roomServices.updateRoom(code, tipo, rec, codF);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La habitación fue editada con éxito", MensajeAviso.CORRECTO);
+					int lCode = ld.getLodgingCode();
+					int hCode = ld.getHotelCode();
+					int rCode = ld.getRoomCode();
+					int sCode = ld.getSeasonCode();
+					String price = txtPrecio.getText();
+					if(price.isEmpty()) throw new IllegalArgumentException("El campo del precio del hospedaje está vacío");
+					double precioN = Double.valueOf(price);
+					double precioV = ld.getLodgingPrice();
+					lodgingServices.updateLodging(lCode, hCode, sCode, rCode, precioN+r.getSurchargeRoom());
+					actualizar(lCode, precioN+r.getSurchargeRoom(), precioV);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hospedaje fue editado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
-					anterior.ponerHabitacion();
+					anterior.ponerHospedajes();
 				} catch (IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
 					ma.setVisible(true);
@@ -232,22 +226,36 @@ public class EditarHabitacion extends MiJPanel {
 			}
 		});
 		btnEditar.setModel(new MyButtonModel());
-		btnEditar.setBounds(50, 220, 340, 35);
+		btnEditar.setBounds(50, 170, 340, 35);
 		btnEditar.setBackground(colorAzul);
 		btnEditar.setForeground(Color.black);
 		btnEditar.setFocusable(false);
 		btnEditar.setBorderPainted(false);
 		panelInferior.add(btnEditar);
-		
-		llenarComboBox();
 	}
 	
-	private void llenarComboBox(){
+	private void actualizar(int code, double precioNuevo, double precioViejo){
 		try {
-			listaPlanes = foodPlanServices.selectAllFoddPlans();
-			for(FoodPlanDTO f : listaPlanes)
-				cbPlan.addItem(f.getTypeOfFoodPlan());
-			cbPlan.setSelectedItem(habit.getRoomType());
+			ArrayList<ContractLodgingDTO> listaLod = contractLodgingServices.selectAllContractLodging();
+			for(ContractLodgingDTO cl : listaLod){
+				if(cl.getLodgingCode()==code){
+					int codeP = contractServices.findContract(cl.getContractCode()).getPackageCode();
+					TouristPackageDTO tp = touristPackageServices.findTouristPackage(codeP);
+					String nombre = tp.getPromotionalName();
+					double costo = tp.getPackageCost();
+					double precio = tp.getPackagePrice();
+					int cantP = tp.getNumberOfPeople();
+					int cantD = tp.getNumberOfDays();
+					int cantN = tp.getNumberOfNights();
+					touristPackageServices.updateTouristPackage(codeP, nombre, 
+							precio-(precioViejo*cantP*cantN), 
+							costo, cantP, cantD, cantN);
+					precio-=precioViejo*cantP*cantN;
+					touristPackageServices.updateTouristPackage(codeP, nombre, 
+							precio+(precioNuevo*cantP*cantN), 
+							costo, cantP, cantD, cantN);
+				}
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
