@@ -309,4 +309,12 @@ public class AgregarEvento extends MiJPanel{
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
 	}
+	
+	public void setLugar(int code){
+		txtLugar.setText(String.valueOf(code));
+	}
+	
+	public void setActividad(int code){
+		txtActividad.setText(String.valueOf(code));
+	}
 }

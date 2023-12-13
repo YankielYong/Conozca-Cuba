@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -24,9 +25,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+import dto.ContractEventDTO;
+import dto.EventDTO;
 import dto.PlaceDTO;
+import dto.TouristPackageDTO;
+import services.ContractEventServices;
+import services.ContractServices;
+import services.EventServices;
 import services.PlaceServices;
 import services.ServicesLocator;
+import services.TouristPackageServices;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
@@ -35,6 +43,10 @@ import utils.Validaciones;
 
 public class EditarLugar extends MiJPanel {
 	
+	private ContractServices contractServices = ServicesLocator.getContractServices();
+	private ContractEventServices contractEventServices = ServicesLocator.getContractEventServices();
+	private EventServices eventServices = ServicesLocator.getEventServices();
+	private TouristPackageServices touristPackageServices = ServicesLocator.getTouristPackageServices();
 	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
 
 	private static final long serialVersionUID = 1L;
@@ -262,6 +274,7 @@ public class EditarLugar extends MiJPanel {
 					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
 					Validaciones.lugar(cadena);
 					placeServices.updatePlace(codigo, cadena, cos, tipo);
+					actualizar(placeServices.findPlace(codigo));
 					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue editado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerLugares();
@@ -287,8 +300,39 @@ public class EditarLugar extends MiJPanel {
 		btnEditar.setForeground(Color.black);
 		btnEditar.setFocusable(false);
 		btnEditar.setBorderPainted(false);
-		panelInferior.add(btnEditar);
-		
+		panelInferior.add(btnEditar);	
+	}
+	
+	private void actualizar(PlaceDTO plN){
+		try {
+			double costoV = place.getCostPerPerson();
+			double costoN = plN.getCostPerPerson();
+			ArrayList<EventDTO> listaEventos = eventServices.selectAllEvents();
+			ArrayList<ContractEventDTO> listaContEve = contractEventServices.selectAllContractEvents();
+			for(EventDTO e : listaEventos){
+				if(e.getPlaceCode()==plN.getPlaceCode()){
+					for(ContractEventDTO ce : listaContEve){
+						if(ce.getEventCode()==e.getEventCode()){
+							int codPaquete = contractServices.findContract(ce.getContractCode()).getPackageCode();
+							TouristPackageDTO tp = touristPackageServices.findTouristPackage(codPaquete);
+							String nombre = tp.getPromotionalName();
+							double costo = tp.getPackageCost();
+							double precio = tp.getPackagePrice();
+							int cantP = tp.getNumberOfPeople();
+							int cantD = tp.getNumberOfDays();
+							int cantN = tp.getNumberOfNights();
+							touristPackageServices.updateTouristPackage(codPaquete, nombre, 
+									precio, costo-costoV*cantP, cantP, cantD, cantN);
+							costo = costo-costoV*cantP;
+							touristPackageServices.updateTouristPackage(codPaquete, nombre, 
+									precio, costo+costoN*cantP, cantP, cantD, cantN);
+						}
+					}
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

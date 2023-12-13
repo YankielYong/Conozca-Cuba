@@ -27,7 +27,6 @@ import services.ServicesLocator;
 import services.TransportModalityServices;
 import services.TransportServices;
 import services.VehicleServices;
-import utils.ConsultarModalidades;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
@@ -322,5 +321,13 @@ public class AgregarTransporte extends MiJPanel{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
+	}
+	
+	public void setVehiculo(int code){
+		txtVehiculo.setText(String.valueOf(code));
+	}
+	
+	public void setModalidad(int code){
+		txtModalidad.setText(String.valueOf(code));
 	}
 }

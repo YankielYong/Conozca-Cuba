@@ -148,6 +148,19 @@ public class ConsultarTemporadas extends MiJPanel{
 		panelInferior.add(lblLugares);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaTemporadas.get(pos).getSeasonCode();
+				if(anterior instanceof AgregarHospedaje)
+					((AgregarHospedaje)anterior).setTemporada(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
+			}
+		});
 		table.setFocusable(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);

@@ -400,5 +400,17 @@ public class AgregarHospedaje extends MiJPanel{
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
 	}
+	
+	public void setHotel(int code){
+		txtHotel.setText(String.valueOf(code));
+	}
+	
+	public void setHabitacion(int code){
+		txtHabitacion.setText(String.valueOf(code));
+	}
+	
+	public void setTemporada(int code){
+		txtTemporada.setText(String.valueOf(code));
+	}
 
 }

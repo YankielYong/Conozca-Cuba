@@ -150,6 +150,14 @@ public class ConsultarVehiculos extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaVehiculos.get(pos).getVehicleCode();
+				if(anterior instanceof AgregarTransporte)
+					((AgregarTransporte)anterior).setVehiculo(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

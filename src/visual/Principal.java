@@ -21,7 +21,6 @@ import dto.RoleDTO;
 import dto.UserDTO;
 import services.RoleServices;
 import services.ServicesLocator;
-import utils.ConsultarModalidades;
 import utils.MyButtonModel;
 import utils.Paneles;
 
@@ -100,6 +99,7 @@ public class Principal extends JFrame{
 	private EditarUsuario panelEditarUsuario;
 	private EditarPaquete panelEditarPaquete;
 	private EditarHospedaje panelEditarHospedaje;
+	private EditarActividad panelEditarActividad;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -378,6 +378,8 @@ public class Principal extends JFrame{
 			panelPrincipal.remove(panelEditarPaquete);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_HOSPEDAJES)
 			panelPrincipal.remove(panelEditarHospedaje);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_ACTIVIDAD)
+			panelPrincipal.remove(panelEditarActividad);
 	}
 
 	private void vistaGestorVentas(){
@@ -576,6 +578,10 @@ public class Principal extends JFrame{
 
 	public void setPanelEditarHospedaje(EditarHospedaje panelEditarHospedaje) {
 		this.panelEditarHospedaje = panelEditarHospedaje;
+	}
+
+	public void setPanelEditarActividad(EditarActividad panelEditarActividad) {
+		this.panelEditarActividad = panelEditarActividad;
 	}
 
 	public void setPanelAbierto(int panel){

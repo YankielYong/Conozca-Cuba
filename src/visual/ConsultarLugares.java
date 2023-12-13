@@ -152,6 +152,14 @@ public class ConsultarLugares extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaLugares.get(pos).getPlaceCode();
+				if(anterior instanceof AgregarEvento)
+					((AgregarEvento)anterior).setLugar(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

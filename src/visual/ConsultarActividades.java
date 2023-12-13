@@ -151,6 +151,14 @@ public class ConsultarActividades extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaActividades.get(pos).getActivityCode();
+				if(anterior instanceof AgregarEvento)
+					((AgregarEvento)anterior).setActividad(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

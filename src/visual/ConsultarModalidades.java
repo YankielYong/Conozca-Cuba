@@ -1,4 +1,4 @@
-package utils;
+package visual;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,7 +26,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import dto.TransportModalityDTO;
 import services.ServicesLocator;
 import services.TransportModalityServices;
-import visual.Principal;
+import utils.MiJPanel;
+import utils.MyButtonModel;
+import utils.Paneles;
+import utils.TransportModalityTableModel;
 
 public class ConsultarModalidades extends MiJPanel{
 	
@@ -147,6 +150,14 @@ public class ConsultarModalidades extends MiJPanel{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int pos = table.getSelectedRow();
+				int code = listaModalidades.get(pos).getModalityCode();
+				if(anterior instanceof AgregarTransporte)
+					((AgregarTransporte)anterior).setModalidad(code);
+				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().add(anterior);
+				padre.getPanelPrincipal().repaint();
+				padre.setPanelAbierto(anterior.getTipoPanel());
 			}
 		});
 		table.setFocusable(false);

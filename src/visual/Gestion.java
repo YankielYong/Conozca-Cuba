@@ -1951,10 +1951,17 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
+				else if(btnActividades.isBorderPainted()){
+					EditarActividad panel = new EditarActividad(padre, este, listaActividades.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 		}
 		else{
-			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para editar", MensajeAviso.ERROR);
+			String err = "No seleccionó ningún elemento para editar";
+			if(btnContratos.isBorderPainted()) err = "No seleccionó ningún contrato para renovar";
+			MensajeAviso ma = new MensajeAviso(null, padre, este, err, MensajeAviso.ERROR);
 			ma.setVisible(true);
 		}
 	}
