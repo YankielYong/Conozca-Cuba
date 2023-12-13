@@ -80,7 +80,7 @@ public class Validaciones {
 	
 	public static void paquete(String nombre, int personas, int dias, int noches) throws IllegalArgumentException{
 		try{noVacio(nombre);}catch(IllegalArgumentException e){
-			throw new IllegalArgumentException("El campo de descripción"+e.getMessage());}
+			throw new IllegalArgumentException("El campo del nombre promocional"+e.getMessage());}
 		if(personas < 1) throw new IllegalArgumentException("El paquete debe ser para al menos a 1 persona");
 		if(dias < 2) throw new IllegalArgumentException("El paquete debe ser para al menos a 2 días");
 		if(noches < 1) throw new IllegalArgumentException("El paquete debe ser para al menos a 1 noche");

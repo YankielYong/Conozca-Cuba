@@ -65,7 +65,7 @@ public class AgregarPaquete extends MiJPanel{
 		anterior = a;
 		este = this;
 		padre = p;
-		setTipoPanel(Paneles.PANEL_AGREGAR_USUARIO);
+		setTipoPanel(Paneles.PANEL_AGREGAR_PAQUETE);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelAgregarPaquete(este);
 		setBounds(pantalla.width/2-181, pantalla.height/2-231, 362, 412);

@@ -98,6 +98,7 @@ public class Principal extends JFrame{
 	private EditarModalidad panelEditarModalidad;
 	private EditarHotel panelEditarHotel;
 	private EditarUsuario panelEditarUsuario;
+	private EditarPaquete panelEditarPaquete;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -376,6 +377,8 @@ public class Principal extends JFrame{
 			panelPrincipal.remove(panelEditarUsuario);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_HABITACION)
 			panelPrincipal.remove(panelEditarHabitacion);
+		else if(panelAbierto == Paneles.PANEL_EDITAR_PAQUETES)
+			panelPrincipal.remove(panelEditarPaquete);
 	}
 
 	private void vistaGestorVentas(){
@@ -566,6 +569,10 @@ public class Principal extends JFrame{
 	public void setPanelConsultarTransportes(
 			ConsultarTransportes panelConsultarTransportes) {
 		this.panelConsultarTransportes = panelConsultarTransportes;
+	}
+
+	public void setPanelEditarPaquete(EditarPaquete panelEditarPaquete) {
+		this.panelEditarPaquete = panelEditarPaquete;
 	}
 
 	public void setPanelAbierto(int panel){

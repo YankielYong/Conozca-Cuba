@@ -370,6 +370,7 @@ public class Gestion extends MiJPanel{
 		esGestorAgencia = true;
 		scrollPane.setBounds(300, 20, 880, 580);
 		btnVer.setBounds(300, 615, 205, 35);
+		btnVer.setVisible(false);
 		btnAgregar.setBounds(525, 615, 205, 35);
 		btnEliminar.setBounds(750, 615, 205, 35);
 		btnEditar.setBounds(975, 615, 205, 35);
@@ -737,6 +738,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				btnEditar.setText("Editar");
+				este.repaint();
 				ponerActividades();
 			}
 		});
@@ -763,6 +770,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				btnEditar.setText("Renovar");
+				este.repaint();
 				ponerContratos();
 			}
 		});
@@ -789,6 +802,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(false);
+				btnEditar.setText("Editar");
+				este.repaint();
 				ponerEventos();
 			}
 		});
@@ -815,6 +834,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				btnEditar.setText("Editar");
+				este.repaint();
 				ponerHospedajes();
 			}
 		});
@@ -841,6 +866,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(false);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				btnEditar.setText("Editar");
+				este.repaint();
 				ponerModalidades();
 			}
 		});
@@ -867,6 +898,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(true);
 				btnTransportes.setBorderPainted(false);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(true);
+				btnEditar.setText("Editar");
+				este.repaint();
 				ponerPaquetes();
 			}
 		});
@@ -893,6 +930,12 @@ public class Gestion extends MiJPanel{
 				btnPaquetes.setBorderPainted(false);
 				btnTransportes.setBorderPainted(true);
 
+				btnVer.setVisible(true);
+				btnAgregar.setVisible(true);
+				btnEliminar.setVisible(true);
+				btnEditar.setVisible(false);
+				btnEditar.setText("Editar");
+				este.repaint();
 				ponerTransportes();
 			}
 		});
@@ -1895,6 +1938,11 @@ public class Gestion extends MiJPanel{
 			else{
 				if(btnModalidades.isBorderPainted()){
 					EditarModalidad panel = new EditarModalidad(padre, este, listaModalidades.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnPaquetes.isBorderPainted()){
+					EditarPaquete panel = new EditarPaquete(padre, este, listaPaquetes.get(pos));
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}

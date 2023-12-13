@@ -46,5 +46,6 @@ public class Paneles {
 	public static int PANEL_CONSULTAR_EVENTOS = 42;
 	public static int PANEL_CONSULTAR_TRANSPORTES = 43;
 	public static int PANEL_CONSULTAR_PAQUETES = 44;
+	public static int PANEL_EDITAR_PAQUETES = 45;
 	
 }
