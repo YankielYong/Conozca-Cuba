@@ -16,9 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import dto.FoodPlanDTO;
 import dto.PlaceDTO;
-import dto.RoomDTO;
 import utils.MiJPanel;
 import utils.MyButtonModel;
 import utils.Paneles;
