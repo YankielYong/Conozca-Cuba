@@ -164,7 +164,7 @@ public class AgregarHospedaje extends MiJPanel{
 		logo.setBounds(75, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel hot = new JLabel("C骴igo del Hotel:");
+		JLabel hot = new JLabel("C贸digo del Hotel:");
 		hot.setBounds(50, 110, 130, 30);
 		hot.setForeground(Color.black);
 		hot.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -214,7 +214,7 @@ public class AgregarHospedaje extends MiJPanel{
 		btnHotel.setBorderPainted(false);
 		panelInferior.add(btnHotel);
 		
-		JLabel hab = new JLabel("C骴igo de la Habitaci髇:");
+		JLabel hab = new JLabel("C锟絛igo de la Habitaci贸n:");
 		hab.setBounds(50, 160, 180, 30);
 		hab.setForeground(Color.black);
 		hab.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -264,7 +264,7 @@ public class AgregarHospedaje extends MiJPanel{
 		btnHabitacion.setBorderPainted(false);
 		panelInferior.add(btnHabitacion);
 		
-		JLabel temp = new JLabel("C骴igo de la Temporada:");
+		JLabel temp = new JLabel("C贸digo de la Temporada:");
 		temp.setBounds(50, 210, 185, 30);
 		temp.setForeground(Color.black);
 		temp.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -364,16 +364,16 @@ public class AgregarHospedaje extends MiJPanel{
 					double precio = Double.valueOf(pr);
 					try{hotelServices.findHotel(hotel);} 
 					catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ning鷑 hotel con ese c骴igo");}
+						throw new IllegalArgumentException("No existe ning煤n hotel con ese c贸digo");}
 					RoomDTO r = null;
 					try{r=roomServices.findRoom(habitacion);} 
 					catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ninguna habitaci髇 con ese c骴igo");}
+						throw new IllegalArgumentException("No existe ninguna habitaci贸n con ese c贸digo");}
 					try{seasonServices.findSeason(temporada);} 
 					catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ninguna temporada con ese c骴igo");}
+						throw new IllegalArgumentException("No existe ninguna temporada con ese c锟絛igo");}
 					lodgingServices.insertLodging(hotel, temporada, habitacion, precio+r.getSurchargeRoom());
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hospedaje fue agregado con 閤ito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hospedaje fue agregado con 茅xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHospedajes();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

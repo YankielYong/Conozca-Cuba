@@ -171,7 +171,7 @@ public class Descubrir extends MiJPanel{
 		image = img.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconPaquete = new ImageIcon(image);
 
-		btnPaquetes = new JButton(" Paquetes Turísticos");
+		btnPaquetes = new JButton(" Paquetes TurÃ­sticos");
 		btnPaquetes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(btnHoteles.isBorderPainted()){

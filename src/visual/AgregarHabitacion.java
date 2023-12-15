@@ -75,7 +75,7 @@ public class AgregarHabitacion extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Agregar Habitaci髇");
+		lblNombre = new JLabel("Agregar Habitaci贸n");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -159,7 +159,7 @@ public class AgregarHabitacion extends MiJPanel{
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel tipo = new JLabel("Tipo de Habitaci髇:");
+		JLabel tipo = new JLabel("Tipo de Habitaci贸n:");
 		tipo.setBounds(50, 110, 144, 30);
 		tipo.setForeground(Color.black);
 		tipo.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -192,7 +192,7 @@ public class AgregarHabitacion extends MiJPanel{
 		cbPlan.setUI(PropiedadesComboBox.createUI(getRootPane(), cbPlan.getBounds()));
 		panelInferior.add(cbPlan);
 		
-		JLabel recargo = new JLabel("Recargo de Habitaci髇:");
+		JLabel recargo = new JLabel("Recargo de Habitaci贸n:");
 		recargo.setBounds(50, 210, 174, 30);
 		recargo.setForeground(Color.black);
 		recargo.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -211,7 +211,7 @@ public class AgregarHabitacion extends MiJPanel{
 		txtRecargo.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtRecargo);
 		
-		btnAgregar = new JButton("Agregar Habitaci髇");
+		btnAgregar = new JButton("Agregar Habitaci贸n");
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -221,11 +221,11 @@ public class AgregarHabitacion extends MiJPanel{
 					String tipo = (String)cbTipo.getSelectedItem();
 					int codF = listaPlanes.get(cbPlan.getSelectedIndex()).getFoodPlanCode();
 					String recargo = txtRecargo.getText();
-					if(recargo.isEmpty()) throw new IllegalArgumentException("El campo de recargo de habitaci髇 esta vac韔");
+					if(recargo.isEmpty()) throw new IllegalArgumentException("El campo de recargo de habitaci贸n esta vac铆o");
 					if(recargo.charAt(recargo.length()-1)=='.') recargo = recargo.substring(0, recargo.length()-1);
 					double rec = Double.valueOf(recargo);
 					roomServices.insertRoom(tipo, rec, codF);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La habitaci髇 fue agregada con 閤ito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La habitaci贸n fue agregada con 茅xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHabitacion();
 				} catch (IllegalArgumentException | ClassNotFoundException | SQLException e1){

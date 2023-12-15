@@ -6,7 +6,7 @@ public class ActivityTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public ActivityTableModel(){
-		String[] nombreColumnas = {"Código", "Fecha", "Precio", "Descripción"};
+		String[] nombreColumnas = {"CÃ³digo", "Fecha", "Precio", "DescripciÃ³n"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

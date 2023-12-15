@@ -190,7 +190,7 @@ public class EditarHotel extends MiJPanel{
 		txtNombre.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtNombre);
 		
-		JLabel telefono = new JLabel("TelÈfono: ");
+		JLabel telefono = new JLabel("Tel√©fono: ");
 		telefono.setBounds(50, 160, 70, 30);
 		telefono.setForeground(Color.black);
 		telefono.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -281,7 +281,7 @@ public class EditarHotel extends MiJPanel{
 		mEcoturismo.setFont(new Font("Arial", Font.PLAIN, 16));
 		panelInferior.add(mEcoturismo);
 		
-		mHistorico = new JRadioButton("HistÛrico");
+		mHistorico = new JRadioButton("Hist√≥rico");
 		mHistorico.setBounds(240, 420, 120, 30);
 		mHistorico.setBackground(Color.white);
 		mHistorico.setForeground(Color.black);
@@ -339,18 +339,18 @@ public class EditarHotel extends MiJPanel{
 					hotelServices.updateHotel(codigo, nombre, direccion, categoria, telefono, fax, correo, 
 							localizacion, modalidades, cantHabitaciones, cantPisos, distCiudad, distAereopuerto, 
 							cadenaHotelera, provincia);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hotel fue editado con Èxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hotel fue editado con √©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHotel();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					if(e1.getMessage().equals("El campo de la cantidad de pisos del hotel est· vacÌo"))
+					if(e1.getMessage().equals("El campo de la cantidad de pisos del hotel est√° vac√≠o"))
 						ma.agrandar(60);
-					if(e1.getMessage().equals("El campo de la cantidad de habitaciones del hotel est· vacÌo"))
+					if(e1.getMessage().equals("El campo de la cantidad de habitaciones del hotel est√° vac√≠o"))
 						ma.agrandar(120);
-					if(e1.getMessage().equals("El campo de distancia a la ciudad m·s cercana est· vacÌo"))
+					if(e1.getMessage().equals("El campo de distancia a la ciudad m√°s cercana est√° vac√≠o"))
 						ma.agrandar(100);
-					if(e1.getMessage().equals("El campo de distancia al aereopuerto est· vacÌo"))
+					if(e1.getMessage().equals("El campo de distancia al aereopuerto est√° vac√≠o"))
 						ma.agrandar(40);
 					ma.setVisible(true);
 				}
@@ -387,7 +387,7 @@ public class EditarHotel extends MiJPanel{
 				if(mEcoturismo.isSelected()){
 					mod += ", Ecoturismo";
 					if(mHistorico.isSelected()){
-						mod += ", HistÛrico";
+						mod += ", Hist√≥rico";
 						if(mVerano.isSelected()){
 							mod += ", Verano";
 							if(mNavidad.isSelected()){
@@ -433,7 +433,7 @@ public class EditarHotel extends MiJPanel{
 					}
 				}
 				else if(mHistorico.isSelected()){
-					mod += ", HistÛrico";
+					mod += ", Hist√≥rico";
 					if(mVerano.isSelected()){
 						mod += ", Verano";
 						if(mNavidad.isSelected()){
@@ -481,7 +481,7 @@ public class EditarHotel extends MiJPanel{
 			else if(mEcoturismo.isSelected()){
 				mod += ", Ecoturismo";
 				if(mHistorico.isSelected()){
-					mod += ", HistÛrico";
+					mod += ", Hist√≥rico";
 					if(mVerano.isSelected()){
 						mod += ", Verano";
 						if(mNavidad.isSelected()){
@@ -527,7 +527,7 @@ public class EditarHotel extends MiJPanel{
 				}
 			}
 			else if(mHistorico.isSelected()){
-				mod += ", HistÛrico";
+				mod += ", Hist√≥rico";
 				if(mVerano.isSelected()){
 					mod += ", Verano";
 					if(mNavidad.isSelected()){
@@ -577,7 +577,7 @@ public class EditarHotel extends MiJPanel{
 			if(mEcoturismo.isSelected()){
 				mod += ", Ecoturismo";
 				if(mHistorico.isSelected()){
-					mod += ", HistÛrico";
+					mod += ", Hist√≥rico";
 					if(mVerano.isSelected()){
 						mod += ", Verano";
 						if(mNavidad.isSelected()){
@@ -623,7 +623,7 @@ public class EditarHotel extends MiJPanel{
 				}
 			}
 			else if(mHistorico.isSelected()){
-				mod += ", HistÛrico";
+				mod += ", Hist√≥rico";
 				if(mVerano.isSelected()){
 					mod += ", Verano";
 					if(mNavidad.isSelected()){
@@ -672,7 +672,7 @@ public class EditarHotel extends MiJPanel{
 		else if(mEcoturismo.isSelected()){
 			mod += "Ecoturismo";
 			if(mHistorico.isSelected()){
-				mod += ", HistÛrico";
+				mod += ", Hist√≥rico";
 				if(mVerano.isSelected()){
 					mod += ", Verano";
 					if(mNavidad.isSelected()){
@@ -718,7 +718,7 @@ public class EditarHotel extends MiJPanel{
 			}
 		}
 		else if(mHistorico.isSelected()){
-			mod += "HistÛrico";
+			mod += "Hist√≥rico";
 			if(mVerano.isSelected()){
 				mod += ", Verano";
 				if(mNavidad.isSelected()){
@@ -763,7 +763,7 @@ public class EditarHotel extends MiJPanel{
 			mod += "Todo Incluido";
 		}
 		else
-			throw new IllegalArgumentException("No seleccionÛ ninguna modalidad");
+			throw new IllegalArgumentException("No seleccionÔøΩ ninguna modalidad");
 		return mod;
 	}
 	
@@ -775,7 +775,7 @@ public class EditarHotel extends MiJPanel{
 			mGolf.setSelected(true);
 		if(mod.contains("Ecoturismo"))
 			mEcoturismo.setSelected(true);
-		if(mod.contains("HistÛrico"))
+		if(mod.contains("Hist√≥rico"))
 			mHistorico.setSelected(true);
 		if(mod.contains("Verano"))
 			mVerano.setSelected(true);

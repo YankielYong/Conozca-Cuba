@@ -6,7 +6,7 @@ public class ProvinceTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public ProvinceTableModel(){
-		String[] nombreColumnas = {"Código", "Nombre"};
+		String[] nombreColumnas = {"CÃ³digo", "Nombre"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

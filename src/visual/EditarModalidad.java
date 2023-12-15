@@ -205,30 +205,30 @@ public class EditarModalidad extends MiJPanel{
 						String costoKmIV = "";
 						String costoHrEsp = "";
 						if(ckmC) costoKm = txtCKm.getText();
-						else throw new IllegalArgumentException("El campo del costo por kilÛmetro est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por kil√≥metro est√° vac√≠o");
 						if(ckmivC) costoKmIV = txtCKmIV.getText();
-						else throw new IllegalArgumentException("El campo del costo por kilÛmetro ida y vuelta est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por kil√≥metro ida y vuelta est√° vac√≠o");
 						if(chresperaC) costoHrEsp = txtCHrEspera.getText();
-						else throw new IllegalArgumentException("El campo del costo por horas de espera est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por horas de espera est√° vac√≠o");
 						Validaciones.costoKilometraje(costoKm, costoKmIV, costoHrEsp);
 						double coskm = Double.valueOf(costoKm);
 						double coskmiv = Double.valueOf(costoKmIV);
 						double coshr = Double.valueOf(costoHrEsp);
 						costPerKilometerServices.updateCostPerKilometer(mod.getModalityCode(), coskm, coskmiv, coshr);
 					}
-					else if(type.equals("Costo por horas y kilÛmetros")){
+					else if(type.equals("Costo por horas y kil√≥metros")){
 						String costkmrec = "";
 						String costohr = "";
 						String costokmex = "";
 						String costohrex = "";
 						if(ckmrecC) costkmrec = txtCKmRec.getText();
-						else throw new IllegalArgumentException("El campo del costo por kilÛmetro recorrido est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por kil√≥metro recorrido est√° vac√≠o");
 						if(chrC) costohr = txtCHr.getText();
-						else throw new IllegalArgumentException("El campo del costo por hora est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por hora est√° vac√≠o");
 						if(ckmextraC) costokmex = txtCKmExtra.getText();
-						else throw new IllegalArgumentException("El campo del costo por kilÛmetros extras est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por kil√≥metros extras est√° vac√≠o");
 						if(chrExtraC) costohrex = txtCHrExtra.getText();
-						else throw new IllegalArgumentException("El campo del costo por horas extras est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por horas extras est√° vac√≠o");
 						Validaciones.costoHorasKilometro(costkmrec, costohr, costokmex, costohrex);
 						double coskmr = Double.valueOf(costkmrec);
 						double coshr = Double.valueOf(costohr);
@@ -241,35 +241,35 @@ public class EditarModalidad extends MiJPanel{
 						String costoR = "";
 						String costoIV = "";
 						if(descrC) des = txtDescR.getText();
-						else throw new IllegalArgumentException("El campo de la descripciÛn del recorrido est· vacÌo");
+						else throw new IllegalArgumentException("El campo de la descripci√≥n del recorrido est√° vac√≠o");
 						if(costorC) costoR = txtCostoR.getText();
-						else throw new IllegalArgumentException("El campo del costo por recorrido est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por recorrido est√° vac√≠o");
 						if(costoivrC) costoIV = txtCostoIVR.getText();
-						else throw new IllegalArgumentException("El campo del costo por recorrido ida y vuelta est· vacÌo");
+						else throw new IllegalArgumentException("El campo del costo por recorrido ida y vuelta est√° vac√≠o");
 						Validaciones.costoRecorrido(des, costoR, costoIV);
 						double costoRecorrido = Double.valueOf(costoR);
 						double costoRecorridoIV = Double.valueOf(costoIV);
 						costPerEstablishedToursServices.updateCostPerEstablishedTours(mod.getModalityCode(), des, costoRecorrido, costoRecorridoIV);
 					}
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La modalidad de transporte fue editada con Èxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La modalidad de transporte fue editada con ÔøΩxito", MensajeAviso.CORRECTO);
 					ma.agrandar(45);
 					ma.setVisible(true);
 					anterior.ponerModalidades();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					if(e1.getMessage().equals("El campo del costo por kilÛmetro ida y vuelta est· vacÌo"))
+					if(e1.getMessage().equals("El campo del costo por kil√≥metro ida y vuelta est√° vac√≠o"))
 						ma.agrandar(80);
-					if(e1.getMessage().equals("El campo del costo por horas de espera est· vacÌo"))
+					if(e1.getMessage().equals("El campo del costo por horas de espera est√° vac√≠o"))
 						ma.agrandar(50);
-					if(e1.getMessage().equals("El campo del costo por kilÛmetro recorrido est· vacÌo"))
+					if(e1.getMessage().equals("El campo del costo por kil√≥metro recorrido est√° vac√≠o"))
 						ma.agrandar(70);
-					if(e1.getMessage().equals("El campo del costo por kilÛmetros extras est· vacÌo"))
+					if(e1.getMessage().equals("El campo del costo por kil√≥metros extras est√° vac√≠o"))
 						ma.agrandar(60);
-					if(e1.getMessage().equals("El campo del costo por horas extras est· vacÌo"))
+					if(e1.getMessage().equals("El campo del costo por horas extras est√° vac√≠o"))
 						ma.agrandar(35);
-					if(e1.getMessage().equals("El campo de la descripciÛn del recorrido est· vacÌo"))
+					if(e1.getMessage().equals("El campo de la descripci√≥n del recorrido est√° vac√≠o"))
 						ma.agrandar(50);
-					if(e1.getMessage().equals("El campo del costo por recorrido ida y vuelta est· vacÌo"))
+					if(e1.getMessage().equals("El campo del costo por recorrido ida y vuelta est√° vac√≠o"))
 						ma.agrandar(80);
 					ma.setVisible(true);
 				}
@@ -294,7 +294,7 @@ public class EditarModalidad extends MiJPanel{
 		
 		if(type.equals("Costo por kilometraje"))
 			costoPorKilometraje();
-		else if(type.equals("Costo por horas y kilÛmetros"))
+		else if(type.equals("Costo por horas y kil√≥metros"))
 			costoHorasRecorridas();
 		else{
 			costoPorRecorrido();
@@ -319,7 +319,7 @@ public class EditarModalidad extends MiJPanel{
 		txtCKm.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtCKm.getText().equals("Costo Por KilÛmetro")){
+				if(txtCKm.getText().equals("Costo Por Kil√≥metro")){
 					txtCKm.setText("");
 					txtCKm.setForeground(Color.black);
 				}
@@ -329,7 +329,7 @@ public class EditarModalidad extends MiJPanel{
 			public void focusLost(FocusEvent e) {
 				if(txtCKm!=null){
 					if(txtCKm.getText().equals("")){
-						txtCKm.setText("Costo Por KilÛmetro");
+						txtCKm.setText("Costo Por Kil√≥metro");
 						txtCKm.setForeground(Color.gray);
 						ckmC = false;
 					}
@@ -360,7 +360,7 @@ public class EditarModalidad extends MiJPanel{
 		txtCKmIV.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtCKmIV.getText().equals("Costo Por KilÛmetro Ida Y Vuelta")){
+				if(txtCKmIV.getText().equals("Costo Por Kil√≥metro Ida Y Vuelta")){
 					txtCKmIV.setText("");
 					txtCKmIV.setForeground(Color.black);
 				}
@@ -370,7 +370,7 @@ public class EditarModalidad extends MiJPanel{
 			public void focusLost(FocusEvent e) {
 				if(txtCKmIV!=null){
 					if(txtCKmIV.getText().equals("")){
-						txtCKmIV.setText("Costo Por KilÛmetro Ida Y Vuelta");
+						txtCKmIV.setText("Costo Por Kil√≥metro Ida Y Vuelta");
 						txtCKmIV.setForeground(Color.gray);
 						ckmivC = false;
 					}
@@ -454,7 +454,7 @@ public class EditarModalidad extends MiJPanel{
 		txtCKmRec.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtCKmRec.getText().equals("Costo Por KilÛmetro Recorrido")){
+				if(txtCKmRec.getText().equals("Costo Por Kil√≥metro Recorrido")){
 					txtCKmRec.setText("");
 					txtCKmRec.setForeground(Color.black);
 				}
@@ -464,7 +464,7 @@ public class EditarModalidad extends MiJPanel{
 			public void focusLost(FocusEvent e) {
 				if(txtCKmRec!=null){
 					if(txtCKmRec.getText().equals("")){
-						txtCKmRec.setText("Costo Por KilÛmetro Recorrido");
+						txtCKmRec.setText("Costo Por Kil√≥metro Recorrido");
 						txtCKmRec.setForeground(Color.gray);
 						ckmrecC = false;
 					}
@@ -536,7 +536,7 @@ public class EditarModalidad extends MiJPanel{
 		txtCKmExtra.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtCKmExtra.getText().equals("Costo Por KilÛmetros Extras")){
+				if(txtCKmExtra.getText().equals("Costo Por Kil√≥metros Extras")){
 					txtCKmExtra.setText("");
 					txtCKmExtra.setForeground(Color.black);
 				}
@@ -546,7 +546,7 @@ public class EditarModalidad extends MiJPanel{
 			public void focusLost(FocusEvent e) {
 				if(txtCKmExtra!=null){
 					if(txtCKmExtra.getText().equals("")){
-						txtCKmExtra.setText("Costo Por KilÛmetros Extras");
+						txtCKmExtra.setText("Costo Por Kil√≥metros Extras");
 						txtCKmExtra.setForeground(Color.gray);
 						ckmextraC = false;
 					}
@@ -630,7 +630,7 @@ public class EditarModalidad extends MiJPanel{
 		txtDescR.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtDescR.getText().equals("DescripciÛn Del Recorrido")){
+				if(txtDescR.getText().equals("Descripci√≥n Del Recorrido")){
 					txtDescR.setText("");
 					txtDescR.setForeground(Color.black);
 				}
@@ -640,7 +640,7 @@ public class EditarModalidad extends MiJPanel{
 			public void focusLost(FocusEvent e) {
 				if(txtDescR!=null){
 					if(txtDescR.getText().equals("")){
-						txtDescR.setText("DescripciÛn Del Recorrido");
+						txtDescR.setText("Descripci√≥n Del Recorrido");
 						txtDescR.setForeground(Color.gray);
 						descrC = false;
 					}

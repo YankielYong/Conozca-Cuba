@@ -220,7 +220,7 @@ public class AgregarContrato extends MiJPanel{
 		cbTipo.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
 		panelInferior.add(cbTipo);
 		
-		txtDescripcion = new JTextField("Descripci髇");
+		txtDescripcion = new JTextField("Descripci贸n");
 		txtDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -230,7 +230,7 @@ public class AgregarContrato extends MiJPanel{
 		txtDescripcion.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtDescripcion.getText().equals("Descripci髇") && !descChanged){
+				if(txtDescripcion.getText().equals("Descripci贸n") && !descChanged){
 					txtDescripcion.setText("");
 					descChanged = true;
 					txtDescripcion.setForeground(Color.black);
@@ -240,7 +240,7 @@ public class AgregarContrato extends MiJPanel{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtDescripcion.getText().equals("")){
-					txtDescripcion.setText("Descripci髇");
+					txtDescripcion.setText("Descripci贸n");
 					descChanged = false;
 					txtDescripcion.setForeground(Color.gray);
 				}
@@ -297,7 +297,7 @@ public class AgregarContrato extends MiJPanel{
 		((JLabel)cbYearInicio.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYearInicio);
 		
-		JLabel fechaConc = new JLabel("Fecha de conciliaci髇");
+		JLabel fechaConc = new JLabel("Fecha de conciliaci贸n");
 		fechaConc.setBounds(50, 290, 150, 20);
 		fechaConc.setForeground(Color.black);
 		fechaConc.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -342,7 +342,7 @@ public class AgregarContrato extends MiJPanel{
 		((JLabel)cbYearConc.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYearConc);
 		
-		JLabel lblPaquete = new JLabel("C骴igo del Paquete:");
+		JLabel lblPaquete = new JLabel("C贸digo del Paquete:");
 		lblPaquete.setBounds(50, 370, 150, 30);
 		lblPaquete.setForeground(Color.black);
 		lblPaquete.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -392,7 +392,7 @@ public class AgregarContrato extends MiJPanel{
 		btnPaquete.setBorderPainted(false);
 		panelInferior.add(btnPaquete);
 		
-		lblEntidad = new JLabel("C骴igo del Evento:");
+		lblEntidad = new JLabel("C贸digo del Evento:");
 		lblEntidad.setBounds(50, 420, 140, 30);
 		lblEntidad.setForeground(Color.black);
 		lblEntidad.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -482,19 +482,19 @@ public class AgregarContrato extends MiJPanel{
 	}
 	
 	private void hotelero(){
-		lblEntidad.setText("C骴igo del Hospedaje:");
+		lblEntidad.setText("C贸digo del Hospedaje:");
 		lblEntidad.setBounds(50, 420, 165, 30);
 		txtEntidad.setBounds(215, 420, 75, 30);
 	}
 	
 	private void transporte(){
-		lblEntidad.setText("C骴igo del Transporte:");
+		lblEntidad.setText("C贸digo del Transporte:");
 		lblEntidad.setBounds(50, 420, 165, 30);
 		txtEntidad.setBounds(215, 420, 75, 30);
 	}
 	
 	private void servComp(){
-		lblEntidad.setText("C骴igo del Evento:");
+		lblEntidad.setText("C贸digo del Evento:");
 		lblEntidad.setBounds(50, 420, 140, 30);
 		txtEntidad.setBounds(190, 420, 100, 30);
 	}
@@ -519,21 +519,21 @@ public class AgregarContrato extends MiJPanel{
 			Validaciones.contrato(desc, fechaInicio, fechaFin, fechaConc);
 			String paq = txtPaquete.getText();
 			String ent = txtEntidad.getText();
-			if(paq.isEmpty()) throw new IllegalArgumentException("El campo del paquete esta vac韔");
+			if(paq.isEmpty()) throw new IllegalArgumentException("El campo del paquete est谩 vac铆o");
 			int paquete = Integer.valueOf(paq);
 			TouristPackageDTO pt = null;
 			try{pt=touristPackageServices.findTouristPackage(paquete);} 
 			catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-				throw new IllegalArgumentException("No existe ning鷑 paquete tur韘tico con ese c骴igo");}
+				throw new IllegalArgumentException("No existe ning煤n paquete tur铆stico con ese c贸digo");}
 			
 			
 			if(tipo.equals("Hotelero")){
-				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del hospedaje esta vac韔");
+				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del hospedaje est谩 vac铆o");
 				int entidad = Integer.valueOf(ent);
 				LodgingDTO l = null;
 				try{l=lodgingServices.findLodging(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-					throw new IllegalArgumentException("No existe ning鷑 hospedaje con ese c骴igo");}
+					throw new IllegalArgumentException("No existe ning煤n hospedaje con ese c贸digo");}
 				listaContratosHoteleros = contractLodgingServices.selectAllContractLodging();
 				boolean parar = false;
 				for(int i=0; i<listaContratosHoteleros.size() && !parar; i++){
@@ -541,7 +541,7 @@ public class AgregarContrato extends MiJPanel{
 					if(c.getPackageCode() == paquete)
 						parar = true;
 				}
-				if(parar) throw new IllegalArgumentException("Este paquete tur韘tico ya tiene un contrato hotelero");
+				if(parar) throw new IllegalArgumentException("Este paquete tur铆stico ya tiene un contrato hotelero");
 				contractServices.insertContract(desc, fechaInicio, fechaFin, fechaConc, tipo, paquete);
 				int codC = contractServices.getLastContractCode();
 				contractLodgingServices.insertContractLodging(codC, entidad);
@@ -553,11 +553,11 @@ public class AgregarContrato extends MiJPanel{
 			
 			
 			else if(tipo.equals("Transporte")){
-				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del transporte esta vac韔");
+				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del transporte esta vac铆o");
 				int entidad = Integer.valueOf(ent);
 				try{transportServices.findTransport(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-					throw new IllegalArgumentException("No existe ning鷑 transporte con ese c骴igo");}
+					throw new IllegalArgumentException("No existe ning煤n transporte con ese c贸digo");}
 				contractServices.insertContract(desc, fechaInicio, fechaFin, fechaConc, tipo, paquete);
 				int codC = contractServices.getLastContractCode();
 				contractTransportServices.insertContractTransport(codC, entidad);
@@ -566,12 +566,12 @@ public class AgregarContrato extends MiJPanel{
 			
 			
 			else if(tipo.equals("Servicios Complementarios")){
-				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del evento esta vac韔");
+				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del evento esta vac铆o");
 				int entidad = Integer.valueOf(ent);
 				EventDTO ev = null;
 				try{ev=eventServices.findEvent(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-					throw new IllegalArgumentException("No existe ning鷑 evento con ese c骴igo");}
+					throw new IllegalArgumentException("No existe ning煤n evento con ese c贸digo");}
 				contractServices.insertContract(desc, fechaInicio, fechaFin, fechaConc, tipo, paquete);
 				int codC = contractServices.getLastContractCode();
 				contractEventServices.insertContractEvent(codC, entidad);
@@ -584,17 +584,17 @@ public class AgregarContrato extends MiJPanel{
 			}
 			
 			
-			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue registrado con 閤ito", MensajeAviso.CORRECTO);
+			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue registrado con 茅xito", MensajeAviso.CORRECTO);
 			ma.setVisible(true);
 			anterior.ponerContratos();
 		}
 		catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 			MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-			if(e1.getMessage().equals("No existe ning鷑 paquete tur韘tico con ese c骴igo"))
+			if(e1.getMessage().equals("No existe ning煤n paquete tur铆stico con ese c贸digo"))
 				ma.agrandar(40);
-			if(e1.getMessage().equals("La fecha de inicio no puede ser antes de la fecha de conciliaci髇"))
+			if(e1.getMessage().equals("La fecha de inicio no puede ser antes de la fecha de conciliaci贸n"))
 				ma.agrandar(150);
-			if(e1.getMessage().equals("Este paquete tur韘tico ya tiene un contrato hotelero"))
+			if(e1.getMessage().equals("Este paquete tur铆stico ya tiene un contrato hotelero"))
 				ma.agrandar(80);
 			ma.setVisible(true);
 		}

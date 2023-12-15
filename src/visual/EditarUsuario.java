@@ -42,6 +42,7 @@ public class EditarUsuario extends MiJPanel{
 
 	private UserServices userServices = ServicesLocator.getUserServices();
 	private RoleServices roleServices = ServicesLocator.getRoleServices();
+	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<RoleDTO> roles;
 	private UserDTO user;
 	private RoleDTO rol;
@@ -334,6 +335,7 @@ public class EditarUsuario extends MiJPanel{
 					if(userChanged) usuario = txtUsuario.getText();
 					if(passChanged) pass = txtPassword.getText();
 					Validaciones.usuario(nombre, usuario, pass);
+					verificac(usuario);
 					int codigoRol = roles.get(cbRol.getSelectedIndex()).getRoleCode();
 					int codigoUsuario = user.getUserCode();
 					userServices.updateUser(codigoUsuario, nombre, usuario, MD5.encrypt(pass), codigoRol);
@@ -343,25 +345,27 @@ public class EditarUsuario extends MiJPanel{
 				}
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					if(e1.getMessage().equals("El campo de la contraseña está vacío")){
-						String nombre = "";
-						String usuario = "";
-						if(nameChanged) nombre = txtNombre.getText();
-						if(userChanged) usuario = txtUsuario.getText();
-						Validaciones.usuario(nombre, usuario, "password123");
-						int codigoRol = roles.get(cbRol.getSelectedIndex()).getRoleCode();
-						int codigoUsuario = user.getUserCode();
 						try {
+							String nombre = "";
+							String usuario = "";
+							if(nameChanged) nombre = txtNombre.getText();
+							if(userChanged) usuario = txtUsuario.getText();
+							Validaciones.usuario(nombre, usuario, "password123");
+							verificac(usuario);
+							int codigoRol = roles.get(cbRol.getSelectedIndex()).getRoleCode();
+							int codigoUsuario = user.getUserCode();
 							userServices.updateUserWithoutPassword(codigoUsuario, nombre, usuario, codigoRol);
-						} catch (ClassNotFoundException | SQLException e2) {
-							e2.printStackTrace();
+							MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El usuario fue editado con éxito", MensajeAviso.CORRECTO);
+							ma.setVisible(true);
+							anterior.ponerUsuarios();
+						} catch (ClassNotFoundException | SQLException | IllegalArgumentException e2) {
+							MensajeAviso ma = new MensajeAviso(null, padre, este, e2.getMessage(), MensajeAviso.ERROR);
+							ma.setVisible(true);
 						}
-						MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El usuario fue editado con éxito", MensajeAviso.CORRECTO);
-						ma.setVisible(true);
-						anterior.ponerUsuarios();
 					}
 					else{
 						MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-						if(e1.getMessage().equals("La contraseña debe tener al menos caracteres")){
+						if(e1.getMessage().equals("La contraseña debe tener al menos 8 caracteres")){
 							ma.agrandar(15);
 						}
 						ma.setVisible(true);
@@ -388,6 +392,16 @@ public class EditarUsuario extends MiJPanel{
 		panelInferior.add(btnEditar);
 
 		llenarComboBox();
+	}
+
+	private void verificac(String usuario) throws ClassNotFoundException, SQLException, IllegalArgumentException{
+		listaUsuarios = userServices.selectAllUsers();
+		boolean yaEsta = false;
+		for(int i=0; i<listaUsuarios.size() && !yaEsta; i++){
+			if(usuario.equals(listaUsuarios.get(i).getUserNick()) && !usuario.equals(user.getUserNick()))
+				yaEsta = true;
+		}
+		if(yaEsta) throw new IllegalArgumentException("Ya existe un usuario con ese nick");
 	}
 
 	private void llenarComboBox(){

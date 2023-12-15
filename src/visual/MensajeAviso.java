@@ -88,7 +88,7 @@ public class MensajeAviso extends JDialog{
 		switch(type){
 		case 0: tipo.setText("Correcto"); break;
 		case 1: tipo.setText("Error"); break;
-		case 2: tipo.setText("Información"); break;
+		case 2: tipo.setText("InformaciÃ³n"); break;
 		}
 
 		imagen = new JLabel("");

@@ -70,7 +70,7 @@ public class VerHotel extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Ver Hotel");
+		lblNombre = new JLabel("Informaci贸n Hotel");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -174,7 +174,7 @@ public class VerHotel extends MiJPanel{
 		else
 			categ = hotel.getHotelCategory()+" Estrellas";
 		
-		JLabel categoria = new JLabel("Categor韆: "+categ);
+		JLabel categoria = new JLabel("Categor铆a: "+categ);
 		categoria.setBounds(50, 220, 400, 30);
 		categoria.setForeground(Color.black);
 		categoria.setFont(new Font("Arial", Font.BOLD, 16));
@@ -192,19 +192,19 @@ public class VerHotel extends MiJPanel{
 		provincia.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(provincia);
 		
-		JLabel direccion = new JLabel("Direcci髇: "+hotel.getHotelAddress());
+		JLabel direccion = new JLabel("Direcci贸n: "+hotel.getHotelAddress());
 		direccion.setBounds(50, 340, 400, 30);
 		direccion.setForeground(Color.black);
 		direccion.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(direccion);
 		
-		JLabel localizacion = new JLabel("Localizaci髇: "+hotel.getHotelLocation());
+		JLabel localizacion = new JLabel("Localizaci贸n: "+hotel.getHotelLocation());
 		localizacion.setBounds(50, 380, 400, 30);
 		localizacion.setForeground(Color.black);
 		localizacion.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(localizacion);
 		
-		JLabel telefono = new JLabel("Tel閒ono: "+hotel.getHotelPhone());
+		JLabel telefono = new JLabel("Tel茅fono: "+hotel.getHotelPhone());
 		telefono.setBounds(50, 420, 400, 30);
 		telefono.setForeground(Color.black);
 		telefono.setFont(new Font("Arial", Font.BOLD, 16));
@@ -241,13 +241,13 @@ public class VerHotel extends MiJPanel{
 		totalHab.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(totalHab);
 		
-		JLabel distCiudad = new JLabel("Distancia a la ciudad m醩 cercana (km): "+hotel.getNearbyCityDistance());
+		JLabel distCiudad = new JLabel("Distancia a la ciudad m谩s cercana (km): "+hotel.getNearbyCityDistance());
 		distCiudad.setBounds(550, 460, 400, 30);
 		distCiudad.setForeground(Color.black);
 		distCiudad.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(distCiudad);
 		
-		JLabel distAereopuerto = new JLabel("Distancia al aereopuerto (km): "+hotel.getAirportDistance());
+		JLabel distAereopuerto = new JLabel("Distancia al aeropuerto (km): "+hotel.getAirportDistance());
 		distAereopuerto.setBounds(550, 500, 400, 30);
 		distAereopuerto.setForeground(Color.black);
 		distAereopuerto.setFont(new Font("Arial", Font.BOLD, 16));
@@ -260,7 +260,7 @@ public class VerHotel extends MiJPanel{
 		if(mod.contains("Luna de Miel")) lista.add("Luna de Miel");
 		if(mod.contains("Golf")) lista.add("Golf");
 		if(mod.contains("Ecoturismo")) lista.add("Ecoturismo");
-		if(mod.contains("Hist髍ico")) lista.add("Hist髍ico");
+		if(mod.contains("Hist贸rico")) lista.add("Hist贸rico");
 		if(mod.contains("Verano")) lista.add("Verano");
 		if(mod.contains("Navidad")) lista.add("Navidad");
 		if(mod.contains("Todo Incluido")) lista.add("Todo Incluido");

@@ -6,7 +6,7 @@ public class RoomTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public RoomTableModel(){
-		String[] nombreColumnas = {"Código", "Tipo de Habitación", "Plan Alimenticio", "Recargo de Habitación"};
+		String[] nombreColumnas = {"CÃ³digo", "Tipo de HabitaciÃ³n", "Plan Alimenticio", "Recargo de HabitaciÃ³n"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

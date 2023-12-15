@@ -55,7 +55,7 @@ public class VerLugar extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Información Lugar");
+		lblNombre = new JLabel("InformaciÃ³n Lugar");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -139,7 +139,7 @@ public class VerLugar extends MiJPanel {
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("Código: "+lugar.getPlaceCode());
+		JLabel codigo = new JLabel("CÃ³digo: "+lugar.getPlaceCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));

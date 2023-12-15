@@ -33,7 +33,7 @@ public class ComboBoxModel {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Aprendizaje");
 		model.addElement("Entretenimiento");
-		model.addElement("Gastronómico");
+		model.addElement("GastronÃ³mico");
 		return model;
 	}
 	
@@ -48,7 +48,7 @@ public class ComboBoxModel {
 	public static DefaultComboBoxModel<String> modalidadesModel(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Costo por kilometraje");
-		model.addElement("Costo por horas y kilómetros");
+		model.addElement("Costo por horas y kilÃ³metros");
 		model.addElement("Costo por recorridos establecidos");
 		return model;
 	}

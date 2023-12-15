@@ -122,7 +122,7 @@ public class Perfil extends MiJPanel{
 		rol.setForeground(Color.black);
 		panelInferior.add(rol);
 
-		btnCerrarSesion = new JButton("Cerrar Sesión");
+		btnCerrarSesion = new JButton("Cerrar SesiÃ³n");
 		btnCerrarSesion.setFont(new Font("Arial", Font.BOLD, 16));
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			@Override

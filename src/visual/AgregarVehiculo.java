@@ -69,7 +69,7 @@ public class AgregarVehiculo extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Agregar VehÌculo");
+		lblNombre = new JLabel("Agregar Veh√≠culo");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -199,7 +199,7 @@ public class AgregarVehiculo extends MiJPanel{
 		txtMarca.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtMarca);
 		
-		JLabel fabricacion = new JLabel("AÒo de FabricaciÛn:");
+		JLabel fabricacion = new JLabel("A√±o de Fabricaci√≥n:");
 		fabricacion.setBounds(50, 190, 150, 30);
 		fabricacion.setForeground(Color.black);
 		fabricacion.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -275,7 +275,7 @@ public class AgregarVehiculo extends MiJPanel{
 		txtCapTotal.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtCapTotal);
 		
-		btnAgregar = new JButton("Agregar VehÌculo");
+		btnAgregar = new JButton("Agregar Veh√≠culo");
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -294,19 +294,19 @@ public class AgregarVehiculo extends MiJPanel{
 					int capCE = Integer.valueOf(capC);
 					int capTT = Integer.valueOf(capT);
 					vehicleServices.insertVehicle(chapa, marca, yFabr, capSE, capCE, capTT);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El vehÌculo fue agregado con Èxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El veh√≠culo fue agregado con √©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerVehiculos();
 				}
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					if(e1.getMessage().equals("El campo de la capacidad sin equipajes est· vacÌo"))
+					if(e1.getMessage().equals("El campo de la capacidad sin equipajes est√° vac√≠o"))
 						ma.agrandar(40);
-					if(e1.getMessage().equals("El campo de la capacidad con equipajes est· vacÌo"))
+					if(e1.getMessage().equals("El campo de la capacidad con equipajes est√° vac√≠o"))
 						ma.agrandar(45);
-					if(e1.getMessage().equals("No puede tener m·s capacidad con equipaje que sin equipaje"))
+					if(e1.getMessage().equals("No puede tener m√°s capacidad con equipaje que sin equipaje"))
 						ma.agrandar(130);
-					if(e1.getMessage().equals("La capacidad total no puede ser menor que las dem·s"))
+					if(e1.getMessage().equals("La capacidad total no puede ser menor que las dem√°s"))
 						ma.agrandar(70);
 					ma.setVisible(true);
 				}

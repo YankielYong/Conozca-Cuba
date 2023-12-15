@@ -6,7 +6,7 @@ public class RoleTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public RoleTableModel(){
-		String[] nombreColumnas = {"Nombre", "Descripción"};
+		String[] nombreColumnas = {"Nombre", "DescripciÃ³n"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

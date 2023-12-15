@@ -6,7 +6,7 @@ public class LodgingTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public LodgingTableModel(){
-		String[] nombreColumnas = {"Código", "Hotel", "Habitación", "Plan Alimenticio", "Temporada", "Precio"};
+		String[] nombreColumnas = {"CÃ³digo", "Hotel", "HabitaciÃ³n", "Plan Alimenticio", "Temporada", "Precio"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

@@ -138,7 +138,7 @@ public class ConsultarPaquetes extends MiJPanel{
 		btnAtras.setModel(new MyButtonModel());
 		panelInferior.add(btnAtras);
 		
-		JLabel lblAct = new JLabel("Paquetes Turísticos");
+		JLabel lblAct = new JLabel("Paquetes TurÃ­sticos");
 		lblAct.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAct.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAct.setForeground(Color.black);

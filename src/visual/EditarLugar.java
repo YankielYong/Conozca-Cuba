@@ -247,6 +247,7 @@ public class EditarLugar extends MiJPanel {
 		cbTipo = new JComboBox<String>();
 		cbTipo.setBounds(50, 210, 260, 30);
 		cbTipo.setBackground(Color.white);
+		cbTipo.setForeground(Color.black);
 		cbTipo.setFocusable(false);
 		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipo.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
@@ -269,13 +270,13 @@ public class EditarLugar extends MiJPanel {
 					String costo = "";
 					if(nameChanged) cadena = txtNombre.getText();
 					if(costChanged) costo = txtCosto.getText();
-					else throw new IllegalArgumentException("El campo del costo est· vacÌo");
+					else throw new IllegalArgumentException("El campo del costo est√° vac√≠o");
 					double cos = Double.valueOf(costo);
 					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
 					Validaciones.lugar(cadena);
 					placeServices.updatePlace(codigo, cadena, cos, tipo);
 					actualizar(placeServices.findPlace(codigo));
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue editado con Èxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue editado con √©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerLugares();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

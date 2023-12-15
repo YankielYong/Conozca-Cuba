@@ -80,6 +80,7 @@ public class Principal extends JFrame{
 	private ConsultarHoteles panelConsultarHoteles;
 	private ConsultarHabitaciones panelConsultarHabitaciones;
 	private ConsultarTemporadas panelConsultarTemporadas;
+	private RenovarContrato panelRenovarContrato;
 	private VerHotel panelVerHotel;
 	private InfoPaquete panelVerPaquete;
 	private VerVehiculo panelVerVehiculo;
@@ -87,6 +88,7 @@ public class Principal extends JFrame{
 	private VerHabitacion panelVerHabitacion;
 	private VerLugar panelVerLugar;
 	private VerActividad panelVerActividad;
+	private VerContrato panelVerContrato;
 	private VerModalidad panelVerModalidad;
 	private VerTransporte panelVerTransporte;
 	private VerHospedaje panelVerHospedaje;
@@ -362,10 +364,14 @@ public class Principal extends JFrame{
 			panelPrincipal.remove(panelAgregarHospedaje);
 		else if(panelAbierto == Paneles.PANEL_VER_EVENTO)
 			panelPrincipal.remove(panelVerEvento);
+		else if(panelAbierto == Paneles.PANEL_VER_CONTRATO)
+			panelPrincipal.remove(panelVerContrato);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_CADENA_HOTELERA)
 			panelPrincipal.remove(panelEditarCadenaHotelera);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_MODALIDAD)
 			panelPrincipal.remove(panelEditarModalidad);
+		else if(panelAbierto == Paneles.PANEL_RENOVAR_CONTRATO)
+			panelPrincipal.remove(panelRenovarContrato);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_HOTEL)
 			panelPrincipal.remove(panelEditarHotel);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_LUGAR)
@@ -580,8 +586,16 @@ public class Principal extends JFrame{
 		this.panelEditarHospedaje = panelEditarHospedaje;
 	}
 
+	public void setPanelRenovarContrato(RenovarContrato panelRenovarContrato) {
+		this.panelRenovarContrato = panelRenovarContrato;
+	}
+
 	public void setPanelEditarActividad(EditarActividad panelEditarActividad) {
 		this.panelEditarActividad = panelEditarActividad;
+	}
+
+	public void setPanelVerContrato(VerContrato panelVerContrato) {
+		this.panelVerContrato = panelVerContrato;
 	}
 
 	public void setPanelAbierto(int panel){

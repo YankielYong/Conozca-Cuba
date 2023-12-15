@@ -40,6 +40,7 @@ public class VerUsuario extends MiJPanel {
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
 	private JButton btnCerrar;
+	private JLabel lblNombre;
 
 	private JButton btnAtras;
 
@@ -66,6 +67,12 @@ public class VerUsuario extends MiJPanel {
 		panelSuperior.setBounds(1, 1, 430, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
+		
+		lblNombre = new JLabel("Información Usuario");
+		lblNombre.setForeground(Color.black);
+		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNombre.setBounds(10, 0, 200, 30);
+		panelSuperior.add(lblNombre);
 
 		ImageIcon img = new ImageIcon(getClass().getResource("/visual/imagenes/close.png"));
 		Image image = img.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -147,7 +154,7 @@ public class VerUsuario extends MiJPanel {
 		lUsuario.setBounds(175, 30, 80, 80);
 		panelInferior.add(lUsuario);
 
-		codigo = new JLabel("C�digo: "+user.getUserCode());
+		codigo = new JLabel("Código: "+user.getUserCode());
 		codigo.setBounds(50, 120, 350, 35);
 		codigo.setFont(new Font("Arial", Font.BOLD, 18));
 		codigo.setForeground(Color.black);

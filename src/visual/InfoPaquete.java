@@ -98,7 +98,7 @@ public class InfoPaquete extends JPanel{
 		nombre.setFont(new Font("Arial", Font.PLAIN, 16));
 		panelInferior.add(nombre);
 		
-		JLabel cantDias = new JLabel("Cantidad de Días: ");
+		JLabel cantDias = new JLabel("Cantidad de DÃ­as: ");
 		cantDias.setBounds(50, 220, 200, 30);
 		cantDias.setForeground(Color.black);
 		cantDias.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -122,7 +122,7 @@ public class InfoPaquete extends JPanel{
 		hotel.setFont(new Font("Arial", Font.PLAIN, 16));
 		panelInferior.add(hotel);
 		
-		JLabel habitacion = new JLabel("Tipo de Habitación: ");
+		JLabel habitacion = new JLabel("Tipo de HabitaciÃ³n: ");
 		habitacion.setBounds(50, 340, 400, 30);
 		habitacion.setForeground(Color.black);
 		habitacion.setFont(new Font("Arial", Font.PLAIN, 16));

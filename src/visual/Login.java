@@ -39,7 +39,7 @@ public class Login extends JFrame {
 
 	public static void main(String[] args) {
 		Login l = new Login();
-		l.setVisible(true);
+		//l.setVisible(true);
 	}
 	
 	private UserServices userServices = ServicesLocator.getUserServices();
@@ -351,7 +351,7 @@ public class Login extends JFrame {
 		}
 
 		//iniciarYankiel();
-		//iniciarPatricia();
+		iniciarPatricia();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -386,7 +386,7 @@ public class Login extends JFrame {
 		}
 		catch(IllegalArgumentException e1){
 			MensajeAviso ma = new MensajeAviso(este, null, null, e1.getMessage(), MensajeAviso.ERROR);
-			if(e1.getMessage().equals("La contraseña debe tener al menos caracteres")){
+			if(e1.getMessage().equals("La contraseña debe tener al menos 8 caracteres")){
 				ma.agrandar(15);
 			}
 			ma.setVisible(true);

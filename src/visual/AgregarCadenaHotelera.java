@@ -195,7 +195,7 @@ public class AgregarCadenaHotelera extends MiJPanel{
 					if(nameChanged) cadena = txtNombre.getText();
 					Validaciones.cadenaHotelera(cadena);
 					hotelChainServices.insertHotelChain(cadena);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La Cadena Hotelera fue agregada con éxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La Cadena Hotelera fue agregada con Ã©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerCadenasHoteleras();
 				}

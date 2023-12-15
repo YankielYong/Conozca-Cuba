@@ -181,7 +181,7 @@ public class EditarActividad extends MiJPanel{
 		logo.setBounds(68, 15, 220, 67);
 		panelInferior.add(logo);
 
-		JLabel dia = new JLabel("DÌa");
+		JLabel dia = new JLabel("D√≠a");
 		dia.setHorizontalAlignment(SwingConstants.CENTER);
 		dia.setHorizontalTextPosition(SwingConstants.CENTER);
 		dia.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -222,7 +222,7 @@ public class EditarActividad extends MiJPanel{
 		((JLabel)cbMes.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbMes);
 
-		JLabel year = new JLabel("AÒo");
+		JLabel year = new JLabel("A√±o");
 		year.setHorizontalAlignment(SwingConstants.CENTER);
 		year.setHorizontalTextPosition(SwingConstants.CENTER);
 		year.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -236,7 +236,6 @@ public class EditarActividad extends MiJPanel{
 		cbYear.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbYear.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		cbYear.setModel(ComboBoxModel.yearsModel());
-		cbYear.setSelectedItem(2024);
 		cbYear.setUI(PropiedadesComboBox.createUI(getRootPane(), cbYear.getBounds()));
 		((JLabel)cbYear.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYear);
@@ -345,7 +344,7 @@ public class EditarActividad extends MiJPanel{
 		txtDescripcion.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtDescripcion.getText().equals("DescripciÛn") && !descChanged){
+				if(txtDescripcion.getText().equals("Descripci√≥n") && !descChanged){
 					txtDescripcion.setText("");
 					descChanged = true;
 					txtDescripcion.setForeground(Color.black);
@@ -355,7 +354,7 @@ public class EditarActividad extends MiJPanel{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtDescripcion.getText().equals("")){
-					txtDescripcion.setText("DescripciÛn");
+					txtDescripcion.setText("Descripci√≥n");
 					descChanged = false;
 					txtDescripcion.setForeground(Color.gray);
 				}
@@ -380,7 +379,7 @@ public class EditarActividad extends MiJPanel{
 					String desc = "";
 					String precio = "";
 					if(priceChanged) precio = txtPrecio.getText();
-					else throw new IllegalArgumentException("El campo del precio de la actividad est· vacÌo");
+					else throw new IllegalArgumentException("El campo del precio de la actividad est√° vac√≠o");
 					if(descChanged) desc = txtDescripcion.getText();
 					double pre = Double.valueOf(precio);
 					int dia = (int)cbDia.getSelectedItem();
@@ -399,7 +398,7 @@ public class EditarActividad extends MiJPanel{
 					Validaciones.actividad(fecha, desc);
 					activityServices.updateActivity(codigo, fecha, pre, desc);
 					actualizar(activityServices.findActivity(codigo));
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La actividad fue editada con Èxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La actividad fue editada con √©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerActividades();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

@@ -210,7 +210,7 @@ public class AgregarHotel extends MiJPanel{
 		txtNombre.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtNombre);
 		
-		JLabel categoria = new JLabel("Categoría: ");
+		JLabel categoria = new JLabel("CategorÃ­a: ");
 		categoria.setBounds(50, 220, 85, 30);
 		categoria.setForeground(Color.black);
 		categoria.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -259,7 +259,7 @@ public class AgregarHotel extends MiJPanel{
 		cbProvincia.setUI(PropiedadesComboBox.createUI(getRootPane(), cbProvincia.getBounds()));
 		panelInferior.add(cbProvincia);
 		
-		JLabel direccion = new JLabel("Dirección: ");
+		JLabel direccion = new JLabel("DirecciÃ³n: ");
 		direccion.setBounds(50, 340, 80, 30);
 		direccion.setForeground(Color.black);
 		direccion.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -272,7 +272,7 @@ public class AgregarHotel extends MiJPanel{
 		txtDireccion.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtDireccion);
 		
-		JLabel localizacion = new JLabel("Localización: ");
+		JLabel localizacion = new JLabel("LocalizaciÃ³n: ");
 		localizacion.setBounds(50, 380, 100, 30);
 		localizacion.setForeground(Color.black);
 		localizacion.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -289,7 +289,7 @@ public class AgregarHotel extends MiJPanel{
 		cbLocalizacion.setUI(PropiedadesComboBox.createUI(getRootPane(), cbLocalizacion.getBounds()));
 		panelInferior.add(cbLocalizacion);
 		
-		JLabel telefono = new JLabel("Teléfono: ");
+		JLabel telefono = new JLabel("TelÃ©fono: ");
 		telefono.setBounds(50, 420, 70, 30);
 		telefono.setForeground(Color.black);
 		telefono.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -361,7 +361,7 @@ public class AgregarHotel extends MiJPanel{
 		mEcoturismo.setFont(new Font("Arial", Font.PLAIN, 16));
 		panelInferior.add(mEcoturismo);
 		
-		mHistorico = new JRadioButton("Histórico");
+		mHistorico = new JRadioButton("HistÃ³rico");
 		mHistorico.setBounds(800, 260, 120, 30);
 		mHistorico.setBackground(Color.white);
 		mHistorico.setForeground(Color.black);
@@ -427,7 +427,7 @@ public class AgregarHotel extends MiJPanel{
 		txtCantHab.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtCantHab);
 		
-		JLabel distCiudad = new JLabel("Distancia a la ciudad más cercana (km): ");
+		JLabel distCiudad = new JLabel("Distancia a la ciudad mÃ¡s cercana (km): ");
 		distCiudad.setBounds(550, 460, 285, 30);
 		distCiudad.setForeground(Color.black);
 		distCiudad.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -458,7 +458,7 @@ public class AgregarHotel extends MiJPanel{
 		txtDistCiudad.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtDistCiudad);
 		
-		JLabel distAereopuerto = new JLabel("Distancia al aereopuerto (km): ");
+		JLabel distAereopuerto = new JLabel("Distancia al aeropuerto (km): ");
 		distAereopuerto.setBounds(550, 500, 220, 30);
 		distAereopuerto.setForeground(Color.black);
 		distAereopuerto.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -519,18 +519,18 @@ public class AgregarHotel extends MiJPanel{
 					hotelServices.insertHotel(nombre, direccion, categoria, telefono, fax, correo, localizacion,
 							modalidades, cantHabitaciones, cantPisos, distCiudad, distAereopuerto, 
 							cadenaHotelera, provincia);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hotel fue agregado con éxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hotel fue agregado con Ã©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHotel();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					if(e1.getMessage().equals("El campo de la cantidad de pisos del hotel está vacío"))
+					if(e1.getMessage().equals("El campo de la cantidad de pisos del hotel estÃ¡ vacÃ­o"))
 						ma.agrandar(60);
-					if(e1.getMessage().equals("El campo de la cantidad de habitaciones del hotel está vacío"))
+					if(e1.getMessage().equals("El campo de la cantidad de habitaciones del hotel estÃ¡ vacÃ­o"))
 						ma.agrandar(120);
-					if(e1.getMessage().equals("El campo de distancia a la ciudad más cercana está vacío"))
+					if(e1.getMessage().equals("El campo de distancia a la ciudad mÃ¡s cercana estÃ¡ vacÃ­o"))
 						ma.agrandar(100);
-					if(e1.getMessage().equals("El campo de distancia al aereopuerto está vacío"))
+					if(e1.getMessage().equals("El campo de distancia al aereopuerto estÃ¡ vacÃ­o"))
 						ma.agrandar(40);
 					ma.setVisible(true);
 				}
@@ -582,7 +582,7 @@ public class AgregarHotel extends MiJPanel{
 				if(mEcoturismo.isSelected()){
 					mod += ", Ecoturismo";
 					if(mHistorico.isSelected()){
-						mod += ", Histórico";
+						mod += ", HistÃ³rico";
 						if(mVerano.isSelected()){
 							mod += ", Verano";
 							if(mNavidad.isSelected()){
@@ -628,7 +628,7 @@ public class AgregarHotel extends MiJPanel{
 					}
 				}
 				else if(mHistorico.isSelected()){
-					mod += ", Histórico";
+					mod += ", HistÃ³rico";
 					if(mVerano.isSelected()){
 						mod += ", Verano";
 						if(mNavidad.isSelected()){
@@ -676,7 +676,7 @@ public class AgregarHotel extends MiJPanel{
 			else if(mEcoturismo.isSelected()){
 				mod += ", Ecoturismo";
 				if(mHistorico.isSelected()){
-					mod += ", Histórico";
+					mod += ", Histï¿½rico";
 					if(mVerano.isSelected()){
 						mod += ", Verano";
 						if(mNavidad.isSelected()){
@@ -722,7 +722,7 @@ public class AgregarHotel extends MiJPanel{
 				}
 			}
 			else if(mHistorico.isSelected()){
-				mod += ", Histórico";
+				mod += ", HistÃ³rico";
 				if(mVerano.isSelected()){
 					mod += ", Verano";
 					if(mNavidad.isSelected()){
@@ -772,7 +772,7 @@ public class AgregarHotel extends MiJPanel{
 			if(mEcoturismo.isSelected()){
 				mod += ", Ecoturismo";
 				if(mHistorico.isSelected()){
-					mod += ", Histórico";
+					mod += ", HistÃ³rico";
 					if(mVerano.isSelected()){
 						mod += ", Verano";
 						if(mNavidad.isSelected()){
@@ -818,7 +818,7 @@ public class AgregarHotel extends MiJPanel{
 				}
 			}
 			else if(mHistorico.isSelected()){
-				mod += ", Histórico";
+				mod += ", HistÃ³rico";
 				if(mVerano.isSelected()){
 					mod += ", Verano";
 					if(mNavidad.isSelected()){
@@ -867,7 +867,7 @@ public class AgregarHotel extends MiJPanel{
 		else if(mEcoturismo.isSelected()){
 			mod += "Ecoturismo";
 			if(mHistorico.isSelected()){
-				mod += ", Histórico";
+				mod += ", HistÃ³rico";
 				if(mVerano.isSelected()){
 					mod += ", Verano";
 					if(mNavidad.isSelected()){
@@ -913,7 +913,7 @@ public class AgregarHotel extends MiJPanel{
 			}
 		}
 		else if(mHistorico.isSelected()){
-			mod += "Histórico";
+			mod += "HistÃ³rico";
 			if(mVerano.isSelected()){
 				mod += ", Verano";
 				if(mNavidad.isSelected()){
@@ -958,7 +958,7 @@ public class AgregarHotel extends MiJPanel{
 			mod += "Todo Incluido";
 		}
 		else
-			throw new IllegalArgumentException("No seleccionó ninguna modalidad");
+			throw new IllegalArgumentException("No seleccionï¿½ ninguna modalidad");
 		return mod;
 	}
 	

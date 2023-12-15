@@ -54,7 +54,7 @@ public class VerVehiculo extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Información Vehículo");
+		lblNombre = new JLabel("InformaciÃ³n VehÃ­culo");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -146,7 +146,7 @@ public class VerVehiculo extends MiJPanel {
 		logo.setBounds(190, 15, 200, 61);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("Código: "+vehiculo.getVehicleCode());
+		JLabel codigo = new JLabel("CÃ³digo: "+vehiculo.getVehicleCode());
 		codigo.setBounds(50, 100, 340, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -164,7 +164,7 @@ public class VerVehiculo extends MiJPanel {
 		marca.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(marca);
 
-		JLabel fabricacion = new JLabel("Año de Fabricación: "+vehiculo.getYearOfProduction());
+		JLabel fabricacion = new JLabel("AÃ±o de FabricaciÃ³n: "+vehiculo.getYearOfProduction());
 		fabricacion.setBounds(50, 220, 340, 30);
 		fabricacion.setForeground(Color.black);
 		fabricacion.setFont(new Font("Arial", Font.BOLD, 16));

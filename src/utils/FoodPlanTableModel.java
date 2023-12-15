@@ -6,7 +6,7 @@ public class FoodPlanTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public FoodPlanTableModel(){
-		String[] nombreColumnas = {"Código", "Tipo de Plan Alimenticio"};
+		String[] nombreColumnas = {"CÃ³digo", "Tipo de Plan Alimenticio"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

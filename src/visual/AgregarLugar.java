@@ -269,14 +269,14 @@ public class AgregarLugar extends MiJPanel{
 					int prov = listaProvincias.get(cbProvincia.getSelectedIndex()).getProvinceCode();
 					if(nameChanged) cadena = txtNombre.getText();
 					if(costChanged) costo = txtCosto.getText();
-					else throw new IllegalArgumentException("El campo del costo está vacío");
+					else throw new IllegalArgumentException("El campo del costo estï¿½ vacï¿½o");
 					double cos = Double.valueOf(costo);
 					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
 					Validaciones.lugar(cadena);
 					placeServices.insertPlace(cadena, cos, tipo);
 					int lugar = placeServices.getLastPlaceCode();
 					provincePlaceServices.insertProvincePlace(prov, lugar);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue agregado con éxito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue agregado con Ã©xito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerLugares();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
