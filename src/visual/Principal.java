@@ -82,7 +82,7 @@ public class Principal extends JFrame{
 	private ConsultarTemporadas panelConsultarTemporadas;
 	private RenovarContrato panelRenovarContrato;
 	private VerHotel panelVerHotel;
-	private InfoPaquete panelVerPaquete;
+	private VerPaquete panelVerPaquete;
 	private VerVehiculo panelVerVehiculo;
 	private VerUsuario panelVerUsuario;
 	private VerHabitacion panelVerHabitacion;
@@ -366,6 +366,8 @@ public class Principal extends JFrame{
 			panelPrincipal.remove(panelVerEvento);
 		else if(panelAbierto == Paneles.PANEL_VER_CONTRATO)
 			panelPrincipal.remove(panelVerContrato);
+		else if(panelAbierto == Paneles.PANEL_VER_PAQUETE)
+			panelPrincipal.remove(panelVerPaquete);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_CADENA_HOTELERA)
 			panelPrincipal.remove(panelEditarCadenaHotelera);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_MODALIDAD)
@@ -596,6 +598,10 @@ public class Principal extends JFrame{
 
 	public void setPanelVerContrato(VerContrato panelVerContrato) {
 		this.panelVerContrato = panelVerContrato;
+	}
+
+	public void setPanelVerPaquete(VerPaquete panelVerPaquete) {
+		this.panelVerPaquete = panelVerPaquete;
 	}
 
 	public void setPanelAbierto(int panel){

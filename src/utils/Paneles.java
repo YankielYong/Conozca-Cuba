@@ -51,5 +51,6 @@ public class Paneles {
 	public static int PANEL_EDITAR_ACTIVIDAD = 47;
 	public static int PANEL_VER_CONTRATO = 48;
 	public static int PANEL_RENOVAR_CONTRATO = 49;
+	public static int PANEL_VER_PAQUETE = 50;
 	
 }

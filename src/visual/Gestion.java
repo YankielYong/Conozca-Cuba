@@ -1899,6 +1899,11 @@ public class Gestion extends MiJPanel{
 					padre.getPanelPrincipal().add(panel);
 					padre.getPanelPrincipal().repaint();
 				}
+				else if(btnPaquetes.isBorderPainted()){
+					VerPaquete panel = new VerPaquete(padre, este, listaPaquetes.get(pos));
+					padre.getPanelPrincipal().add(panel);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 		}
 		else{
