@@ -128,6 +128,7 @@ public class Reportes extends MiJPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				padre.getPanelPrincipal().remove(este);
+				padre.getPanelPrincipal().repaint();
 				MostrarReporte mr = new MostrarReporte(padre, cbReporte.getSelectedIndex()+1);
 				padre.getPanelPrincipal().add(mr);
 				padre.getPanelPrincipal().repaint();

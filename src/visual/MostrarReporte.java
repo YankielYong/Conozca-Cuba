@@ -33,16 +33,28 @@ public class MostrarReporte extends MiJPanel{
 	private int numReporte;
 	private boolean mostrado = false;
 
+	private String cadena;
+	private String provincia;
 	private Reporte1 reporte1;
+	private Reporte4 reporte4;
+	private Reporte6 reporte6;
 
 	public MostrarReporte(Principal p, int rep){
 		este = this;
 		padre = p;
 		numReporte = rep;
+
+		if(numReporte == 6){
+			Reporte6Params rp = new Reporte6Params(padre);
+			rp.setVisible(true);
+			cadena = rp.getCadena();
+			provincia = rp.getProvincia();
+		}
+
 		setTipoPanel(Paneles.PANEL_MOSTRAR_REPORTES);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelMostrarReporte(este);
-		setBounds(pantalla.width/2-501, pantalla.height/2-326, 1002, 602);
+		setBounds(pantalla.width/2-651, pantalla.height/2-326, 1302, 602);
 		setBackground(Color.darkGray);
 		setLayout(null);
 
@@ -50,10 +62,10 @@ public class MostrarReporte extends MiJPanel{
 		panelSuperior.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				
+
 			}
 		});
-		panelSuperior.setBounds(1, 1, 1000, 30);
+		panelSuperior.setBounds(1, 1, 1300, 30);
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
@@ -81,7 +93,7 @@ public class MostrarReporte extends MiJPanel{
 				btnCerrar.setContentAreaFilled(false);
 			}
 		});
-		btnCerrar.setBounds(955, 0, 45, 30);
+		btnCerrar.setBounds(1255, 0, 45, 30);
 		btnCerrar.setBackground(Color.red);
 		btnCerrar.setFocusable(false);
 		btnCerrar.setBorderPainted(false);
@@ -102,11 +114,11 @@ public class MostrarReporte extends MiJPanel{
 					mostrar();
 			}
 		});
-		panelInferior.setBounds(1, 31, 1000, 570);
+		panelInferior.setBounds(1, 31, 1300, 570);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
 	}
-	
+
 	private void mostrar(){
 		btnCerrar.setBorderPainted(true);
 		btnCerrar.setBorderPainted(false);	
@@ -114,6 +126,14 @@ public class MostrarReporte extends MiJPanel{
 		case 1:
 			reporte1 = new Reporte1();
 			panelInferior.add(reporte1);
+			break;
+		case 4: 
+			reporte4 = new Reporte4();
+			panelInferior.add(reporte4);
+			break;
+		case 6: 
+			reporte6 = new Reporte6(cadena, provincia);
+			panelInferior.add(reporte6);
 			break;
 		}
 		mostrado = true;

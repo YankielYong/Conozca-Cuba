@@ -1,7 +1,6 @@
 package visual;
 
 import java.awt.BorderLayout;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,20 +14,40 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.swing.JRViewer;
 import services.ServicesLocator;
 
-public class Reporte1 extends JPanel{
+public class Reporte6 extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	private Reporte1 este;
-	public Reporte1(){
+	private Reporte6 este;
+	private String cad;
+	private String prov;
+	public Reporte6(String cadena, String provincia){
 		este = this;
+		cad = cadena;
+		prov = provincia;
 		setBounds(0, 0, 1300, 570);
 		setLayout(new BorderLayout());
 		try {
 			Map<String, Object> param = new HashMap<>();
 			param.put("foto", getClass().getResourceAsStream("/visual/imagenes/logo cc.png"));
 			java.sql.Connection connection = ServicesLocator.getConnection();
-			JasperReport report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte1.jasper");
+			JasperReport report = null;
+			if(cad.equals("Todas") && prov.equals("Todas")){
+				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v1.jasper");
+			}
+			else if(!cad.equals("Todas") && prov.equals("Todas")){
+				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v2.jasper");
+				param.put("cadena", cad);
+			}
+			else if(cad.equals("Todas") && !prov.equals("Todas")){
+				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v3.jasper");
+				param.put("provincia", prov);
+			}
+			else if(!cad.equals("Todas") && !prov.equals("Todas")){
+				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v4.jasper");
+				param.put("cadena", cad);
+				param.put("provincia", prov);
+			}
 			JasperPrint jp = JasperFillManager.fillReport(report, param, connection);
 			JRViewer jr = new JRViewer(jp);
 			este.add(jr);

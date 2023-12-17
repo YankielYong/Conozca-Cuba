@@ -1,7 +1,6 @@
 package visual;
 
 import java.awt.BorderLayout;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +14,12 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.swing.JRViewer;
 import services.ServicesLocator;
 
-public class Reporte1 extends JPanel{
+public class Reporte4 extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	private Reporte1 este;
-	public Reporte1(){
+	private Reporte4 este;
+	public Reporte4(){
 		este = this;
 		setBounds(0, 0, 1300, 570);
 		setLayout(new BorderLayout());
@@ -28,7 +27,7 @@ public class Reporte1 extends JPanel{
 			Map<String, Object> param = new HashMap<>();
 			param.put("foto", getClass().getResourceAsStream("/visual/imagenes/logo cc.png"));
 			java.sql.Connection connection = ServicesLocator.getConnection();
-			JasperReport report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte1.jasper");
+			JasperReport report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte4.jasper");
 			JasperPrint jp = JasperFillManager.fillReport(report, param, connection);
 			JRViewer jr = new JRViewer(jp);
 			este.add(jr);

@@ -200,6 +200,12 @@ public class VerContrato extends MiJPanel{
 		tipo.setForeground(Color.black);
 		tipo.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(tipo);
+		
+		JLabel des = new JLabel("Descripción: "+contrato.getContractDescription());
+		des.setBounds(50, 170, 350, 30);
+		des.setForeground(Color.black);
+		des.setFont(new Font("Arial", Font.BOLD, 16));
+		panelInferior.add(des);
 
 		try {
 			tp = touristPackageServices.findTouristPackage(contrato.getPackageCode());
@@ -208,7 +214,7 @@ public class VerContrato extends MiJPanel{
 		}
 
 		JLabel paq = new JLabel("Paquete Turístico: "+tp.getPromotionalName());
-		paq.setBounds(50, 170, 350, 30);
+		paq.setBounds(50, 200, 350, 30);
 		paq.setForeground(Color.black);
 		paq.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(paq);
@@ -217,19 +223,19 @@ public class VerContrato extends MiJPanel{
 
 		JLabel fechaCon = new JLabel("Fecha de conciliación:  "+
 				format.format(contrato.getContractConciliationDate()));
-		fechaCon.setBounds(50, 200, 350, 30);
+		fechaCon.setBounds(50, 230, 350, 30);
 		fechaCon.setForeground(Color.black);
 		fechaCon.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(fechaCon);
 
 		JLabel fechaIni = new JLabel("Fecha de inicio:  "+format.format(contrato.getContractStartDate()));
-		fechaIni.setBounds(50, 230, 350, 30);
+		fechaIni.setBounds(50, 260, 350, 30);
 		fechaIni.setForeground(Color.black);
 		fechaIni.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(fechaIni);
 
 		JLabel fechaFin = new JLabel("Fecha de finalización:  "+format.format(contrato.getContractEndDate()));
-		fechaFin.setBounds(50, 260, 350, 30);
+		fechaFin.setBounds(50, 290, 350, 30);
 		fechaFin.setForeground(Color.black);
 		fechaFin.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(fechaFin);
@@ -257,31 +263,31 @@ public class VerContrato extends MiJPanel{
 			FoodPlanDTO f = foodPlanServices.findFoodPlan(r.getFoodPlanCode());
 
 			JLabel aloj = new JLabel("Hospedaje");
-			aloj.setBounds(50, 320, 350, 30);
+			aloj.setBounds(50, 350, 350, 30);
 			aloj.setForeground(Color.black);
 			aloj.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
 			panelInferior.add(aloj);
 
 			JLabel hotel = new JLabel("Hotel: "+h.getHotelName());
-			hotel.setBounds(50, 360, 350, 30);
+			hotel.setBounds(50, 390, 350, 30);
 			hotel.setForeground(Color.black);
 			hotel.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(hotel);
 
 			JLabel hab = new JLabel("Habitación: "+r.getRoomType());
-			hab.setBounds(50, 390, 350, 30);
+			hab.setBounds(50, 420, 350, 30);
 			hab.setForeground(Color.black);
 			hab.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(hab);
 
 			JLabel plan = new JLabel("Plan Alimenticio: "+f.getTypeOfFoodPlan());
-			plan.setBounds(50, 420, 350, 30);
+			plan.setBounds(50, 450, 350, 30);
 			plan.setForeground(Color.black);
 			plan.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(plan);
 
 			JLabel temp = new JLabel("Temporada: "+s.getSeasonName());
-			temp.setBounds(50, 450, 350, 30);
+			temp.setBounds(50, 480, 350, 30);
 			temp.setForeground(Color.black);
 			temp.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(temp);
@@ -290,8 +296,8 @@ public class VerContrato extends MiJPanel{
 			e.printStackTrace();
 		}
 
-		este.setBounds(pantalla.width/2-226, pantalla.height/2-296, 452, 542);
-		panelInferior.setBounds(1, 31, 450, 510);
+		este.setBounds(pantalla.width/2-226, pantalla.height/2-311, 452, 572);
+		panelInferior.setBounds(1, 31, 450, 540);
 	}
 
 	private void transporte(){
@@ -302,25 +308,25 @@ public class VerContrato extends MiJPanel{
 			TransportModalityDTO tm = transportModalityServices.findTransportModality(t.getModalityCode());
 
 			JLabel tra = new JLabel("Transporte");
-			tra.setBounds(50, 320, 350, 30);
+			tra.setBounds(50, 350, 350, 30);
 			tra.setForeground(Color.black);
 			tra.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
 			panelInferior.add(tra);
 			
 			JLabel veh = new JLabel("Vehículo: "+v.getVehicleBrand());
-			veh.setBounds(50, 360, 350, 30);
+			veh.setBounds(50, 390, 350, 30);
 			veh.setForeground(Color.black);
 			veh.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(veh);
 
 			JLabel mod = new JLabel("Modalidad: "+tm.getModalityType());
-			mod.setBounds(50, 390, 350, 30);
+			mod.setBounds(50, 420, 350, 30);
 			mod.setForeground(Color.black);
 			mod.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(mod);
 
 			JLabel tran = new JLabel("Transportista: "+t.getTransportBorrower());
-			tran.setBounds(50, 420, 350, 30);
+			tran.setBounds(50, 450, 350, 30);
 			tran.setForeground(Color.black);
 			tran.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(tran);
@@ -329,8 +335,8 @@ public class VerContrato extends MiJPanel{
 			e.printStackTrace();
 		}
 
-		este.setBounds(pantalla.width/2-226, pantalla.height/2-281, 452, 512);
-		panelInferior.setBounds(1, 31, 450, 480);
+		este.setBounds(pantalla.width/2-226, pantalla.height/2-296, 452, 542);
+		panelInferior.setBounds(1, 31, 450, 510);
 	}
 
 	private void complementario(){
@@ -341,19 +347,19 @@ public class VerContrato extends MiJPanel{
 			ActivityDTO a = activityServices.findActivity(ev.getActivityCode());
 
 			JLabel eve = new JLabel("Evento");
-			eve.setBounds(50, 320, 350, 30);
+			eve.setBounds(50, 350, 350, 30);
 			eve.setForeground(Color.black);
 			eve.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
 			panelInferior.add(eve);
 
 			JLabel lug = new JLabel("Lugar: "+p.getPlaceName());
-			lug.setBounds(50, 360, 350, 30);
+			lug.setBounds(50, 390, 350, 30);
 			lug.setForeground(Color.black);
 			lug.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(lug);
 
 			JLabel ac = new JLabel("Actividad: "+a.getActivityDescription());
-			ac.setBounds(50, 390, 350, 30);
+			ac.setBounds(50, 420, 350, 30);
 			ac.setForeground(Color.black);
 			ac.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(ac);
@@ -363,7 +369,7 @@ public class VerContrato extends MiJPanel{
 
 			JLabel fec = new JLabel("Fecha:  "+format.format(a.getActivityDate())
 					+"     "+format2.format(a.getActivityDate()));
-			fec.setBounds(50, 420, 350, 30);
+			fec.setBounds(50, 450, 350, 30);
 			fec.setForeground(Color.black);
 			fec.setFont(new Font("Arial", Font.BOLD, 16));
 			panelInferior.add(fec);
@@ -372,7 +378,7 @@ public class VerContrato extends MiJPanel{
 			e.printStackTrace();
 		}
 		
-		este.setBounds(pantalla.width/2-226, pantalla.height/2-281, 452, 512);
-		panelInferior.setBounds(1, 31, 450, 480);
+		este.setBounds(pantalla.width/2-226, pantalla.height/2-296, 452, 542);
+		panelInferior.setBounds(1, 31, 450, 510);
 	}
 }
