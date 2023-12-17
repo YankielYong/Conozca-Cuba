@@ -16,6 +16,8 @@ public class ComboBoxModel {
 
 	public static DefaultComboBoxModel<String> localizacionesModel(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Campo");
+		model.addElement("Cayo");
 		model.addElement("Ciudad");
 		model.addElement("Playa");
 		return model;
@@ -59,6 +61,19 @@ public class ComboBoxModel {
 		model.addElement("Doble");
 		model.addElement("Suite");
 		model.addElement("Junior Suite");
+		return model;
+	}
+	
+	public static DefaultComboBoxModel<String> reportesModel(){
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model.addElement("Listado de contratos conciliados con hoteles");
+		model.addElement("Listado de temporadas de los contratos hoteleros");
+		model.addElement("Listado de contratos de transporte");
+		model.addElement("Listado de contratos de servicios complementarios");
+		model.addElement("Listado de hoteles activos");
+		model.addElement("Listado de hoteles inactivos");
+		model.addElement("Programa del paquete turístico");
+		model.addElement("Plan de ingreso por concepto de venta del paquete turístico");
 		return model;
 	}
 	

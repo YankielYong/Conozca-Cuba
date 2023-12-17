@@ -46,6 +46,7 @@ public class Principal extends JFrame{
 	private JButton btnPerfil;
 	private JButton btnDescubrir;
 	private JButton btnGestion;
+	private JButton btnReportes;
 
 	private JPanel panelPrincipal;
 
@@ -102,6 +103,8 @@ public class Principal extends JFrame{
 	private EditarPaquete panelEditarPaquete;
 	private EditarHospedaje panelEditarHospedaje;
 	private EditarActividad panelEditarActividad;
+	private Reportes panelReportes;
+	private MostrarReporte panelMostrarReporte;
 
 	public Principal(UserDTO u){
 		este = this;
@@ -269,7 +272,38 @@ public class Principal extends JFrame{
 		btnGestion.setFocusable(false);
 		btnGestion.setBorderPainted(false);
 		btnGestion.setContentAreaFilled(false);
+		
+		img = new ImageIcon(getClass().getResource("/visual/imagenes/reporte.png"));
+		image = img.getImage().getScaledInstance(37, 37, Image.SCALE_SMOOTH);
+		Icon iconReporte = new ImageIcon(image);
 
+		btnReportes = new JButton(iconReporte);
+		btnReportes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removerPanel();
+				panelReportes = new Reportes(este);
+				panelPrincipal.add(panelReportes);
+				panelPrincipal.repaint();
+			}
+		});
+		btnReportes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnReportes.setContentAreaFilled(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnReportes.setContentAreaFilled(false);
+			}
+		});
+		btnReportes.setModel(new MyButtonModel());
+		btnReportes.setBounds(225, 0, 75, 50);
+		btnReportes.setBackground(colorFondoBotones);
+		btnReportes.setFocusable(false);
+		btnReportes.setBorderPainted(false);
+		btnReportes.setContentAreaFilled(false);
+		
 		panelPrincipal = new JPanel(null){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -388,6 +422,10 @@ public class Principal extends JFrame{
 			panelPrincipal.remove(panelEditarHospedaje);
 		else if(panelAbierto == Paneles.PANEL_EDITAR_ACTIVIDAD)
 			panelPrincipal.remove(panelEditarActividad);
+		else if(panelAbierto == Paneles.PANEL_REPORTES)
+			panelPrincipal.remove(panelReportes);
+		else if(panelAbierto == Paneles.PANEL_MOSTRAR_REPORTES)
+			panelPrincipal.remove(panelMostrarReporte);
 	}
 
 	private void vistaGestorVentas(){
@@ -397,6 +435,8 @@ public class Principal extends JFrame{
 
 		btnGestion.setIcon(iconGestion);
 		panelSuperior.add(btnGestion);
+		
+		panelSuperior.add(btnReportes);
 	}
 
 	private void vistaGestorAgencia(){
@@ -406,6 +446,8 @@ public class Principal extends JFrame{
 
 		btnGestion.setIcon(iconGestion);
 		panelSuperior.add(btnGestion);
+		
+		panelSuperior.add(btnReportes);
 	}
 
 	public void setPanelAgregarUsuario(AgregarUsuario agregarUsuario) {
@@ -602,6 +644,14 @@ public class Principal extends JFrame{
 
 	public void setPanelVerPaquete(VerPaquete panelVerPaquete) {
 		this.panelVerPaquete = panelVerPaquete;
+	}
+
+	public void setPanelReportes(Reportes panelReportes) {
+		this.panelReportes = panelReportes;
+	}
+
+	public void setPanelMostrarReporte(MostrarReporte panelMostrarReporte) {
+		this.panelMostrarReporte = panelMostrarReporte;
 	}
 
 	public void setPanelAbierto(int panel){
