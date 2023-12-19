@@ -65,6 +65,7 @@ public class AgregarActividad extends MiJPanel{
 	private Gestion anterior;
 	private AgregarActividad este;
 
+	@SuppressWarnings("deprecation")
 	public AgregarActividad(Principal p, Gestion a){
 		este = this;
 		padre = p;
@@ -165,7 +166,7 @@ public class AgregarActividad extends MiJPanel{
 		logo.setBounds(68, 15, 220, 67);
 		panelInferior.add(logo);
 
-		JLabel dia = new JLabel("D�a");
+		JLabel dia = new JLabel("Día");
 		dia.setHorizontalAlignment(SwingConstants.CENTER);
 		dia.setHorizontalTextPosition(SwingConstants.CENTER);
 		dia.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -353,7 +354,6 @@ public class AgregarActividad extends MiJPanel{
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setFont(new Font("Arial", Font.BOLD, 18));
 		btnAgregar.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				padre.getPanelPrincipal().remove(este);
@@ -407,7 +407,15 @@ public class AgregarActividad extends MiJPanel{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
+		
 
+		int day = new Date().getDate();
+		int month = new Date().getMonth()+1;
+		int yearr = new Date().getYear()+1900;
+		cbDia.setSelectedItem(day);
+		cbMes.setSelectedItem(month);
+		cbYear.setSelectedItem(yearr);
+		controlDiasMeses();
 	}
 
 	private void controlDiasMeses(){

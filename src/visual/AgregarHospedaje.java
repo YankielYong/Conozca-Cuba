@@ -214,7 +214,7 @@ public class AgregarHospedaje extends MiJPanel{
 		btnHotel.setBorderPainted(false);
 		panelInferior.add(btnHotel);
 		
-		JLabel hab = new JLabel("C�digo de la Habitación:");
+		JLabel hab = new JLabel("Código de la Habitación:");
 		hab.setBounds(50, 160, 180, 30);
 		hab.setForeground(Color.black);
 		hab.setFont(new Font("Arial", Font.PLAIN, 16));

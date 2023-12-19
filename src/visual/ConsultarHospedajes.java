@@ -196,19 +196,20 @@ public class ConsultarHospedajes extends MiJPanel{
 		};
 		table.setModel(tableModel);
 		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
+		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(5).setCellRenderer(Alinear);
-		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(0).setPreferredWidth(55);
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table.getColumnModel().getColumn(1).setPreferredWidth(270);
 		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		table.getColumnModel().getColumn(2).setPreferredWidth(110);
 		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(3).setPreferredWidth(140);
 		table.getColumnModel().getColumn(3).setResizable(false);
-		table.getColumnModel().getColumn(4).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(80);
 		table.getColumnModel().getColumn(4).setResizable(false);
-		table.getColumnModel().getColumn(5).setPreferredWidth(80);
+		table.getColumnModel().getColumn(5).setPreferredWidth(85);
 		table.getColumnModel().getColumn(5).setResizable(false);
 		try{
 			listaHospedajes = lodgingServices.selectAllLodgings();

@@ -76,6 +76,10 @@ import dto.ActivityDTO;
 import dto.ContractDTO;
 import dto.ContractEventDTO;
 import dto.ContractLodgingDTO;
+import dto.ContractTransportDTO;
+import dto.CostPerEstablishedToursDTO;
+import dto.CostPerHourKilometerDTO;
+import dto.CostPerKilometerDTO;
 import dto.EventDTO;
 import dto.FoodPlanDTO;
 import dto.HotelChainDTO;
@@ -136,6 +140,7 @@ public class Gestion extends MiJPanel{
 	private ArrayList<TransportDTO> listaTransportes;
 	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<VehicleDTO> listaVehiculos;
+	private ArrayList<ContractLodgingDTO> listaContratosHoteleros;
 
 	private DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 
@@ -200,13 +205,11 @@ public class Gestion extends MiJPanel{
 	private TouristPackageTableModel touristPackageTableModel;
 	private TransportTableModel transportTableModel;
 
-	private UserDTO user;
 	private RoleDTO roleUser;
 
-	public Gestion(Principal p, UserDTO u, RoleDTO r){
+	public Gestion(Principal p, RoleDTO r){
 		este = this;
 		padre = p;
-		user = u;
 		roleUser = r;
 		setTipoPanel(Paneles.PANEL_GESTION);
 		padre.setPanelAbierto(getTipoPanel());
@@ -1502,7 +1505,7 @@ public class Gestion extends MiJPanel{
 			public void mouseClicked(MouseEvent e) {
 				pos = table.getSelectedRow();
 			}
-			
+
 		});
 		table.setFocusable(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1542,7 +1545,7 @@ public class Gestion extends MiJPanel{
 			}
 			else if(btnProvincias.isBorderPainted()){
 				padre.getPanelPrincipal().remove(este);
-				AgregarProvincia panel = new AgregarProvincia(padre, este);
+				AgregarrProvincia panel = new AgregarrProvincia(padre, este);
 				padre.getPanelPrincipal().add(panel);
 				padre.getPanelPrincipal().repaint();
 			}
@@ -1628,14 +1631,14 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnHabitaciones.isBorderPainted()){
-						mensaje = "esta habitaci�n";
+						mensaje = "esta habitación";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta habitación?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							roomServices.deleteRoom(listaHabitaciones.get(pos).getRoomCode());
 							ponerHabitacion();
-							mensaje = "La habitaci�n fue eliminada con éxito";
+							mensaje = "La habitación fue eliminada con éxito";
 						}
 					}
 					else if(btnHoteles.isBorderPainted()){
@@ -1677,6 +1680,9 @@ public class Gestion extends MiJPanel{
 					}
 					else if(btnUsuarios.isBorderPainted()){
 						mensaje = "este usuario";
+						UserDTO yanko = userServices.findUser(1);
+						if(listaUsuarios.get(pos).getUserName().equals(yanko.getUserName()))
+							throw new IllegalArgumentException("Por seguridad de la aplicación este usuario no puede ser eliminado");
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este usuario?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1687,7 +1693,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnVehiculos.isBorderPainted()){
-						mensaje = "este veh�culo";
+						mensaje = "este vehículo";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este vehículo?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1724,28 +1730,91 @@ public class Gestion extends MiJPanel{
 							int codigo = c.getContractCode();
 							TouristPackageDTO tp = touristPackageServices.findTouristPackage(c.getPackageCode());
 							String tipo = listaContratos.get(pos).getContractType();
+
+
+
 							if(tipo.equals("Hotelero")){
 								ContractLodgingDTO cl = contractLodgingServices.findContractLodging(codigo);
 								LodgingDTO l = lodgingServices.findLodging(cl.getLodgingCode());
 								contractLodgingServices.deleteContractLodging(codigo);
-								touristPackageServices.updateTouristPackage(tp.getPackageCode(), tp.getPromotionalName(), 
-										tp.getPackagePrice()-(l.getLodgingPrice()*tp.getNumberOfPeople()*tp.getNumberOfNights()), 
+								double precioNuevo = tp.getPackagePrice()-(l.getLodgingPrice()*tp.getNumberOfPeople()*tp.getNumberOfNights());
+								if(precioNuevo<0) precioNuevo = 0;
+								touristPackageServices.updateTouristPackage(tp.getPackageCode(), tp.getPromotionalName(), precioNuevo, 
 										tp.getPackageCost(), tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
 							}
+
+
+
 							else if(tipo.equals("Transporte")){
+								ContractTransportDTO ct = contractTransportServices.findContractTransport(codigo);
+								TransportDTO tr = transportServices.findTransport(ct.getTransportCode());
+								TransportModalityDTO tm = transportModalityServices.findTransportModality(tr.getModalityCode());
+								listaContratosHoteleros = contractLodgingServices.selectAllContractLodging();
+								HotelDTO ht = null;
+								boolean parar = false;
+								for(int i=0; i<listaContratosHoteleros.size() && !parar; i++){
+									ContractLodgingDTO cl = listaContratosHoteleros.get(i);
+									ContractDTO ca = contractServices.findContract(cl.getContractCode());
+									if(ca.getPackageCode() == tp.getPackageCode()){
+										parar = true;
+										LodgingDTO l = lodgingServices.findLodging(cl.getLodgingCode());
+										ht = hotelServices.findHotel(l.getHotelCode());
+									}
+								}
+								double precio = 0;
+								if(ht.getAirportDistance() > ht.getNearbyCityDistance()){
+									if(tm.getModalityType().equals("Costo por kilometraje")){
+										CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
+										precio = mod.getCostPerKm() * ht.getAirportDistance();
+									}
+									else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
+										CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
+										precio = mod.getCostPerKmTraveled() * ht.getAirportDistance();
+									}
+									else if(tm.getModalityType().equals("Costo por recorridos establecidos")){
+										CostPerEstablishedToursDTO mod = costPerEstablishedToursServices.findCostPerEstablishedTours(tm.getModalityCode());
+										precio = mod.getCostPerTour() * ht.getAirportDistance();
+									}
+								}
+								else{
+									if(tm.getModalityType().equals("Costo por kilometraje")){
+										CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
+										precio = mod.getCostPerKmRoundTrip() * ht.getNearbyCityDistance();
+									}
+									else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
+										CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
+										precio = mod.getCostPerKmTraveled() * ht.getNearbyCityDistance();
+									}
+									else if(tm.getModalityType().equals("Costo por recorridos establecidos")){
+										CostPerEstablishedToursDTO mod = costPerEstablishedToursServices.findCostPerEstablishedTours(tm.getModalityCode());
+										precio = mod.getCostPerTourRoundTrip() * ht.getNearbyCityDistance();
+									}
+								}
+								int paquete = tp.getPackageCode();
+								String nombre = tp.getPromotionalName();
+								double precioNuevo = tp.getPackagePrice() - precio;
+								if(precioNuevo<0) precioNuevo=0;
+								double cost = tp.getPackageCost();
+								int cantP = tp.getNumberOfPeople();
+								int cantD = tp.getNumberOfDays();
+								int cantN = tp.getNumberOfNights();
+								touristPackageServices.updateTouristPackage(paquete, nombre, precioNuevo, cost, cantP, cantD, cantN);
 								contractTransportServices.deleteContractTransport(codigo);
 							}
+
+
+
 							else if(tipo.equals("Servicios Complementarios")){
 								ContractEventDTO ce = contractEventServices.findContractEvent(codigo);
 								EventDTO ev = eventServices.findEvent(ce.getEventCode());
 								ActivityDTO ac = activityServices.findActivity(ev.getActivityCode());
 								PlaceDTO p = placeServices.findPlace(ev.getPlaceCode());
 								contractEventServices.deleteContractEvent(codigo);
-								touristPackageServices.updateTouristPackage(tp.getPackageCode(),
-										tp.getPromotionalName(), 
-										tp.getPackagePrice()-(ac.getActivityPrice()*tp.getNumberOfPeople()),
-										tp.getPackageCost()-(p.getCostPerPerson()*tp.getNumberOfPeople()),
-										tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
+								double precioNuevo = tp.getPackagePrice() - (ac.getActivityPrice()*tp.getNumberOfPeople());
+								if(precioNuevo<0) precioNuevo = 0;
+								double costoNuevo = tp.getPackageCost()-(p.getCostPerPerson()*tp.getNumberOfPeople());
+								touristPackageServices.updateTouristPackage(tp.getPackageCode(), tp.getPromotionalName(), precioNuevo, 
+										costoNuevo, tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
 							}
 							contractServices.deleteContract(codigo);
 							ponerContratos();
@@ -1795,7 +1864,7 @@ public class Gestion extends MiJPanel{
 						}
 					}
 					else if(btnPaquetes.isBorderPainted()){
-						mensaje = "este paquete tur�stico";
+						mensaje = "este paquete turístico";
 						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este paquete turístico?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1828,9 +1897,18 @@ public class Gestion extends MiJPanel{
 				ma.setVisible(true);
 			}
 		}
-		catch(SQLException | ClassNotFoundException e){
-			MensajeAviso ma = new MensajeAviso(null, padre, este, "No fue posible eliminar "+mensaje, MensajeAviso.ERROR);
-			ma.setVisible(true);
+		catch(SQLException | ClassNotFoundException | IllegalArgumentException e){
+			if(e.getMessage().equals("Por seguridad de la aplicación este usuario no puede ser eliminado")){
+				MensajeAviso ma = new MensajeAviso(null, padre, este, e.getMessage(), MensajeAviso.ERROR);
+				ma.agrandar(170);
+				ma.setVisible(true);
+			}
+			else{
+				MensajeAviso ma = new MensajeAviso(null, padre, este, "No fue posible eliminar "+mensaje, MensajeAviso.ERROR);
+				if(mensaje.equals("esta modalidad de transporte"))
+					ma.agrandar(60);
+				ma.setVisible(true);
+			}
 		}
 	}
 
@@ -1911,7 +1989,7 @@ public class Gestion extends MiJPanel{
 			ma.setVisible(true);
 		}
 	}
-	
+
 	private void accionEditar(){
 		btnEditar.setBackground(colorAzul);
 		padre.getPanelPrincipal().remove(este);

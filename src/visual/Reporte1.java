@@ -22,7 +22,7 @@ public class Reporte1 extends JPanel{
 	private Reporte1 este;
 	public Reporte1(){
 		este = this;
-		setBounds(0, 0, 1300, 570);
+		setBounds(0, 0, 1300, 650);
 		setLayout(new BorderLayout());
 		try {
 			Map<String, Object> param = new HashMap<>();

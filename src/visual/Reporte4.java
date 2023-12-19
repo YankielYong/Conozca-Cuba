@@ -21,7 +21,7 @@ public class Reporte4 extends JPanel{
 	private Reporte4 este;
 	public Reporte4(){
 		este = this;
-		setBounds(0, 0, 1300, 570);
+		setBounds(0, 0, 1300, 650);
 		setLayout(new BorderLayout());
 		try {
 			Map<String, Object> param = new HashMap<>();

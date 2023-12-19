@@ -356,7 +356,6 @@ public class Login extends JFrame {
 	
 	@SuppressWarnings("deprecation")
 	private void iniciarSesion(){
-		este.setVisible(false);
 		String usuario = "";
 		String pass = "";
 		try{
@@ -385,6 +384,7 @@ public class Login extends JFrame {
 				throw new IllegalArgumentException("El usuario no existe en la base de datos");
 		}
 		catch(IllegalArgumentException e1){
+			este.setVisible(false);
 			MensajeAviso ma = new MensajeAviso(este, null, null, e1.getMessage(), MensajeAviso.ERROR);
 			if(e1.getMessage().equals("La contraseña debe tener al menos 8 caracteres")){
 				ma.agrandar(15);

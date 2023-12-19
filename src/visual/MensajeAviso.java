@@ -176,12 +176,13 @@ public class MensajeAviso extends JDialog{
 	public void agrandar(int ancho){
 		int x = getX();
 		int y = getY();
-		setBounds(x-ancho/2, y, 422+ancho, 152);
-		panelSuperior.setBounds(1, 1, 420+ancho, 30);
-		panelInferior.setBounds(1, 31, 420+ancho, 120);
+		int wN = getWidth()+ancho;
+		setBounds(pantalla.width/2 - wN/2, y, wN, 152);
+		panelSuperior.setBounds(1, 1, wN-2, 30);
+		panelInferior.setBounds(1, 31, wN-2, 120);
 		lblMensaje.setBounds(70, 20, 350+ancho, 40);
-		btnAceptar.setBounds(160+ancho, 75, 100, 30);
-		btnCancelar.setBounds(280+ancho, 75, 100, 30);
+		btnAceptar.setBounds(160+ancho/2, 75, 100, 30);
+		btnCancelar.setBounds(wN/2-50, 75, 100, 30);
 	}
 
 	public boolean getValor(){

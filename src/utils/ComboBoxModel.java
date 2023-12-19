@@ -35,7 +35,9 @@ public class ComboBoxModel {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Aprendizaje");
 		model.addElement("Entretenimiento");
+		model.addElement("Espectáculo Nocturno");
 		model.addElement("Gastronómico");
+		model.addElement("Museo");
 		return model;
 	}
 	

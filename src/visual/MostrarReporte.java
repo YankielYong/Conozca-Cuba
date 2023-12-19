@@ -36,15 +36,19 @@ public class MostrarReporte extends MiJPanel{
 	private String cadena;
 	private String provincia;
 	private Reporte1 reporte1;
+	private Reporte3 reporte3;
 	private Reporte4 reporte4;
+	private Reporte5 reporte5;
 	private Reporte6 reporte6;
+	private Reporte7 reporte7;
+	private Reporte8 reporte8;
 
 	public MostrarReporte(Principal p, int rep){
 		este = this;
 		padre = p;
 		numReporte = rep;
 
-		if(numReporte == 6){
+		if(numReporte == 5 || numReporte == 6){
 			Reporte6Params rp = new Reporte6Params(padre);
 			rp.setVisible(true);
 			cadena = rp.getCadena();
@@ -54,7 +58,7 @@ public class MostrarReporte extends MiJPanel{
 		setTipoPanel(Paneles.PANEL_MOSTRAR_REPORTES);
 		padre.setPanelAbierto(getTipoPanel());
 		padre.setPanelMostrarReporte(este);
-		setBounds(pantalla.width/2-651, pantalla.height/2-326, 1302, 602);
+		setBounds(pantalla.width/2-651, pantalla.height/2-366, 1302, 682);
 		setBackground(Color.darkGray);
 		setLayout(null);
 
@@ -114,9 +118,28 @@ public class MostrarReporte extends MiJPanel{
 					mostrar();
 			}
 		});
-		panelInferior.setBounds(1, 31, 1300, 570);
+		panelInferior.setBounds(1, 31, 1300, 650);
 		panelInferior.setBackground(Color.white);
 		add(panelInferior);
+
+		if(numReporte == 3){
+			setBounds(pantalla.width/2-601, pantalla.height/2-366, 1202, 682);
+			panelSuperior.setBounds(1, 1, 1200, 30);
+			btnCerrar.setBounds(1155, 0, 45, 30);
+			panelInferior.setBounds(1, 31, 1200, 650);
+		}
+		else if(numReporte == 5 || numReporte == 6){
+			setBounds(pantalla.width/2-581, pantalla.height/2-366, 1162, 682);
+			panelSuperior.setBounds(1, 1, 1160, 30);
+			btnCerrar.setBounds(1115, 0, 45, 30);
+			panelInferior.setBounds(1, 31, 1160, 650);
+		}
+		else if(numReporte == 7){
+			setBounds(pantalla.width/2-401, pantalla.height/2-366, 802, 682);
+			panelSuperior.setBounds(1, 1, 800, 30);
+			btnCerrar.setBounds(755, 0, 45, 30);
+			panelInferior.setBounds(1, 31, 800, 650);
+		}
 	}
 
 	private void mostrar(){
@@ -127,13 +150,29 @@ public class MostrarReporte extends MiJPanel{
 			reporte1 = new Reporte1();
 			panelInferior.add(reporte1);
 			break;
+		case 3: 
+			reporte3 = new Reporte3();
+			panelInferior.add(reporte3);
+			break;
 		case 4: 
 			reporte4 = new Reporte4();
 			panelInferior.add(reporte4);
 			break;
+		case 5: 
+			reporte5 = new Reporte5(cadena, provincia);
+			panelInferior.add(reporte5);
+			break;
 		case 6: 
 			reporte6 = new Reporte6(cadena, provincia);
 			panelInferior.add(reporte6);
+			break;
+		case 7: 
+			reporte7 = new Reporte7();
+			panelInferior.add(reporte7);
+			break;
+		case 8: 
+			reporte8 = new Reporte8();
+			panelInferior.add(reporte8);
 			break;
 		}
 		mostrado = true;

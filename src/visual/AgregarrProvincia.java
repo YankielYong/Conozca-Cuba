@@ -9,8 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -27,12 +30,8 @@ import utils.MyButtonModel;
 import utils.Paneles;
 import utils.Validaciones;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+public class AgregarrProvincia extends MiJPanel{
 
-public class AgregarProvincia extends MiJPanel{
-	
 	private ProvinceServices provinceServices = ServicesLocator.getProvinceServices();
 
 	private static final long serialVersionUID = 1L;
@@ -50,9 +49,9 @@ public class AgregarProvincia extends MiJPanel{
 	
 	private Principal padre;
 	private Gestion anterior;
-	private AgregarProvincia este;
+	private AgregarrProvincia este;
 	
-	public AgregarProvincia(Principal p, Gestion a){
+	public AgregarrProvincia(Principal p, Gestion a){
 		este = this;
 		padre = p;
 		anterior = a;
@@ -158,6 +157,10 @@ public class AgregarProvincia extends MiJPanel{
 			public void keyTyped(KeyEvent e) {
 				Validaciones.soloLetras(e);
 			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarAccion(e.getKeyCode());
+			}
 		});
 		txtNombre.addFocusListener(new FocusAdapter() {
 			@Override
@@ -189,24 +192,7 @@ public class AgregarProvincia extends MiJPanel{
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				padre.getPanelPrincipal().remove(este);
-				padre.getPanelPrincipal().repaint();
-				try{
-					String cadena;
-					if(!nameChanged)
-						cadena = "";
-					else
-						cadena = txtNombre.getText();
-					Validaciones.provincia(cadena);
-					provinceServices.insertProvince(cadena);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La provincia fue agregada con éxito", MensajeAviso.CORRECTO);
-					ma.setVisible(true);
-					anterior.ponerProvincias();
-				}
-				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
-					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					ma.setVisible(true);
-				}
+				agregar();
 			}
 		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
@@ -228,4 +214,30 @@ public class AgregarProvincia extends MiJPanel{
 		panelInferior.add(btnAgregar);
 	}
 	
+	private void agregar(){
+		padre.getPanelPrincipal().remove(este);
+		padre.getPanelPrincipal().repaint();
+		try{
+			String cadena;
+			if(!nameChanged)
+				cadena = "";
+			else
+				cadena = txtNombre.getText();
+			Validaciones.provincia(cadena);
+			provinceServices.insertProvince(cadena);
+			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La provincia fue agregada con éxito", MensajeAviso.CORRECTO);
+			ma.setVisible(true);
+			anterior.ponerProvincias();
+		}
+		catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
+			MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+			ma.setVisible(true);
+		}
+	}
+	
+	private void realizarAccion(int key){
+		switch(key){
+		case KeyEvent.VK_ENTER: agregar(); break;
+		}
+	}
 }

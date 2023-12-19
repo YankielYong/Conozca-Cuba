@@ -194,11 +194,11 @@ public class ConsultarTransportes extends MiJPanel{
 		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setPreferredWidth(170);
+		table.getColumnModel().getColumn(1).setPreferredWidth(140);
 		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setPreferredWidth(170);
+		table.getColumnModel().getColumn(2).setPreferredWidth(260);
 		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(3).setPreferredWidth(90);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		try {
 			listaTransportes = transportServices.selectAllTransports();

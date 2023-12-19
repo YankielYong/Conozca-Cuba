@@ -14,9 +14,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,20 +31,32 @@ import javax.swing.border.MatteBorder;
 import dto.ActivityDTO;
 import dto.ContractDTO;
 import dto.ContractLodgingDTO;
+import dto.ContractTransportDTO;
+import dto.CostPerEstablishedToursDTO;
+import dto.CostPerHourKilometerDTO;
+import dto.CostPerKilometerDTO;
 import dto.EventDTO;
+import dto.HotelDTO;
 import dto.LodgingDTO;
 import dto.PlaceDTO;
 import dto.TouristPackageDTO;
+import dto.TransportDTO;
+import dto.TransportModalityDTO;
 import services.ActivityServices;
 import services.ContractEventServices;
 import services.ContractLodgingServices;
 import services.ContractServices;
 import services.ContractTransportServices;
+import services.CostPerEstablishedToursServices;
+import services.CostPerHourKilometerServices;
+import services.CostPerKilometerServices;
 import services.EventServices;
+import services.HotelServices;
 import services.LodgingServices;
 import services.PlaceServices;
 import services.ServicesLocator;
 import services.TouristPackageServices;
+import services.TransportModalityServices;
 import services.TransportServices;
 import utils.ComboBoxModel;
 import utils.MiJPanel;
@@ -59,15 +71,21 @@ public class AgregarContrato extends MiJPanel{
 	private ContractEventServices contractEventServices = ServicesLocator.getContractEventServices();
 	private ContractLodgingServices contractLodgingServices = ServicesLocator.getContractLodgingServices();
 	private ContractServices contractServices = ServicesLocator.getContractServices();
+	private CostPerEstablishedToursServices costPerEstablishedToursServices = ServicesLocator.getCostPerEstablishedToursServices();
+	private CostPerHourKilometerServices costPerHourKilometerServices = ServicesLocator.getCostPerHourKilometerServices();
+	private CostPerKilometerServices costPerKilometerServices = ServicesLocator.getCostPerKilometerServices();
 	private ContractTransportServices contractTransportServices = ServicesLocator.getContractTransportServices();
 	private EventServices eventServices = ServicesLocator.getEventServices();
+	private HotelServices hotelServices = ServicesLocator.getHotelServices();
 	private LodgingServices lodgingServices = ServicesLocator.getLodgingServices();
 	private PlaceServices placeServices = ServicesLocator.getPlaceServices();
 	private TouristPackageServices touristPackageServices = ServicesLocator.getTouristPackageServices();
+	private TransportModalityServices transportModalityServices = ServicesLocator.getTransportModalityServices();
 	private TransportServices transportServices = ServicesLocator.getTransportServices();
-	
+
 	private ArrayList<ContractLodgingDTO> listaContratosHoteleros;
-	
+	private ArrayList<ContractTransportDTO> listaContratosTransporte;
+
 	private static final long serialVersionUID = 1L;
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	private Color colorAzul = new Color(59, 165, 187);
@@ -92,11 +110,12 @@ public class AgregarContrato extends MiJPanel{
 	private JButton btnAgregar;
 	private JLabel lblEntidad;
 	private boolean descChanged = false;
-	
+
 	private Principal padre;
 	private AgregarContrato este;
 	private Gestion anterior;
-	
+
+	@SuppressWarnings("deprecation")
 	public AgregarContrato(Principal p, Gestion a) {
 		anterior = a;
 		este = this;
@@ -196,7 +215,7 @@ public class AgregarContrato extends MiJPanel{
 		JLabel logo = new JLabel(iconLogo);
 		logo.setBounds(88, 15, 220, 67);
 		panelInferior.add(logo);
-		
+
 		cbTipo = new JComboBox<String>();
 		cbTipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -219,7 +238,7 @@ public class AgregarContrato extends MiJPanel{
 		cbTipo.setModel(utils.ComboBoxModel.contratosModel());
 		cbTipo.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
 		panelInferior.add(cbTipo);
-		
+
 		txtDescripcion = new JTextField("Descripción");
 		txtDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
@@ -251,13 +270,13 @@ public class AgregarContrato extends MiJPanel{
 		txtDescripcion.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		txtDescripcion.setBounds(50, 160, 300, 30);
 		panelInferior.add(txtDescripcion);
-		
+
 		JLabel fechaInicio = new JLabel("Fecha de inicio");
 		fechaInicio.setBounds(50, 210, 150, 20);
 		fechaInicio.setForeground(Color.black);
 		fechaInicio.setFont(new Font("Arial", Font.PLAIN, 14));
 		panelInferior.add(fechaInicio);
-		
+
 		cbDiaInicio = new JComboBox<Integer>();
 		cbDiaInicio.setBounds(50, 240, 80, 30);
 		cbDiaInicio.setBackground(Color.white);
@@ -268,7 +287,7 @@ public class AgregarContrato extends MiJPanel{
 		cbDiaInicio.setUI(PropiedadesComboBox.createUI(getRootPane(), cbDiaInicio.getBounds()));
 		((JLabel)cbDiaInicio.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbDiaInicio);
-		
+
 		cbMesInicio = new JComboBox<Integer>();
 		cbMesInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -284,7 +303,7 @@ public class AgregarContrato extends MiJPanel{
 		cbMesInicio.setUI(PropiedadesComboBox.createUI(getRootPane(), cbMesInicio.getBounds()));
 		((JLabel)cbMesInicio.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbMesInicio);
-		
+
 		cbYearInicio = new JComboBox<Integer>();
 		cbYearInicio.setBounds(270, 240, 80, 30);
 		cbYearInicio.setBackground(Color.white);
@@ -296,13 +315,13 @@ public class AgregarContrato extends MiJPanel{
 		cbYearInicio.setUI(PropiedadesComboBox.createUI(getRootPane(), cbYearInicio.getBounds()));
 		((JLabel)cbYearInicio.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYearInicio);
-		
+
 		JLabel fechaConc = new JLabel("Fecha de conciliación");
 		fechaConc.setBounds(50, 290, 150, 20);
 		fechaConc.setForeground(Color.black);
 		fechaConc.setFont(new Font("Arial", Font.PLAIN, 14));
 		panelInferior.add(fechaConc);
-		
+
 		cbDiaConc = new JComboBox<Integer>();
 		cbDiaConc.setBounds(50, 320, 80, 30);
 		cbDiaConc.setBackground(Color.white);
@@ -313,7 +332,7 @@ public class AgregarContrato extends MiJPanel{
 		cbDiaConc.setUI(PropiedadesComboBox.createUI(getRootPane(), cbDiaConc.getBounds()));
 		((JLabel)cbDiaConc.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbDiaConc);
-		
+
 		cbMesConc = new JComboBox<Integer>();
 		cbMesConc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -329,7 +348,7 @@ public class AgregarContrato extends MiJPanel{
 		cbMesConc.setUI(PropiedadesComboBox.createUI(getRootPane(), cbMesConc.getBounds()));
 		((JLabel)cbMesConc.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbMesConc);
-		
+
 		cbYearConc = new JComboBox<Integer>();
 		cbYearConc.setBounds(270, 320, 80, 30);
 		cbYearConc.setBackground(Color.white);
@@ -341,13 +360,13 @@ public class AgregarContrato extends MiJPanel{
 		cbYearConc.setUI(PropiedadesComboBox.createUI(getRootPane(), cbYearConc.getBounds()));
 		((JLabel)cbYearConc.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYearConc);
-		
+
 		JLabel lblPaquete = new JLabel("Código del Paquete:");
 		lblPaquete.setBounds(50, 370, 150, 30);
 		lblPaquete.setForeground(Color.black);
 		lblPaquete.setFont(new Font("Arial", Font.PLAIN, 16));
 		panelInferior.add(lblPaquete);
-		
+
 		txtPaquete = new JTextField();
 		txtPaquete.addKeyListener(new KeyAdapter() {
 			@Override
@@ -360,7 +379,7 @@ public class AgregarContrato extends MiJPanel{
 		txtPaquete.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPaquete.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtPaquete);
-		
+
 		btnPaquete = new JButton("Ver");
 		btnPaquete.addActionListener(new ActionListener() {
 			@Override
@@ -391,13 +410,13 @@ public class AgregarContrato extends MiJPanel{
 		btnPaquete.setFocusable(false);
 		btnPaquete.setBorderPainted(false);
 		panelInferior.add(btnPaquete);
-		
+
 		lblEntidad = new JLabel("Código del Evento:");
 		lblEntidad.setBounds(50, 420, 140, 30);
 		lblEntidad.setForeground(Color.black);
 		lblEntidad.setFont(new Font("Arial", Font.PLAIN, 16));
 		panelInferior.add(lblEntidad);
-		
+
 		txtEntidad = new JTextField();
 		txtEntidad.addKeyListener(new KeyAdapter() {
 			@Override
@@ -410,7 +429,7 @@ public class AgregarContrato extends MiJPanel{
 		txtEntidad.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtEntidad.setBorder(new MatteBorder(0, 0, 3, 0, colorAzul));
 		panelInferior.add(txtEntidad);
-		
+
 		btnEntidad = new JButton("Ver");
 		btnEntidad.addActionListener(new ActionListener() {
 			@Override
@@ -451,7 +470,7 @@ public class AgregarContrato extends MiJPanel{
 		btnEntidad.setFocusable(false);
 		btnEntidad.setBorderPainted(false);
 		panelInferior.add(btnEntidad);
-		
+
 		btnAgregar = new JButton("Agregar Contrato");
 		btnAgregar.addActionListener(new ActionListener() {
 			@Override
@@ -477,28 +496,40 @@ public class AgregarContrato extends MiJPanel{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBorderPainted(false);
 		panelInferior.add(btnAgregar);
-		
+
 		hotelero();
+		
+		int day = new Date().getDate();
+		int month = new Date().getMonth()+1;
+		int yearr = new Date().getYear()+1900;
+		cbDiaInicio.setSelectedItem(day);
+		cbMesInicio.setSelectedItem(month);
+		cbYearInicio.setSelectedItem(yearr);
+		cbDiaConc.setSelectedItem(day);
+		cbMesConc.setSelectedItem(month);
+		cbYearConc.setSelectedItem(yearr);
+		controlDiasMeses(1);
+		controlDiasMeses(3);
 	}
-	
+
 	private void hotelero(){
 		lblEntidad.setText("Código del Hospedaje:");
 		lblEntidad.setBounds(50, 420, 165, 30);
 		txtEntidad.setBounds(215, 420, 75, 30);
 	}
-	
+
 	private void transporte(){
 		lblEntidad.setText("Código del Transporte:");
 		lblEntidad.setBounds(50, 420, 165, 30);
 		txtEntidad.setBounds(215, 420, 75, 30);
 	}
-	
+
 	private void servComp(){
 		lblEntidad.setText("Código del Evento:");
 		lblEntidad.setBounds(50, 420, 140, 30);
 		txtEntidad.setBounds(190, 420, 100, 30);
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	private void agregar(){
 		padre.getPanelPrincipal().remove(este);
@@ -525,8 +556,8 @@ public class AgregarContrato extends MiJPanel{
 			try{pt=touristPackageServices.findTouristPackage(paquete);} 
 			catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
 				throw new IllegalArgumentException("No existe ningún paquete turístico con ese código");}
-			
-			
+
+
 			if(tipo.equals("Hotelero")){
 				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del hospedaje está vacío");
 				int entidad = Integer.valueOf(ent);
@@ -549,22 +580,82 @@ public class AgregarContrato extends MiJPanel{
 						pt.getPackagePrice()+(l.getLodgingPrice()*pt.getNumberOfPeople()*pt.getNumberOfNights()), 
 						pt.getPackageCost(), pt.getNumberOfPeople(), pt.getNumberOfDays(), pt.getNumberOfNights());
 			}
-			
-			
-			
+
+
+
 			else if(tipo.equals("Transporte")){
 				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del transporte esta vacío");
 				int entidad = Integer.valueOf(ent);
-				try{transportServices.findTransport(entidad);} 
+				TransportDTO tr;
+				try{tr = transportServices.findTransport(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
 					throw new IllegalArgumentException("No existe ningún transporte con ese código");}
+				TransportModalityDTO tm;
+				HotelDTO ht = null;
+				tm = transportModalityServices.findTransportModality(tr.getModalityCode());
+				listaContratosHoteleros = contractLodgingServices.selectAllContractLodging();
+				boolean parar = false;
+				for(int i=0; i<listaContratosHoteleros.size() && !parar; i++){
+					ContractLodgingDTO cl = listaContratosHoteleros.get(i);
+					ContractDTO c = contractServices.findContract(cl.getContractCode());
+					if(c.getPackageCode() == paquete){
+						parar = true;
+						LodgingDTO l = lodgingServices.findLodging(cl.getLodgingCode());
+						ht = hotelServices.findHotel(l.getHotelCode());
+					}
+				}
+				if(!parar) throw new IllegalArgumentException("Primero se debe agregar un contrato hotelero para este paquete");
+				double precio = 0;
+				boolean primerTransporte = true;
+				listaContratosTransporte = contractTransportServices.selectAllContractTransports();
+				for(int i=0; i<listaContratosTransporte.size() && primerTransporte; i++){
+					ContractTransportDTO ct = listaContratosTransporte.get(i);
+					ContractDTO c = contractServices.findContract(ct.getContractCodde());
+					if(c.getPackageCode() == paquete)
+						primerTransporte = false;
+				}
+				if(primerTransporte){
+					if(tm.getModalityType().equals("Costo por kilometraje")){
+						CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
+						precio = mod.getCostPerKm() * ht.getAirportDistance();
+					}
+					else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
+						CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
+						precio = mod.getCostPerKmTraveled() * ht.getAirportDistance();
+					}
+					else if(tm.getModalityType().equals("Costo por recorridos establecidos")){
+						CostPerEstablishedToursDTO mod = costPerEstablishedToursServices.findCostPerEstablishedTours(tm.getModalityCode());
+						precio = mod.getCostPerTour() * ht.getAirportDistance();
+					}
+				}
+				else{
+					if(tm.getModalityType().equals("Costo por kilometraje")){
+						CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
+						precio = mod.getCostPerKmRoundTrip() * ht.getNearbyCityDistance();
+					}
+					else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
+						CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
+						precio = mod.getCostPerKmTraveled() * ht.getNearbyCityDistance();
+					}
+					else if(tm.getModalityType().equals("Costo por recorridos establecidos")){
+						CostPerEstablishedToursDTO mod = costPerEstablishedToursServices.findCostPerEstablishedTours(tm.getModalityCode());
+						precio = mod.getCostPerTourRoundTrip() * ht.getNearbyCityDistance();
+					}
+				}
+				String nombre = pt.getPromotionalName();
+				double precioNuevo = pt.getPackagePrice() + precio;
+				double cost = pt.getPackageCost();
+				int cantP = pt.getNumberOfPeople();
+				int cantD = pt.getNumberOfDays();
+				int cantN = pt.getNumberOfNights();
+				touristPackageServices.updateTouristPackage(paquete, nombre, precioNuevo, cost, cantP, cantD, cantN);
 				contractServices.insertContract(desc, fechaInicio, fechaFin, fechaConc, tipo, paquete);
 				int codC = contractServices.getLastContractCode();
 				contractTransportServices.insertContractTransport(codC, entidad);
 			}
-			
-			
-			
+
+
+
 			else if(tipo.equals("Servicios Complementarios")){
 				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del evento esta vacío");
 				int entidad = Integer.valueOf(ent);
@@ -582,8 +673,8 @@ public class AgregarContrato extends MiJPanel{
 						pt.getPackageCost()+(pl.getCostPerPerson()*pt.getNumberOfPeople()), 
 						pt.getNumberOfPeople(), pt.getNumberOfDays(), pt.getNumberOfNights());
 			}
-			
-			
+
+
 			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue registrado con éxito", MensajeAviso.CORRECTO);
 			ma.setVisible(true);
 			anterior.ponerContratos();
@@ -596,10 +687,12 @@ public class AgregarContrato extends MiJPanel{
 				ma.agrandar(150);
 			if(e1.getMessage().equals("Este paquete turístico ya tiene un contrato hotelero"))
 				ma.agrandar(80);
+			if(e1.getMessage().equals("Primero se debe agregar un contrato hotelero para este paquete"))
+				ma.agrandar(160);
 			ma.setVisible(true);
 		}
 	}
-	
+
 	private void controlDiasMeses(int fecha){
 		if(fecha==1){
 			int val = (int)cbDiaInicio.getSelectedItem();
@@ -638,13 +731,13 @@ public class AgregarContrato extends MiJPanel{
 			}
 		}
 	}
-	
+
 	public void setPaquete(int code){
 		txtPaquete.setText(String.valueOf(code));
 	}
-	
+
 	public void setEntidad(int code){
 		txtEntidad.setText(String.valueOf(code));
 	}
-	
+
 }

@@ -188,6 +188,15 @@ public class ConsultarLugares extends MiJPanel{
 		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
 		table.getColumnModel().getColumn(3).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setCellRenderer(Alinear);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(240);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setPreferredWidth(130);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(130);
+		table.getColumnModel().getColumn(3).setResizable(false);
 		try {
 			listaLugares = placeServices.selectAllPlaces();
 			for(PlaceDTO l : listaLugares){

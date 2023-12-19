@@ -25,7 +25,7 @@ public class Reporte6 extends JPanel{
 		este = this;
 		cad = cadena;
 		prov = provincia;
-		setBounds(0, 0, 1300, 570);
+		setBounds(0, 0, 1160, 650);
 		setLayout(new BorderLayout());
 		try {
 			Map<String, Object> param = new HashMap<>();

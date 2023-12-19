@@ -58,7 +58,7 @@ public class Principal extends JFrame{
 	private Gestion panelGestion;
 	private AgregarUsuario panelAgregarUsuario;
 	private AgregarHotel panelAgregarHotel;
-	private AgregarProvincia panelAgregarProvincia;
+	private AgregarrProvincia panelAgregarProvincia;
 	private AgregarCadenaHotelera panelAgregarCadenaHotelera;
 	private AgregarLugar panelAgregarLugar;
 	private AgregarVehiculo panelAgregarVehiculo;
@@ -251,7 +251,7 @@ public class Principal extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removerPanel();
-				panelGestion = new Gestion(este, user, roleUser);
+				panelGestion = new Gestion(este, roleUser);
 				panelPrincipal.add(panelGestion);
 				panelPrincipal.repaint();
 			}
@@ -458,7 +458,7 @@ public class Principal extends JFrame{
 		this.panelAgregarHotel = panelAgregarHotel;
 	}
 
-	public void setPanelAgregarProvincia(AgregarProvincia panelAgregarProvincia) {
+	public void setPanelAgregarProvincia(AgregarrProvincia panelAgregarProvincia) {
 		this.panelAgregarProvincia = panelAgregarProvincia;
 	}
 

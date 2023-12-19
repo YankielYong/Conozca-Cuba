@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.3.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_Letter" pageWidth="950" pageHeight="600" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a57d542-f82f-46c6-a6fb-d7d279ed832a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_Letter" pageWidth="950" pageHeight="600" whenNoDataType="AllSectionsNoDetail" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a57d542-f82f-46c6-a6fb-d7d279ed832a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conozca Cuba"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="203"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="791"/>
@@ -63,7 +63,7 @@ province_place.province_code = province.province_code]]>
 		<band height="100" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<image onErrorType="Blank">
-				<reportElement x="0" y="5" width="300" height="91" uuid="f346da3d-6948-4468-8ebd-5aaf25f74d98">
+				<reportElement x="310" y="5" width="300" height="91" uuid="f346da3d-6948-4468-8ebd-5aaf25f74d98">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -77,11 +77,12 @@ province_place.province_code = province.province_code]]>
 		<band height="60" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="0" y="15" width="510" height="30" uuid="ba124c88-4029-48c1-9608-9b7e19f4a04f">
+				<reportElement x="0" y="15" width="910" height="30" uuid="ba124c88-4029-48c1-9608-9b7e19f4a04f">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Listado de contratos de Servicios Complementarios]]></text>
