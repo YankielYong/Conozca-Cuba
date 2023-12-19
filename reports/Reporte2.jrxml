@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 4.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte 2" pageWidth="820" pageHeight="850" columnWidth="780" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conozca Cuba"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="218"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="777"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="foto" class="java.io.InputStream"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT contract_start_date, contract_end_date, contract_conciliation_date, hotel_name, season_name, season_description, season_start_date, season_end_date, room_type, type_of_food_plan, lodging_price
+FROM contract,contract_lodging,food_plan,hotel,lodging,room,season
+WHERE contract.contract_code=contract_lodging.contract_code AND contract_lodging.lodging_code=lodging.lodging_code AND lodging.hotel_code=hotel.hotel_code AND lodging.room_code=room.room_code 
+AND lodging.season_code=season.season_code AND room.food_plan_code=food_plan.food_plan_code]]>
+	</queryString>
+	<field name="contract_start_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="contract_start_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="contract_start_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contract"/>
+	</field>
+	<field name="contract_end_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="contract_end_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="contract_end_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contract"/>
+	</field>
+	<field name="contract_conciliation_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="contract_conciliation_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="contract_conciliation_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contract"/>
+	</field>
+	<field name="hotel_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="hotel_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="hotel_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hotel"/>
+	</field>
+	<field name="season_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="season_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="season_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="season"/>
+	</field>
+	<field name="season_description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="season_description"/>
+		<property name="com.jaspersoft.studio.field.label" value="season_description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="season"/>
+	</field>
+	<field name="season_start_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="season_start_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="season_start_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="season"/>
+	</field>
+	<field name="season_end_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="season_end_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="season_end_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="season"/>
+	</field>
+	<field name="room_type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="room_type"/>
+		<property name="com.jaspersoft.studio.field.label" value="room_type"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="type_of_food_plan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="type_of_food_plan"/>
+		<property name="com.jaspersoft.studio.field.label" value="type_of_food_plan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="food_plan"/>
+	</field>
+	<field name="lodging_price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="lodging_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="lodging_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lodging"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="270" y="5" width="300" height="91">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="15" width="780" height="30">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listado de temporadas de los contratos de hoteles]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="250" splitType="Stretch">
+			<staticText>
+				<reportElement x="250" y="50" width="160" height="20">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de conciliación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="50" width="109" height="20">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de inicio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="50" width="149" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de terminación:]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="780" y="40" width="1" height="200">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="40" width="780" height="1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement mode="Opaque" x="0" y="40" width="1" height="200">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="240" width="780" height="1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="90" width="122" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Hotel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="131" width="130" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de habitación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="120" width="109" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de inicio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="120" width="150" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de terminación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="210" width="150" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio del hospedaje:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="170" width="120" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Plan alimenticio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="195" width="80" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="265" y="80" width="495" height="1">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="760" y="80" width="1" height="151"/>
+			</line>
+			<line>
+				<reportElement x="265" y="230" width="495" height="1">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="265" y="79" width="1" height="151">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="450" y="90" width="150" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Temporada Hotelera]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="50" width="90" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contract_start_date}.getDate()+"/"+($F{contract_start_date}.getMonth()+1)+"/"+($F{contract_start_date}.getYear()+1900)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="90" width="130" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hotel_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="131" width="125" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{room_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="171" width="140" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_of_food_plan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="211" width="110" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lodging_price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="120" width="70" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{season_start_date}.getDate()+"/"+($F{season_start_date}.getMonth()+1)+"/"+($F{season_start_date}.getYear()+1900)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="195" width="395" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{season_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="680" y="50" width="80" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contract_end_date}.getDate()+"/"+($F{contract_end_date}.getMonth()+1)+"/"+($F{contract_end_date}.getYear()+1900)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="640" y="120" width="90" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{season_end_date}.getDate()+"/"+($F{season_end_date}.getMonth()+1)+"/"+($F{season_end_date}.getYear()+1900)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="50" width="90" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contract_conciliation_date}.getDate()+"/"+($F{contract_conciliation_date}.getMonth()+1)+"/"+($F{contract_conciliation_date}.getYear()+1900)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="160" width="70" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="345" y="160" width="125" height="20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{season_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="50" height="20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

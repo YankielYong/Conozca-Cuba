@@ -36,6 +36,7 @@ public class MostrarReporte extends MiJPanel{
 	private String cadena;
 	private String provincia;
 	private Reporte1 reporte1;
+	private Reporte2 reporte2;
 	private Reporte3 reporte3;
 	private Reporte4 reporte4;
 	private Reporte5 reporte5;
@@ -149,6 +150,10 @@ public class MostrarReporte extends MiJPanel{
 		case 1:
 			reporte1 = new Reporte1();
 			panelInferior.add(reporte1);
+			break;
+		case 2:
+			reporte2 = new Reporte2();
+			panelInferior.add(reporte2);
 			break;
 		case 3: 
 			reporte3 = new Reporte3();
