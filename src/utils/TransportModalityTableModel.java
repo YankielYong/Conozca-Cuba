@@ -6,7 +6,7 @@ public class TransportModalityTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public TransportModalityTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "Tipo de Modalidad"};
+		String[] nombreColumnas = {"Código", "Tipo de Modalidad"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

@@ -6,7 +6,7 @@ public class UserTableModel extends DefaultTableModel{
 	
 	private static final long serialVersionUID = 1L;
 	public UserTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "Nombre", "Nick", "Rol"};
+		String[] nombreColumnas = {"Código", "Nombre", "Nick", "Rol"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

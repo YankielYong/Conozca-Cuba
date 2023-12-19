@@ -68,7 +68,7 @@ public class VerUsuario extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("InformaciÃ³n Usuario");
+		lblNombre = new JLabel("Información Usuario");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -154,7 +154,7 @@ public class VerUsuario extends MiJPanel {
 		lUsuario.setBounds(175, 30, 80, 80);
 		panelInferior.add(lUsuario);
 
-		codigo = new JLabel("CÃ³digo: "+user.getUserCode());
+		codigo = new JLabel("Código: "+user.getUserCode());
 		codigo.setBounds(50, 120, 350, 35);
 		codigo.setFont(new Font("Arial", Font.BOLD, 18));
 		codigo.setForeground(Color.black);

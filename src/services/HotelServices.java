@@ -131,4 +131,25 @@ public class HotelServices {
 		connection.close();
 		return hotels;
 	}
+	
+	public ArrayList<HotelDTO> searchHotels(String nombre) throws SQLException, ClassNotFoundException{
+		ArrayList<HotelDTO> hotels = new ArrayList<HotelDTO>();
+		String function = "{?= call search_hotel_by_name(?)}";
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		connection.setAutoCommit(false);
+		CallableStatement preparedFunction = connection.prepareCall(function);
+		preparedFunction.registerOutParameter(1, java.sql.Types.OTHER);
+		preparedFunction.setString(2, nombre);
+		preparedFunction.execute();
+		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
+		while (rs.next()){
+			hotels.add(new HotelDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), 
+					rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getInt(11), 
+					rs.getDouble(12), rs.getDouble(13), rs.getInt(14), rs.getInt(15)));
+		}
+		rs.close();
+		preparedFunction.close();
+		connection.close();
+		return hotels;
+	}
 }

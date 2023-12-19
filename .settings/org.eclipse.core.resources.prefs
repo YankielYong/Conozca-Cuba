@@ -1,4 +1,9 @@
 eclipse.preferences.version=1
+encoding//src/visual/AgregarHospedaje.java=UTF-8
+encoding//src/visual/AgregarHotel.java=UTF-8
+encoding//src/visual/AgregarLugar.java=UTF-8
 encoding//src/visual/AgregarUsuario.java=UTF-8
+encoding//src/visual/EditarHotel.java=UTF-8
+encoding//src/visual/EditarModalidad.java=UTF-8
 encoding//src/visual/EditarUsuario.java=UTF-8
 encoding//src/visual/Login.java=UTF-8

@@ -80,7 +80,7 @@ public class VerTransporte extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Informaci贸n Transporte");
+		lblNombre = new JLabel("Informaci髇 Transporte");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -172,7 +172,7 @@ public class VerTransporte extends MiJPanel {
 		logo.setBounds(190, 15, 200, 61);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("C贸digo: "+transporte.getTransportCode());
+		JLabel codigo = new JLabel("C骴igo: "+transporte.getTransportCode());
 		codigo.setBounds(50, 100, 340, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -184,7 +184,7 @@ public class VerTransporte extends MiJPanel {
 		transportista.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(transportista);
 
-		JLabel veh = new JLabel("Veh铆culo: ");
+		JLabel veh = new JLabel("Veh韈ulo: ");
 		veh.setBounds(50, 170, 340, 30);
 		veh.setForeground(Color.black);
 		veh.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
@@ -204,7 +204,7 @@ public class VerTransporte extends MiJPanel {
 		marca.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(marca);
 
-		JLabel fabricacion = new JLabel("A帽o de Fabricaci贸n: "+vehiculo.getYearOfProduction());
+		JLabel fabricacion = new JLabel("A駉 de Fabricaci髇: "+vehiculo.getYearOfProduction());
 		fabricacion.setBounds(50, 245, 340, 30);
 		fabricacion.setForeground(Color.black);
 		fabricacion.setFont(new Font("Arial", Font.BOLD, 16));
@@ -242,7 +242,7 @@ public class VerTransporte extends MiJPanel {
 
 		if(type.equals("Costo por kilometraje"))
 			costoPorKilometraje();
-		else if(type.equals("Costo por horas y kil贸metros"))
+		else if(type.equals("Costo por horas y kil髆etros"))
 			costoHorasRecorridas();
 		else{
 			costoPorRecorrido();
@@ -258,13 +258,13 @@ public class VerTransporte extends MiJPanel {
 		btnCerrar.setBounds(445, 0, 45, 30);
 		panelSuperior.setBounds(1, 1, 490, 30);
 		panelInferior.setBounds(1, 31, 490, 520);
-		JLabel km = new JLabel("Costo por kil贸metro: "+k.getCostPerKm());
+		JLabel km = new JLabel("Costo por kil髆etro: "+k.getCostPerKm());
 		km.setBounds(50, 415, 340, 30);
 		km.setForeground(Color.black);
 		km.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(km);
 
-		JLabel idaVuelta = new JLabel("Costo por kil贸metro ida y vuelta: "+k.getCostPerKmRoundTrip());
+		JLabel idaVuelta = new JLabel("Costo por kil髆etro ida y vuelta: "+k.getCostPerKmRoundTrip());
 		idaVuelta.setBounds(50, 440, 340, 30);
 		idaVuelta.setForeground(Color.black);
 		idaVuelta.setFont(new Font("Arial", Font.BOLD, 16));
@@ -284,7 +284,7 @@ public class VerTransporte extends MiJPanel {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		JLabel kmRecorrido = new JLabel("Costo por kil贸metro recorrido: "+h.getCostPerKmTraveled());
+		JLabel kmRecorrido = new JLabel("Costo por kil髆etro recorrido: "+h.getCostPerKmTraveled());
 		kmRecorrido.setBounds(50, 415, 340, 30);
 		kmRecorrido.setForeground(Color.black);
 		kmRecorrido.setFont(new Font("Arial", Font.BOLD, 16));
@@ -296,7 +296,7 @@ public class VerTransporte extends MiJPanel {
 		horas.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(horas);
 
-		JLabel kmExtras = new JLabel("Costo por kil贸metros extras: "+h.getCostForExtraKm());
+		JLabel kmExtras = new JLabel("Costo por kil髆etros extras: "+h.getCostForExtraKm());
 		kmExtras.setBounds(50, 465, 340, 30);
 		kmExtras.setForeground(Color.black);
 		kmExtras.setFont(new Font("Arial", Font.BOLD, 16));
@@ -319,7 +319,7 @@ public class VerTransporte extends MiJPanel {
 		btnCerrar.setBounds(445, 0, 45, 30);
 		panelSuperior.setBounds(1, 1, 490, 30);
 		panelInferior.setBounds(1, 31, 490, 520);
-		JLabel desc = new JLabel("Descripci贸n del recorrido: "+t.getTourDescription());
+		JLabel desc = new JLabel("Descripci髇 del recorrido: "+t.getTourDescription());
 		desc.setBounds(50, 415, 340, 30);
 		desc.setForeground(Color.black);
 		desc.setFont(new Font("Arial", Font.BOLD, 16));
@@ -352,4 +352,3 @@ public class VerTransporte extends MiJPanel {
 		}
 	}
 }
-

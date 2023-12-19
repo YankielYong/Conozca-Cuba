@@ -239,7 +239,7 @@ public class AgregarContrato extends MiJPanel{
 		cbTipo.setUI(PropiedadesComboBox.createUI(getRootPane(), cbTipo.getBounds()));
 		panelInferior.add(cbTipo);
 
-		txtDescripcion = new JTextField("DescripciÃ³n");
+		txtDescripcion = new JTextField("Descripción");
 		txtDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -249,7 +249,7 @@ public class AgregarContrato extends MiJPanel{
 		txtDescripcion.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtDescripcion.getText().equals("DescripciÃ³n") && !descChanged){
+				if(txtDescripcion.getText().equals("Descripción") && !descChanged){
 					txtDescripcion.setText("");
 					descChanged = true;
 					txtDescripcion.setForeground(Color.black);
@@ -259,7 +259,7 @@ public class AgregarContrato extends MiJPanel{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtDescripcion.getText().equals("")){
-					txtDescripcion.setText("DescripciÃ³n");
+					txtDescripcion.setText("Descripción");
 					descChanged = false;
 					txtDescripcion.setForeground(Color.gray);
 				}
@@ -316,7 +316,7 @@ public class AgregarContrato extends MiJPanel{
 		((JLabel)cbYearInicio.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYearInicio);
 
-		JLabel fechaConc = new JLabel("Fecha de conciliaciÃ³n");
+		JLabel fechaConc = new JLabel("Fecha de conciliación");
 		fechaConc.setBounds(50, 290, 150, 20);
 		fechaConc.setForeground(Color.black);
 		fechaConc.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -361,7 +361,7 @@ public class AgregarContrato extends MiJPanel{
 		((JLabel)cbYearConc.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbYearConc);
 
-		JLabel lblPaquete = new JLabel("CÃ³digo del Paquete:");
+		JLabel lblPaquete = new JLabel("Código del Paquete:");
 		lblPaquete.setBounds(50, 370, 150, 30);
 		lblPaquete.setForeground(Color.black);
 		lblPaquete.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -411,7 +411,7 @@ public class AgregarContrato extends MiJPanel{
 		btnPaquete.setBorderPainted(false);
 		panelInferior.add(btnPaquete);
 
-		lblEntidad = new JLabel("CÃ³digo del Evento:");
+		lblEntidad = new JLabel("Código del Evento:");
 		lblEntidad.setBounds(50, 420, 140, 30);
 		lblEntidad.setForeground(Color.black);
 		lblEntidad.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -513,19 +513,19 @@ public class AgregarContrato extends MiJPanel{
 	}
 
 	private void hotelero(){
-		lblEntidad.setText("CÃ³digo del Hospedaje:");
+		lblEntidad.setText("Código del Hospedaje:");
 		lblEntidad.setBounds(50, 420, 165, 30);
 		txtEntidad.setBounds(215, 420, 75, 30);
 	}
 
 	private void transporte(){
-		lblEntidad.setText("CÃ³digo del Transporte:");
+		lblEntidad.setText("Código del Transporte:");
 		lblEntidad.setBounds(50, 420, 165, 30);
 		txtEntidad.setBounds(215, 420, 75, 30);
 	}
 
 	private void servComp(){
-		lblEntidad.setText("CÃ³digo del Evento:");
+		lblEntidad.setText("Código del Evento:");
 		lblEntidad.setBounds(50, 420, 140, 30);
 		txtEntidad.setBounds(190, 420, 100, 30);
 	}
@@ -550,21 +550,21 @@ public class AgregarContrato extends MiJPanel{
 			Validaciones.contrato(desc, fechaInicio, fechaFin, fechaConc);
 			String paq = txtPaquete.getText();
 			String ent = txtEntidad.getText();
-			if(paq.isEmpty()) throw new IllegalArgumentException("El campo del paquete estÃ¡ vacÃ­o");
+			if(paq.isEmpty()) throw new IllegalArgumentException("El campo del paquete está vacío");
 			int paquete = Integer.valueOf(paq);
 			TouristPackageDTO pt = null;
 			try{pt=touristPackageServices.findTouristPackage(paquete);} 
 			catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-				throw new IllegalArgumentException("No existe ningÃºn paquete turÃ­stico con ese cÃ³digo");}
+				throw new IllegalArgumentException("No existe ningún paquete turístico con ese código");}
 
 
 			if(tipo.equals("Hotelero")){
-				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del hospedaje estÃ¡ vacÃ­o");
+				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del hospedaje está vacío");
 				int entidad = Integer.valueOf(ent);
 				LodgingDTO l = null;
 				try{l=lodgingServices.findLodging(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-					throw new IllegalArgumentException("No existe ningÃºn hospedaje con ese cÃ³digo");}
+					throw new IllegalArgumentException("No existe ningún hospedaje con ese código");}
 				listaContratosHoteleros = contractLodgingServices.selectAllContractLodging();
 				boolean parar = false;
 				for(int i=0; i<listaContratosHoteleros.size() && !parar; i++){
@@ -572,7 +572,7 @@ public class AgregarContrato extends MiJPanel{
 					if(c.getPackageCode() == paquete)
 						parar = true;
 				}
-				if(parar) throw new IllegalArgumentException("Este paquete turÃ­stico ya tiene un contrato hotelero");
+				if(parar) throw new IllegalArgumentException("Este paquete turístico ya tiene un contrato hotelero");
 				contractServices.insertContract(desc, fechaInicio, fechaFin, fechaConc, tipo, paquete);
 				int codC = contractServices.getLastContractCode();
 				contractLodgingServices.insertContractLodging(codC, entidad);
@@ -584,12 +584,12 @@ public class AgregarContrato extends MiJPanel{
 
 
 			else if(tipo.equals("Transporte")){
-				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del transporte esta vacÃ­o");
+				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del transporte esta vacío");
 				int entidad = Integer.valueOf(ent);
 				TransportDTO tr;
 				try{tr = transportServices.findTransport(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-					throw new IllegalArgumentException("No existe ningÃºn transporte con ese cÃ³digo");}
+					throw new IllegalArgumentException("No existe ningún transporte con ese código");}
 				TransportModalityDTO tm;
 				HotelDTO ht = null;
 				tm = transportModalityServices.findTransportModality(tr.getModalityCode());
@@ -619,7 +619,7 @@ public class AgregarContrato extends MiJPanel{
 						CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
 						precio = mod.getCostPerKm() * ht.getAirportDistance();
 					}
-					else if(tm.getModalityType().equals("Costo por horas y kilÃ³metros")){
+					else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
 						CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
 						precio = mod.getCostPerKmTraveled() * ht.getAirportDistance();
 					}
@@ -633,7 +633,7 @@ public class AgregarContrato extends MiJPanel{
 						CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
 						precio = mod.getCostPerKmRoundTrip() * ht.getNearbyCityDistance();
 					}
-					else if(tm.getModalityType().equals("Costo por horas y kilÃ³metros")){
+					else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
 						CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
 						precio = mod.getCostPerKmTraveled() * ht.getNearbyCityDistance();
 					}
@@ -657,12 +657,12 @@ public class AgregarContrato extends MiJPanel{
 
 
 			else if(tipo.equals("Servicios Complementarios")){
-				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del evento esta vacÃ­o");
+				if(ent.isEmpty()) throw new IllegalArgumentException("El campo del evento esta vacío");
 				int entidad = Integer.valueOf(ent);
 				EventDTO ev = null;
 				try{ev=eventServices.findEvent(entidad);} 
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-					throw new IllegalArgumentException("No existe ningÃºn evento con ese cÃ³digo");}
+					throw new IllegalArgumentException("No existe ningún evento con ese código");}
 				contractServices.insertContract(desc, fechaInicio, fechaFin, fechaConc, tipo, paquete);
 				int codC = contractServices.getLastContractCode();
 				contractEventServices.insertContractEvent(codC, entidad);
@@ -675,17 +675,17 @@ public class AgregarContrato extends MiJPanel{
 			}
 
 
-			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue registrado con Ã©xito", MensajeAviso.CORRECTO);
+			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue registrado con éxito", MensajeAviso.CORRECTO);
 			ma.setVisible(true);
 			anterior.ponerContratos();
 		}
 		catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 			MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-			if(e1.getMessage().equals("No existe ningÃºn paquete turÃ­stico con ese cÃ³digo"))
+			if(e1.getMessage().equals("No existe ningún paquete turístico con ese código"))
 				ma.agrandar(40);
-			if(e1.getMessage().equals("La fecha de inicio no puede ser antes de la fecha de conciliaciÃ³n"))
+			if(e1.getMessage().equals("La fecha de inicio no puede ser antes de la fecha de conciliación"))
 				ma.agrandar(150);
-			if(e1.getMessage().equals("Este paquete turÃ­stico ya tiene un contrato hotelero"))
+			if(e1.getMessage().equals("Este paquete turístico ya tiene un contrato hotelero"))
 				ma.agrandar(80);
 			if(e1.getMessage().equals("Primero se debe agregar un contrato hotelero para este paquete"))
 				ma.agrandar(160);

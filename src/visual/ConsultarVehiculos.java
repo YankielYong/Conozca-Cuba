@@ -138,7 +138,7 @@ public class ConsultarVehiculos extends MiJPanel{
 		btnAtras.setModel(new MyButtonModel());
 		panelInferior.add(btnAtras);
 
-		JLabel lblVehi = new JLabel("VehÃ­culos");
+		JLabel lblVehi = new JLabel("Vehículos");
 		lblVehi.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVehi.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblVehi.setForeground(Color.black);

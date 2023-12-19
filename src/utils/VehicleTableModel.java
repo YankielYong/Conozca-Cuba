@@ -6,7 +6,7 @@ public class VehicleTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public VehicleTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "Chapa", "Marca", "AÃ±o de FabricaciÃ³n"};
+		String[] nombreColumnas = {"Código", "Chapa", "Marca", "Año de Fabricación"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

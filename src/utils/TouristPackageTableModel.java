@@ -6,7 +6,7 @@ public class TouristPackageTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public TouristPackageTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "Nombre Promocional", "Personas", "DÃ­as", "Noches", "Precio", "Costo"};
+		String[] nombreColumnas = {"Código", "Nombre Promocional", "Personas", "Días", "Noches", "Precio", "Costo"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

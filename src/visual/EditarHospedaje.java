@@ -169,7 +169,7 @@ public class EditarHospedaje extends MiJPanel{
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel pre = new JLabel("Precio sin recargo de habitaci√≥n:");
+		JLabel pre = new JLabel("Precio sin recargo de habitaciÛn:");
 		pre.setBounds(50, 110, 235, 30);
 		pre.setForeground(Color.black);
 		pre.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -201,12 +201,12 @@ public class EditarHospedaje extends MiJPanel{
 					int rCode = ld.getRoomCode();
 					int sCode = ld.getSeasonCode();
 					String price = txtPrecio.getText();
-					if(price.isEmpty()) throw new IllegalArgumentException("El campo del precio del hospedaje est√° vac√≠o");
+					if(price.isEmpty()) throw new IllegalArgumentException("El campo del precio del hospedaje est· vacÌo");
 					double precioN = Double.valueOf(price);
 					double precioV = ld.getLodgingPrice();
 					lodgingServices.updateLodging(lCode, hCode, sCode, rCode, precioN+r.getSurchargeRoom());
 					actualizar(lCode, precioN+r.getSurchargeRoom(), precioV);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hospedaje fue editado con √©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El hospedaje fue editado con Èxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHospedajes();
 				} catch (IllegalArgumentException | ClassNotFoundException | SQLException e1){

@@ -6,7 +6,7 @@ public class TransportTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public TransportTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "VehÃ­culo", "Modalidad de Transporte", "Transportista"};
+		String[] nombreColumnas = {"Código", "Vehículo", "Modalidad de Transporte", "Transportista"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

@@ -77,7 +77,7 @@ public class EditarHabitacion extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 		
-		lblNombre = new JLabel("Editar Habitaci√≥n");
+		lblNombre = new JLabel("Editar HabitaciÛn");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -177,7 +177,7 @@ public class EditarHabitacion extends MiJPanel {
 		cbPlan.setUI(PropiedadesComboBox.createUI(getRootPane(), cbPlan.getBounds()));
 		panelInferior.add(cbPlan);
 		
-		JLabel recargo = new JLabel("Recargo de Habitaci√≥n:");
+		JLabel recargo = new JLabel("Recargo de HabitaciÛn:");
 		recargo.setBounds(50, 160, 174, 30);
 		recargo.setForeground(Color.black);
 		recargo.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -208,11 +208,11 @@ public class EditarHabitacion extends MiJPanel {
 					String tipo = habit.getRoomType();
 					int codF = listaPlanes.get(cbPlan.getSelectedIndex()).getFoodPlanCode();
 					String recargo = txtRecargo.getText();
-					if(recargo.isEmpty()) throw new IllegalArgumentException("El campo de recargo de habitaci√≥n est√° vac√≠o");
+					if(recargo.isEmpty()) throw new IllegalArgumentException("El campo de recargo de habitaciÛn est· vacÌo");
 					if(recargo.charAt(recargo.length()-1)=='.') recargo = recargo.substring(0, recargo.length()-1);
 					double rec = Double.valueOf(recargo);
 					roomServices.updateRoom(code, tipo, rec, codF);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La habitaci√≥n fue editada con √©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La habitaciÛn fue editada con Èxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerHabitacion();
 				} catch (IllegalArgumentException | ClassNotFoundException | SQLException e1){

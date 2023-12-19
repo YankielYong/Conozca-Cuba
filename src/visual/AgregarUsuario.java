@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
 import dto.RoleDTO;
-import dto.UserDTO;
 import services.RoleServices;
 import services.ServicesLocator;
 import services.UserServices;
@@ -43,7 +42,6 @@ public class AgregarUsuario extends MiJPanel {
 
 	private UserServices userServices = ServicesLocator.getUserServices();
 	private RoleServices roleServices = ServicesLocator.getRoleServices();
-	private ArrayList<UserDTO> listaUsuarios;
 	private ArrayList<RoleDTO> roles;
 
 	private static final long serialVersionUID = 1L;
@@ -334,13 +332,6 @@ public class AgregarUsuario extends MiJPanel {
 					if(userChanged) usuario = txtUsuario.getText();
 					if(passChanged) pass = txtPassword.getText();
 					Validaciones.usuario(nombre, usuario, pass);
-					listaUsuarios = userServices.selectAllUsers();
-					boolean yaEsta = false;
-					for(int i=0; i<listaUsuarios.size() && !yaEsta; i++){
-						if(usuario.equals(listaUsuarios.get(i).getUserNick()))
-							yaEsta = true;
-					}
-					if(yaEsta) throw new IllegalArgumentException("Ya existe un usuario con ese nick");
 					int codigoRol = roles.get(cbRol.getSelectedIndex()).getRoleCode();
 					userServices.insertUser(nombre, usuario, MD5.encrypt(pass), codigoRol);
 					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El usuario fue registrado con éxito", MensajeAviso.CORRECTO);
@@ -348,11 +339,17 @@ public class AgregarUsuario extends MiJPanel {
 					anterior.ponerUsuarios();
 				}
 				catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
-					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					if(e1.getMessage().equals("La contraseña debe tener al menos 8 caracteres")){
-						ma.agrandar(15);
+					if(e1.getMessage().contains("Ya existe este nombre de usuario")){
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "Ya existe este nombre de usuario", MensajeAviso.ERROR);
+						ma.setVisible(true);
 					}
-					ma.setVisible(true);
+					else{
+						MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
+						if(e1.getMessage().equals("La contraseña debe tener al menos 8 caracteres")){
+							ma.agrandar(15);
+						}
+						ma.setVisible(true);
+					}
 				}
 			}
 		});

@@ -6,7 +6,7 @@ public class HotelChainTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public HotelChainTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "Nombre"};
+		String[] nombreColumnas = {"Código", "Nombre"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

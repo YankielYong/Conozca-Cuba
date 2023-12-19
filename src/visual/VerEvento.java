@@ -67,7 +67,7 @@ public class VerEvento extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("InformaciÃ³n Evento");
+		lblNombre = new JLabel("Información Evento");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -151,7 +151,7 @@ public class VerEvento extends MiJPanel {
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("CÃ³digo: "+e.getEventCode());
+		JLabel codigo = new JLabel("Código: "+e.getEventCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -169,7 +169,7 @@ public class VerEvento extends MiJPanel {
 		costoPorPax.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(costoPorPax);
 
-		JLabel desc = new JLabel("DescripciÃ³n: "+act.getActivityDescription());
+		JLabel desc = new JLabel("Descripción: "+act.getActivityDescription());
 		desc.setBounds(50, 260, 290, 30);
 		desc.setForeground(Color.black);
 		desc.setFont(new Font("Arial", Font.BOLD, 16));

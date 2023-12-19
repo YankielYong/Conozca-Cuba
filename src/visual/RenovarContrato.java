@@ -155,7 +155,7 @@ public class RenovarContrato extends MiJPanel{
 		logo.setBounds(68, 15, 220, 67);
 		panelInferior.add(logo);
 		
-		JLabel fechaRe = new JLabel("Fecha de renovaci√≥n");
+		JLabel fechaRe = new JLabel("Fecha de renovaciÛn");
 		fechaRe.setBounds(50, 110, 150, 20);
 		fechaRe.setForeground(Color.black);
 		fechaRe.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -213,7 +213,7 @@ public class RenovarContrato extends MiJPanel{
 					int year = (int)cbYear.getSelectedItem();
 					Date f = new Date(year-1900, mes-1, dia);
 					if(f.compareTo(new Date()) > 0)
-						throw new IllegalArgumentException("La fecha no es v√°lida porque no ha pasado");
+						throw new IllegalArgumentException("La fecha no es v·lida porque no ha pasado");
 					if(f.compareTo(contrato.getContractStartDate()) <= 0)
 						throw new IllegalArgumentException("La fecha debe ser posterior a la fecha de inicio");
 					String descripcion = contrato.getContractDescription();
@@ -223,7 +223,7 @@ public class RenovarContrato extends MiJPanel{
 					String tipo = contrato.getContractType();
 					int paquete = contrato.getPackageCode();
 					contractServices.updateContract(codigo, descripcion, fechaInicio, fechaFinal, fechaConc, tipo, paquete);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue renovado con √©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El contrato fue renovado con Èxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerContratos();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

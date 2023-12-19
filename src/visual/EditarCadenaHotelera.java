@@ -175,7 +175,7 @@ public class EditarCadenaHotelera extends MiJPanel{
 					String cadena = txtNombre.getText();
 					Validaciones.cadenaHotelera(cadena); 
 					hotelChainServices.updateHotelChain(hotelChain.getHotelChainCode(), cadena);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La cadena hotelera fue editada con Ã©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La cadena hotelera fue editada con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerCadenasHoteleras();
 				}

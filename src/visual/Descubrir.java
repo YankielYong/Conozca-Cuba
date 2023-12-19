@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -61,6 +62,7 @@ import java.awt.Cursor;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.awt.event.KeyAdapter;
 
 public class Descubrir extends MiJPanel{
 	
@@ -171,7 +173,7 @@ public class Descubrir extends MiJPanel{
 		image = img.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Icon iconPaquete = new ImageIcon(image);
 
-		btnPaquetes = new JButton(" Paquetes TurÃ­sticos");
+		btnPaquetes = new JButton(" Paquetes Turísticos");
 		btnPaquetes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(btnHoteles.isBorderPainted()){
@@ -186,6 +188,8 @@ public class Descubrir extends MiJPanel{
 					btnTransportes.setBorderPainted(false);
 					btnPaquetes.setBorderPainted(true);
 				}
+				txtBuscarNombre.setVisible(true);
+				lblBuscarN.setVisible(true);
 				txtBuscarProvincia.setVisible(false);
 				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
@@ -225,6 +229,8 @@ public class Descubrir extends MiJPanel{
 					btnTransportes.setBorderPainted(false);
 					btnHoteles.setBorderPainted(true);
 				}
+				txtBuscarNombre.setVisible(true);
+				lblBuscarN.setVisible(true);
 				txtBuscarProvincia.setVisible(true);
 				lblBuscarP.setVisible(true);
 				txtBuscarCadenaHotelera.setVisible(true);
@@ -265,8 +271,10 @@ public class Descubrir extends MiJPanel{
 					btnTransportes.setBorderPainted(false);
 					btnEventos.setBorderPainted(true);
 				}
-				txtBuscarProvincia.setVisible(true);
-				lblBuscarP.setVisible(true);
+				txtBuscarNombre.setVisible(false);
+				lblBuscarN.setVisible(false);
+				txtBuscarProvincia.setVisible(false);
+				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
 				
@@ -304,6 +312,8 @@ public class Descubrir extends MiJPanel{
 					btnEventos.setBorderPainted(false);
 					btnTransportes.setBorderPainted(true);
 				}
+				txtBuscarNombre.setVisible(false);
+				lblBuscarN.setVisible(false);
 				txtBuscarProvincia.setVisible(false);
 				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
@@ -329,6 +339,16 @@ public class Descubrir extends MiJPanel{
 		Icon iconBuscar = new ImageIcon(image);
 		
 		txtBuscarNombre = new JTextField("Nombre");
+		txtBuscarNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(btnPaquetes.isBorderPainted()){
+					
+				}
+				else if(btnHoteles.isBorderPainted())
+					ponerHoteles();
+			}
+		});
 		txtBuscarNombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -508,7 +528,7 @@ public class Descubrir extends MiJPanel{
 		table.getColumnModel().getColumn(3).setPreferredWidth(300);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		try{
-			listaHoteles = hotelServices.selectAllHotels();
+			buscarHoteles();
 			for(HotelDTO h : listaHoteles){
 				HotelChainDTO hc = hotelChainServices.findHotelChain(h.getHotelChainCode());
 				ProvinceDTO pr = provinceServices.findProvince(h.getProvinceCode());
@@ -524,6 +544,11 @@ public class Descubrir extends MiJPanel{
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void buscarHoteles() throws ClassNotFoundException, SQLException{
+		if(nameChanged) listaHoteles = hotelServices.searchHotels(txtBuscarNombre.getText());
+		else listaHoteles = hotelServices.searchHotels("");
 	}
 	
 	private void ponerEventos(){

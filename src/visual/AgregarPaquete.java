@@ -77,7 +77,7 @@ public class AgregarPaquete extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Agregar Paquete Tur√≠stico");
+		lblNombre = new JLabel("Agregar Paquete TurÌstico");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 220, 30);
@@ -226,7 +226,7 @@ public class AgregarPaquete extends MiJPanel{
 		txtPersonas.setBounds(50, 160, 260, 30);
 		panelInferior.add(txtPersonas);
 		
-		txtDias = new JTextField("D√≠as");
+		txtDias = new JTextField("DÌas");
 		txtDias.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDias.addKeyListener(new KeyAdapter() {
 			@Override
@@ -238,7 +238,7 @@ public class AgregarPaquete extends MiJPanel{
 		txtDias.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtDias.getText().equals("D√≠as")){
+				if(txtDias.getText().equals("DÌas")){
 					txtDias.setText("");
 					txtDias.setForeground(Color.black);
 				}
@@ -247,7 +247,7 @@ public class AgregarPaquete extends MiJPanel{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtDias.getText().equals("")){
-					txtDias.setText("D√≠as");
+					txtDias.setText("DÌas");
 					txtDias.setForeground(Color.gray);
 					diasChanged = false;
 				}
@@ -348,27 +348,27 @@ public class AgregarPaquete extends MiJPanel{
 					String noches = "";
 					String costo = "";
 					if(nameChanged) nombre = txtNombre.getText();
-					else throw new IllegalArgumentException("El campo del nombre promocional est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo del nombre promocional est· vacÌo");
 					if(personasChanged) personas = txtPersonas.getText();
-					else throw new IllegalArgumentException("El campo de la cantidad de personas est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo de la cantidad de personas est· vacÌo");
 					if(diasChanged) dias = txtDias.getText();
-					else throw new IllegalArgumentException("El campo de la cantidad de d√≠as est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo de la cantidad de dÌas est· vacÌo");
 					if(nochesChanged) noches = txtNoches.getText();
-					else throw new IllegalArgumentException("El campo de la cantidad de noches est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo de la cantidad de noches est· vacÌo");
 					if(costChanged) costo = txtCosto.getText();
-					else throw new IllegalArgumentException("El campo del costo del paquete est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo del costo del paquete est· vacÌo");
 					int pers = Integer.valueOf(personas);
 					int dia = Integer.valueOf(dias);
 					int noch = Integer.valueOf(noches);
 					double cos = Double.valueOf(costo);
 					Validaciones.paquete(nombre, pers, dia, noch);
 					touristPackageServices.insertTouristPackage(nombre, 0, cos, pers, dia, noch);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El paquete tur√≠stico fue agregado con √©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El paquete turÌstico fue agregado con Èxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerPaquetes();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
 					MensajeAviso ma = new MensajeAviso(null, padre, este, e1.getMessage(), MensajeAviso.ERROR);
-					if(e1.getMessage().equals("El campo de la cantidad de personas est√° vac√≠o"))
+					if(e1.getMessage().equals("El campo de la cantidad de personas est· vacÌo"))
 						ma.agrandar(20);
 					if(e1.getMessage().equals("El paquete debe ser para al menos 1 persona"))
 						ma.agrandar(20);

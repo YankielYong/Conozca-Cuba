@@ -72,7 +72,7 @@ public class VerModalidad extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Informaci贸n Modalidad");
+		lblNombre = new JLabel("Informaci髇 Modalidad");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -156,7 +156,7 @@ public class VerModalidad extends MiJPanel{
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("C贸digo: "+mod.getModalityCode());
+		JLabel codigo = new JLabel("C骴igo: "+mod.getModalityCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -170,7 +170,7 @@ public class VerModalidad extends MiJPanel{
 
 		if(type.equals("Costo por kilometraje"))
 			costoPorKilometraje();
-		else if(type.equals("Costo por horas y kil贸metros"))
+		else if(type.equals("Costo por horas y kil髆etros"))
 			costoHorasRecorridas();
 		else{
 			costoPorRecorrido();
@@ -182,13 +182,13 @@ public class VerModalidad extends MiJPanel{
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		JLabel km = new JLabel("Costo por kil贸metro: "+k.getCostPerKm());
+		JLabel km = new JLabel("Costo por kil髆etro: "+k.getCostPerKm());
 		km.setBounds(50, 210, 340, 30);
 		km.setForeground(Color.black);
 		km.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(km);
 
-		JLabel idaVuelta = new JLabel("Costo por kil贸metro ida y vuelta: "+k.getCostPerKmRoundTrip());
+		JLabel idaVuelta = new JLabel("Costo por kil髆etro ida y vuelta: "+k.getCostPerKmRoundTrip());
 		idaVuelta.setBounds(50, 260, 340, 30);
 		idaVuelta.setForeground(Color.black);
 		idaVuelta.setFont(new Font("Arial", Font.BOLD, 16));
@@ -208,7 +208,7 @@ public class VerModalidad extends MiJPanel{
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		JLabel kmRecorrido = new JLabel("Costo por kil贸metro recorrido: "+h.getCostPerKmTraveled());
+		JLabel kmRecorrido = new JLabel("Costo por kil髆etro recorrido: "+h.getCostPerKmTraveled());
 		kmRecorrido.setBounds(50, 210, 340, 30);
 		kmRecorrido.setForeground(Color.black);
 		kmRecorrido.setFont(new Font("Arial", Font.BOLD, 16));
@@ -220,7 +220,7 @@ public class VerModalidad extends MiJPanel{
 		horas.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(horas);
 
-		JLabel kmExtras = new JLabel("Costo por kil贸metros extras: "+h.getCostForExtraKm());
+		JLabel kmExtras = new JLabel("Costo por kil髆etros extras: "+h.getCostForExtraKm());
 		kmExtras.setBounds(50, 310, 340, 30);
 		kmExtras.setForeground(Color.black);
 		kmExtras.setFont(new Font("Arial", Font.BOLD, 16));
@@ -243,7 +243,7 @@ public class VerModalidad extends MiJPanel{
 		btnCerrar.setBounds(445, 0, 45, 30);
 		panelSuperior.setBounds(1, 1, 490, 30);
 		panelInferior.setBounds(1, 31, 490, 370);
-		JLabel desc = new JLabel("Descripci贸n del recorrido: "+t.getTourDescription());
+		JLabel desc = new JLabel("Descripci髇 del recorrido: "+t.getTourDescription());
 		desc.setBounds(50, 210, 340, 30);
 		desc.setForeground(Color.black);
 		desc.setFont(new Font("Arial", Font.BOLD, 16));

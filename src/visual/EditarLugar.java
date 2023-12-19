@@ -270,13 +270,13 @@ public class EditarLugar extends MiJPanel {
 					String costo = "";
 					if(nameChanged) cadena = txtNombre.getText();
 					if(costChanged) costo = txtCosto.getText();
-					else throw new IllegalArgumentException("El campo del costo est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo del costo est· vacÌo");
 					double cos = Double.valueOf(costo);
 					String tipo = cbTipo.getItemAt(cbTipo.getSelectedIndex());
 					Validaciones.lugar(cadena);
 					placeServices.updatePlace(codigo, cadena, cos, tipo);
 					actualizar(placeServices.findPlace(codigo));
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue editado con √©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El lugar fue editado con Èxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerLugares();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){
@@ -337,4 +337,3 @@ public class EditarLugar extends MiJPanel {
 	}
 
 }
-

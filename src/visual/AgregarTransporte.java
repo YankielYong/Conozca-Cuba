@@ -159,7 +159,7 @@ public class AgregarTransporte extends MiJPanel{
 		logo.setBounds(75, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel vehi = new JLabel("C贸digo del Veh铆culo:");
+		JLabel vehi = new JLabel("C骴igo del Veh韈ulo:");
 		vehi.setBounds(50, 110, 150, 30);
 		vehi.setForeground(Color.black);
 		vehi.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -209,7 +209,7 @@ public class AgregarTransporte extends MiJPanel{
 		btnVehiculo.setBorderPainted(false);
 		panelInferior.add(btnVehiculo);
 		
-		JLabel modali = new JLabel("C贸digo de la Modalidad:");
+		JLabel modali = new JLabel("C骴igo de la Modalidad:");
 		modali.setBounds(50, 160, 180, 30);
 		modali.setForeground(Color.black);
 		modali.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -286,16 +286,16 @@ public class AgregarTransporte extends MiJPanel{
 					try{
 						vehicleServices.findVehicle(vehiculo);
 					} catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ning煤n veh铆culo con ese c贸digo");
+						throw new IllegalArgumentException("No existe ning鷑 veh韈ulo con ese c骴igo");
 					}
 					try{
 						transportModalityServices.findTransportModality(modalidad);
 					} catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ninguna modalidad con ese c贸digo");
+						throw new IllegalArgumentException("No existe ninguna modalidad con ese c骴igo");
 					}
 					String borrower = (String)cbTranportista.getSelectedItem();
 					transportServices.insertTransport(vehiculo, modalidad, borrower);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El transporte fue agregado con 茅xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El transporte fue agregado con 閤ito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerTransportes();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

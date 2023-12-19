@@ -55,7 +55,7 @@ public class VerActividad extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("InformaciÃ³n Actividad");
+		lblNombre = new JLabel("Información Actividad");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -139,7 +139,7 @@ public class VerActividad extends MiJPanel{
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("CÃ³digo: "+act.getActivityCode());
+		JLabel codigo = new JLabel("Código: "+act.getActivityCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -160,7 +160,7 @@ public class VerActividad extends MiJPanel{
 		fecha.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(fecha);
 
-		JLabel desc = new JLabel("DescripciÃ³n: "+act.getActivityDescription());
+		JLabel desc = new JLabel("Descripción: "+act.getActivityDescription());
 		desc.setBounds(50, 260, 290, 30);
 		desc.setForeground(Color.black);
 		desc.setFont(new Font("Arial", Font.BOLD, 16));

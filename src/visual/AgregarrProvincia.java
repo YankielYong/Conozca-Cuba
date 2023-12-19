@@ -225,7 +225,7 @@ public class AgregarrProvincia extends MiJPanel{
 				cadena = txtNombre.getText();
 			Validaciones.provincia(cadena);
 			provinceServices.insertProvince(cadena);
-			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La provincia fue agregada con Ã©xito", MensajeAviso.CORRECTO);
+			MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La provincia fue agregada con éxito", MensajeAviso.CORRECTO);
 			ma.setVisible(true);
 			anterior.ponerProvincias();
 		}

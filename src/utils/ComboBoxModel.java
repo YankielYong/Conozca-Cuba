@@ -35,8 +35,8 @@ public class ComboBoxModel {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Aprendizaje");
 		model.addElement("Entretenimiento");
-		model.addElement("Espect√°culo Nocturno");
-		model.addElement("Gastron√≥mico");
+		model.addElement("Espect·culo Nocturno");
+		model.addElement("GastronÛmico");
 		model.addElement("Museo");
 		return model;
 	}
@@ -52,7 +52,7 @@ public class ComboBoxModel {
 	public static DefaultComboBoxModel<String> modalidadesModel(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement("Costo por kilometraje");
-		model.addElement("Costo por horas y kil√≥metros");
+		model.addElement("Costo por horas y kilÛmetros");
 		model.addElement("Costo por recorridos establecidos");
 		return model;
 	}
@@ -74,8 +74,8 @@ public class ComboBoxModel {
 		model.addElement("Listado de contratos de servicios complementarios");
 		model.addElement("Listado de hoteles activos");
 		model.addElement("Listado de hoteles inactivos");
-		model.addElement("Programa del paquete tur√≠stico");
-		model.addElement("Plan de ingreso por concepto de venta del paquete tur√≠stico");
+		model.addElement("Programa del paquete turÌstico");
+		model.addElement("Plan de ingreso por concepto de venta del paquete turÌstico");
 		return model;
 	}
 	

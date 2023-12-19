@@ -74,7 +74,7 @@ public class VerHospedaje extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("InformaciÃ³n Hospedaje");
+		lblNombre = new JLabel("Información Hospedaje");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -158,7 +158,7 @@ public class VerHospedaje extends MiJPanel{
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("CÃ³digo: "+aloj.getLodgingCode());
+		JLabel codigo = new JLabel("Código: "+aloj.getLodgingCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -176,7 +176,7 @@ public class VerHospedaje extends MiJPanel{
 		temp.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(temp);
 
-		JLabel hab = new JLabel("HabitaciÃ³n: "+habit.getRoomType());
+		JLabel hab = new JLabel("Habitación: "+habit.getRoomType());
 		hab.setBounds(50, 230, 290, 30);
 		hab.setForeground(Color.black);
 		hab.setFont(new Font("Arial", Font.BOLD, 16));

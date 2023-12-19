@@ -157,7 +157,7 @@ public class AgregarEvento extends MiJPanel{
 		logo.setBounds(75, 10, 250, 76);
 		panelInferior.add(logo);
 		
-		JLabel lugar = new JLabel("C贸digo del Lugar:");
+		JLabel lugar = new JLabel("C骴igo del Lugar:");
 		lugar.setBounds(50, 110, 132, 30);
 		lugar.setForeground(Color.black);
 		lugar.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -207,7 +207,7 @@ public class AgregarEvento extends MiJPanel{
 		btnLugares.setBorderPainted(false);
 		panelInferior.add(btnLugares);
 		
-		JLabel actividad = new JLabel("C贸digo de la Actividad:");
+		JLabel actividad = new JLabel("C骴igo de la Actividad:");
 		actividad.setBounds(50, 160, 170, 30);
 		actividad.setForeground(Color.black);
 		actividad.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -272,15 +272,15 @@ public class AgregarEvento extends MiJPanel{
 					try{
 						placeServices.findPlace(lugar);
 					} catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ning煤n lugar con ese c贸digo");
+						throw new IllegalArgumentException("No existe ning鷑 lugar con ese c骴igo");
 					}
 					try{
 						activityServices.findActivity(activ);
 					} catch(IllegalArgumentException | ClassNotFoundException | SQLException e2){
-						throw new IllegalArgumentException("No existe ninguna actividad con ese c贸digo");
+						throw new IllegalArgumentException("No existe ninguna actividad con ese c骴igo");
 					}
 					eventServices.insertEvent(lugar, activ);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El evento fue registrado con 茅xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El evento fue registrado con 閤ito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerEventos();
 				}

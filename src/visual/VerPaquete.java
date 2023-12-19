@@ -55,7 +55,7 @@ public class VerPaquete extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("InformaciÃ³n Paquete TurÃ­stico");
+		lblNombre = new JLabel("Información Paquete Turístico");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 250, 30);
@@ -139,7 +139,7 @@ public class VerPaquete extends MiJPanel{
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("CÃ³digo: "+tp.getPackageCode());
+		JLabel codigo = new JLabel("Código: "+tp.getPackageCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -157,7 +157,7 @@ public class VerPaquete extends MiJPanel{
 		cantp.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(cantp);
 
-		JLabel cantd = new JLabel("Cantidad de dÃ­as: "+tp.getNumberOfDays());
+		JLabel cantd = new JLabel("Cantidad de días: "+tp.getNumberOfDays());
 		cantd.setBounds(50, 230, 350, 30);
 		cantd.setForeground(Color.black);
 		cantd.setFont(new Font("Arial", Font.BOLD, 16));

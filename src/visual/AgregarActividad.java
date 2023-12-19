@@ -166,7 +166,7 @@ public class AgregarActividad extends MiJPanel{
 		logo.setBounds(68, 15, 220, 67);
 		panelInferior.add(logo);
 
-		JLabel dia = new JLabel("D√≠a");
+		JLabel dia = new JLabel("DÌa");
 		dia.setHorizontalAlignment(SwingConstants.CENTER);
 		dia.setHorizontalTextPosition(SwingConstants.CENTER);
 		dia.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -207,7 +207,7 @@ public class AgregarActividad extends MiJPanel{
 		((JLabel)cbMes.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		panelInferior.add(cbMes);
 
-		JLabel year = new JLabel("A√±o");
+		JLabel year = new JLabel("AÒo");
 		year.setHorizontalAlignment(SwingConstants.CENTER);
 		year.setHorizontalTextPosition(SwingConstants.CENTER);
 		year.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -325,11 +325,11 @@ public class AgregarActividad extends MiJPanel{
 		txtPrecio.setBounds(50, 240, 260, 30);
 		panelInferior.add(txtPrecio);
 
-		txtDescripcion = new JTextField("Descripci√≥n");
+		txtDescripcion = new JTextField("DescripciÛn");
 		txtDescripcion.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(txtDescripcion.getText().equals("Descripci√≥n") && !descChanged){
+				if(txtDescripcion.getText().equals("DescripciÛn") && !descChanged){
 					txtDescripcion.setText("");
 					descChanged = true;
 					txtDescripcion.setForeground(Color.black);
@@ -339,7 +339,7 @@ public class AgregarActividad extends MiJPanel{
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(txtDescripcion.getText().equals("")){
-					txtDescripcion.setText("Descripci√≥n");
+					txtDescripcion.setText("DescripciÛn");
 					descChanged = false;
 					txtDescripcion.setForeground(Color.gray);
 				}
@@ -363,7 +363,7 @@ public class AgregarActividad extends MiJPanel{
 					String desc = "";
 					String precio = "";
 					if(priceChanged) precio = txtPrecio.getText();
-					else throw new IllegalArgumentException("El campo del precio de la actividad est√° vac√≠o");
+					else throw new IllegalArgumentException("El campo del precio de la actividad est· vacÌo");
 					if(descChanged) desc = txtDescripcion.getText();
 					double pre = Double.valueOf(precio);
 					int dia = (int)cbDia.getSelectedItem();
@@ -381,7 +381,7 @@ public class AgregarActividad extends MiJPanel{
 					Date fecha = new Date(year-1900, mes-1, dia, hora, min);
 					Validaciones.actividad(fecha, desc);
 					activityServices.insertActivity(fecha, pre, desc);
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La actividad fue agregada con √©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "La actividad fue agregada con Èxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerActividades();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

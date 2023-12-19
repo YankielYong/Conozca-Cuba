@@ -6,7 +6,7 @@ public class ContractTableModel extends DefaultTableModel{
 
 	private static final long serialVersionUID = 1L;
 	public ContractTableModel(){
-		String[] nombreColumnas = {"CÃ³digo", "Tipo de Contrato", "Paquete TurÃ­stico"};
+		String[] nombreColumnas = {"Código", "Tipo de Contrato", "Paquete Turístico"};
 		this.setColumnIdentifiers(nombreColumnas);
 	}
 }

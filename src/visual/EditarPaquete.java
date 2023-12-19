@@ -70,7 +70,7 @@ public class EditarPaquete extends MiJPanel{
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Editar Paquete TurÃ­stico");
+		lblNombre = new JLabel("Editar Paquete Turístico");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 220, 30);
@@ -200,8 +200,8 @@ public class EditarPaquete extends MiJPanel{
 					Validaciones.paquete(nombre, tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
 					touristPackageServices.updateTouristPackage(tp.getPackageCode(), nombre, tp.getPackagePrice(), 
 							tp.getPackageCost(), tp.getNumberOfPeople(), tp.getNumberOfDays(), tp.getNumberOfNights());
-					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El paquete turÃ­stico fue "
-							+ "editado con Ã©xito", MensajeAviso.CORRECTO);
+					MensajeAviso ma = new MensajeAviso(null, padre, anterior, "El paquete turístico fue "
+							+ "editado con éxito", MensajeAviso.CORRECTO);
 					ma.setVisible(true);
 					anterior.ponerPaquetes();
 				} catch(IllegalArgumentException | ClassNotFoundException | SQLException e1){

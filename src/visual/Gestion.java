@@ -685,7 +685,7 @@ public class Gestion extends MiJPanel{
 		btnUsuarios.setBorderPainted(false);
 		panelInferior.add(btnUsuarios);
 
-		btnVehiculos = new JButton("  VehÃ­culos");
+		btnVehiculos = new JButton("  Vehículos");
 		btnVehiculos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnCadenas.setBorderPainted(false);
@@ -890,7 +890,7 @@ public class Gestion extends MiJPanel{
 		btnModalidades.setBorderPainted(false);
 		panelInferior.add(btnModalidades);
 
-		btnPaquetes = new JButton("  Paquetes TurÃ­sticos");
+		btnPaquetes = new JButton("  Paquetes Turísticos");
 		btnPaquetes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnActividades.setBorderPainted(false);
@@ -1621,40 +1621,40 @@ public class Gestion extends MiJPanel{
 				if(esGestorAgencia){
 					if(btnCadenas.isBorderPainted()){
 						mensaje = "esta cadena hotelera";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar esta cadena hotelera?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta cadena hotelera?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							hotelChainServices.deleteHotelChain(listaCadenasHoteleras.get(pos).getHotelChainCode());
 							ponerCadenasHoteleras();
-							mensaje = "La cadena hotelera fue eliminada con Ã©xito";
+							mensaje = "La cadena hotelera fue eliminada con éxito";
 						}
 					}
 					else if(btnHabitaciones.isBorderPainted()){
-						mensaje = "esta habitaciÃ³n";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar esta habitaciÃ³n?", MensajeAviso.INFORMACION);
+						mensaje = "esta habitación";
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta habitación?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							roomServices.deleteRoom(listaHabitaciones.get(pos).getRoomCode());
 							ponerHabitacion();
-							mensaje = "La habitaciÃ³n fue eliminada con Ã©xito";
+							mensaje = "La habitación fue eliminada con éxito";
 						}
 					}
 					else if(btnHoteles.isBorderPainted()){
 						mensaje = "este hotel";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este hotel?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este hotel?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							hotelServices.deleteHotel(listaHoteles.get(pos).getHotelCode());
 							ponerHotel();
-							mensaje = "El hotel fue eliminado con Ã©xito";
+							mensaje = "El hotel fue eliminado con éxito";
 						}
 					}
 					else if(btnLugares.isBorderPainted()){
 						mensaje = "este lugar";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este lugar?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este lugar?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
@@ -1664,43 +1664,43 @@ public class Gestion extends MiJPanel{
 							provincePlaceServices.deleteProvincePlace(prov_lug);
 							placeServices.deletePlace(lugar);
 							ponerLugares();
-							mensaje = "El lugar fue eliminado con Ã©xito";
+							mensaje = "El lugar fue eliminado con éxito";
 						}
 					}
 					else if(btnProvincias.isBorderPainted()){
 						mensaje = "esta provincia";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar esta provincia?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta provincia?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							provinceServices.deleteProvince(listaProvincias.get(pos).getProvinceCode());
 							ponerProvincias();
-							mensaje = "La provincia fue eliminada con Ã©xito";
+							mensaje = "La provincia fue eliminada con éxito";
 						}
 					}
 					else if(btnUsuarios.isBorderPainted()){
 						mensaje = "este usuario";
 						UserDTO yanko = userServices.findUser(1);
 						if(listaUsuarios.get(pos).getUserName().equals(yanko.getUserName()))
-							throw new IllegalArgumentException("Por seguridad de la aplicaciÃ³n este usuario no puede ser eliminado");
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este usuario?", MensajeAviso.INFORMACION);
+							throw new IllegalArgumentException("Por seguridad de la aplicación este usuario no puede ser eliminado");
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este usuario?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							userServices.deleteUser(listaUsuarios.get(pos).getUserCode());
 							ponerUsuarios();
-							mensaje = "El usuario fue eliminado con Ã©xito";
+							mensaje = "El usuario fue eliminado con éxito";
 						}
 					}
 					else if(btnVehiculos.isBorderPainted()){
-						mensaje = "este vehÃ­culo";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este vehÃ­culo?", MensajeAviso.INFORMACION);
+						mensaje = "este vehículo";
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este vehículo?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							vehicleServices.deleteVehicle(listaVehiculos.get(pos).getVehicleCode());
 							ponerVehiculos();
-							mensaje = "El vehÃ­culo fue eliminado con Ã©xito";
+							mensaje = "El vehículo fue eliminado con éxito";
 						}
 					}
 					if(eliminado){
@@ -1711,18 +1711,18 @@ public class Gestion extends MiJPanel{
 				else{
 					if(btnActividades.isBorderPainted()){
 						mensaje = "esta actividad";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar esta actividad?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta actividad?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							activityServices.deleteActivity(listaActividades.get(pos).getActivityCode());
 							ponerActividades();
-							mensaje = "La actividad fue eliminada con Ã©xito";
+							mensaje = "La actividad fue eliminada con éxito";
 						}
 					}
 					else if(btnContratos.isBorderPainted()){
 						mensaje = "este contrato";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este contrato?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este contrato?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
@@ -1767,7 +1767,7 @@ public class Gestion extends MiJPanel{
 										CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
 										precio = mod.getCostPerKm() * ht.getAirportDistance();
 									}
-									else if(tm.getModalityType().equals("Costo por horas y kilÃ³metros")){
+									else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
 										CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
 										precio = mod.getCostPerKmTraveled() * ht.getAirportDistance();
 									}
@@ -1781,7 +1781,7 @@ public class Gestion extends MiJPanel{
 										CostPerKilometerDTO mod = costPerKilometerServices.findCostPerKilometer(tm.getModalityCode());
 										precio = mod.getCostPerKmRoundTrip() * ht.getNearbyCityDistance();
 									}
-									else if(tm.getModalityType().equals("Costo por horas y kilÃ³metros")){
+									else if(tm.getModalityType().equals("Costo por horas y kilómetros")){
 										CostPerHourKilometerDTO mod = costPerHourKilometerServices.findCostPerHourKilometer(tm.getModalityCode());
 										precio = mod.getCostPerKmTraveled() * ht.getNearbyCityDistance();
 									}
@@ -1818,34 +1818,34 @@ public class Gestion extends MiJPanel{
 							}
 							contractServices.deleteContract(codigo);
 							ponerContratos();
-							mensaje = "El contrato fue eliminado con Ã©xito";
+							mensaje = "El contrato fue eliminado con éxito";
 						}
 					}
 					else if(btnEventos.isBorderPainted()){
 						mensaje = "este evento";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este evento?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este evento?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							eventServices.deleteEvent(listaEventos.get(pos).getEventCode());
 							ponerEventos();
-							mensaje = "El evento fue eliminado con Ã©xito";
+							mensaje = "El evento fue eliminado con éxito";
 						}
 					}
 					else if(btnHospedajes.isBorderPainted()){
 						mensaje = "este hospedaje";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este hospedaje?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este hospedaje?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							lodgingServices.deleteLodging(listaHospedajes.get(pos).getLodgingCode());
 							ponerHospedajes();
-							mensaje = "El hospedaje fue eliminado con Ã©xito";
+							mensaje = "El hospedaje fue eliminado con éxito";
 						}
 					}
 					else if(btnModalidades.isBorderPainted()){
 						mensaje = "esta modalidad de transporte";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar esta modalidad de transporte?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar esta modalidad de transporte?", MensajeAviso.INFORMACION);
 						ma.agrandar(40);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
@@ -1854,35 +1854,35 @@ public class Gestion extends MiJPanel{
 							String tipo = listaModalidades.get(pos).getModalityType();
 							if(tipo.equals("Costo por kilometraje"))
 								costPerKilometerServices.deleteCostPerKilometer(codigo);
-							else if(tipo.equals("Costo por horas y kilÃ³metros"))
+							else if(tipo.equals("Costo por horas y kilómetros"))
 								costPerHourKilometerServices.deleteCostPerHourKilometer(codigo);
 							else if(tipo.equals("Costo por recorridos establecidos"))
 								costPerEstablishedToursServices.deleteCostPerEstablishedTours(codigo);
 							transportModalityServices.deleteTransportModality(codigo);
 							ponerModalidades();
-							mensaje = "La modalidad de transporte fue eliminada con Ã©xito";
+							mensaje = "La modalidad de transporte fue eliminada con éxito";
 						}
 					}
 					else if(btnPaquetes.isBorderPainted()){
-						mensaje = "este paquete turÃ­stico";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este paquete turÃ­stico?", MensajeAviso.INFORMACION);
+						mensaje = "este paquete turístico";
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este paquete turístico?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							touristPackageServices.deleteTouristPackage(listaPaquetes.get(pos).getPackageCode());
 							ponerPaquetes();
-							mensaje = "El paquete turÃ­stico fue eliminado con Ã©xito";
+							mensaje = "El paquete turístico fue eliminado con éxito";
 						}
 					}
 					else if(btnTransportes.isBorderPainted()){
 						mensaje = "este transporte";
-						MensajeAviso ma = new MensajeAviso(null, padre, este, "Â¿Desea eliminar este transporte?", MensajeAviso.INFORMACION);
+						MensajeAviso ma = new MensajeAviso(null, padre, este, "¿Desea eliminar este transporte?", MensajeAviso.INFORMACION);
 						ma.setVisible(true);
 						eliminado = ma.getValor();
 						if(eliminado){
 							transportServices.deleteTransport(listaTransportes.get(pos).getTransportCode());
 							ponerTransportes();
-							mensaje = "El transporte fue eliminado con Ã©xito";
+							mensaje = "El transporte fue eliminado con éxito";
 						}
 					}
 					if(eliminado){
@@ -1893,12 +1893,12 @@ public class Gestion extends MiJPanel{
 				}
 			}
 			else{
-				MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionÃ³ ningÃºn elemento para eliminar", MensajeAviso.ERROR);
+				MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para eliminar", MensajeAviso.ERROR);
 				ma.setVisible(true);
 			}
 		}
 		catch(SQLException | ClassNotFoundException | IllegalArgumentException e){
-			if(e.getMessage().equals("Por seguridad de la aplicaciÃ³n este usuario no puede ser eliminado")){
+			if(e.getMessage().equals("Por seguridad de la aplicación este usuario no puede ser eliminado")){
 				MensajeAviso ma = new MensajeAviso(null, padre, este, e.getMessage(), MensajeAviso.ERROR);
 				ma.agrandar(170);
 				ma.setVisible(true);
@@ -1985,7 +1985,7 @@ public class Gestion extends MiJPanel{
 			}
 		}
 		else{
-			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionÃ³ ningÃºn elemento para ver", MensajeAviso.ERROR);
+			MensajeAviso ma = new MensajeAviso(null, padre, este, "No seleccionó ningún elemento para ver", MensajeAviso.ERROR);
 			ma.setVisible(true);
 		}
 	}
@@ -2052,8 +2052,8 @@ public class Gestion extends MiJPanel{
 			}
 		}
 		else{
-			String err = "No seleccionÃ³ ningÃºn elemento para editar";
-			if(btnContratos.isBorderPainted()) err = "No seleccionÃ³ ningÃºn contrato para renovar";
+			String err = "No seleccionó ningún elemento para editar";
+			if(btnContratos.isBorderPainted()) err = "No seleccionó ningún contrato para renovar";
 			MensajeAviso ma = new MensajeAviso(null, padre, este, err, MensajeAviso.ERROR);
 			ma.setVisible(true);
 		}

@@ -10,10 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
-
-
-
 import java.sql.SQLException;
 
 import javax.swing.Icon;
@@ -21,11 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
-
-
-
 
 import dto.FoodPlanDTO;
 import dto.RoomDTO;
@@ -72,7 +63,7 @@ public class VerHabitacion extends MiJPanel {
 		panelSuperior.setBackground(colorAzul);
 		add(panelSuperior);
 
-		lblNombre = new JLabel("Informaci贸n Habitaci贸n");
+		lblNombre = new JLabel("Informaci髇 Habitaci髇");
 		lblNombre.setForeground(Color.black);
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNombre.setBounds(10, 0, 200, 30);
@@ -156,13 +147,13 @@ public class VerHabitacion extends MiJPanel {
 		logo.setBounds(90, 10, 250, 76);
 		panelInferior.add(logo);
 
-		JLabel codigo = new JLabel("C贸digo: "+habit.getRoomCode());
+		JLabel codigo = new JLabel("C骴igo: "+habit.getRoomCode());
 		codigo.setBounds(50, 110, 290, 30);
 		codigo.setForeground(Color.black);
 		codigo.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(codigo);
 		
-		JLabel tipo = new JLabel("Tipo de Habitaci贸n: "+habit.getRoomType());
+		JLabel tipo = new JLabel("Tipo de Habitaci髇: "+habit.getRoomType());
 		tipo.setBounds(50, 160, 290, 30);
 		tipo.setForeground(Color.black);
 		tipo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -174,7 +165,7 @@ public class VerHabitacion extends MiJPanel {
 		plan.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(plan);
 
-		JLabel recargo = new JLabel("Recargo de Habitaci贸n: "+habit.getSurchargeRoom());
+		JLabel recargo = new JLabel("Recargo de Habitaci髇: "+habit.getSurchargeRoom());
 		recargo.setBounds(50, 260, 290, 30);
 		recargo.setForeground(Color.black);
 		recargo.setFont(new Font("Arial", Font.BOLD, 16));

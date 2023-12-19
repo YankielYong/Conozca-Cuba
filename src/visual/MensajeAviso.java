@@ -88,7 +88,7 @@ public class MensajeAviso extends JDialog{
 		switch(type){
 		case 0: tipo.setText("Correcto"); break;
 		case 1: tipo.setText("Error"); break;
-		case 2: tipo.setText("InformaciÃ³n"); break;
+		case 2: tipo.setText("Información"); break;
 		}
 
 		imagen = new JLabel("");
@@ -174,7 +174,6 @@ public class MensajeAviso extends JDialog{
 	}
 
 	public void agrandar(int ancho){
-		int x = getX();
 		int y = getY();
 		int wN = getWidth()+ancho;
 		setBounds(pantalla.width/2 - wN/2, y, wN, 152);
