@@ -34,11 +34,11 @@ public class VerPaquete extends MiJPanel{
 	private JButton btnAtras;
 
 	private Principal padre;
-	private Gestion anterior;
+	private MiJPanel anterior;
 	private VerPaquete este;
 	private TouristPackageDTO tp;
 	
-	public VerPaquete(Principal p, Gestion a, TouristPackageDTO t){
+	public VerPaquete(Principal p, MiJPanel a, TouristPackageDTO t){
 		este = this;
 		padre = p;
 		anterior = a;

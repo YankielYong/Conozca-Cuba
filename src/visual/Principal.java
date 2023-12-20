@@ -107,6 +107,7 @@ public class Principal extends JFrame{
 	private MostrarReporte panelMostrarReporte;
 
 	public Principal(UserDTO u){
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/visual/imagenes/logo.png")));
 		este = this;
 		user = u;
 		establecerRol();

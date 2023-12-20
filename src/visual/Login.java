@@ -33,13 +33,14 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) {
 		Login l = new Login();
-		//l.setVisible(true);
+		l.setVisible(true);
 	}
 	
 	private UserServices userServices = ServicesLocator.getUserServices();
@@ -78,6 +79,7 @@ public class Login extends JFrame {
 	private Login este;
 
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/visual/imagenes/logo.png")));
 		este = this;
 		setResizable(false);
 		setUndecorated(true);
@@ -350,8 +352,7 @@ public class Login extends JFrame {
 			e1.printStackTrace();
 		}
 
-		iniciarYankiel();
-		//iniciarPatricia();
+		
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -410,6 +411,7 @@ public class Login extends JFrame {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void iniciarYankiel(){
 		UserDTO usu = null;
 		for(int i=0; i<listaUsuarios.size(); i++){
@@ -424,6 +426,7 @@ public class Login extends JFrame {
 		p.setVisible(true);
 	}
 	
+	@SuppressWarnings("unused")
 	private void iniciarPatricia(){
 		UserDTO usu = null;
 		for(int i=0; i<listaUsuarios.size(); i++){

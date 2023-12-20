@@ -92,7 +92,7 @@ public class Descubrir extends MiJPanel{
 	private JButton btnCerrar;
 	private JPanel panelInferior;
 
-	private JPanel este;
+	private MiJPanel este;
 	private Principal padre;
 
 	private JButton btnPaquetes;
@@ -102,10 +102,16 @@ public class Descubrir extends MiJPanel{
 	private JTextField txtBuscarNombre;
 	private JTextField txtBuscarProvincia;
 	private JTextField txtBuscarCadenaHotelera;
+	private JTextField txtBuscarLugar;
+	private JTextField txtBuscarVehiculo;
+	private JTextField txtBuscarTransportista;
 	
 	private boolean nameChanged = false;
 	private boolean provChanged = false;
 	private boolean chainChanged = false;
+	private boolean placeChanged = false;
+	private boolean vehChanged = false;
+	private boolean transChanged = false;
 	private JLabel lblBuscarN;
 	private JLabel lblBuscarP;
 	private JLabel lblBuscarC;
@@ -194,6 +200,9 @@ public class Descubrir extends MiJPanel{
 				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
+				txtBuscarLugar.setVisible(false);
+				txtBuscarVehiculo.setVisible(false);
+				txtBuscarTransportista.setVisible(false);
 				
 				ponerPaquetes();
 			}
@@ -235,6 +244,9 @@ public class Descubrir extends MiJPanel{
 				lblBuscarP.setVisible(true);
 				txtBuscarCadenaHotelera.setVisible(true);
 				lblBuscarC.setVisible(true);
+				txtBuscarLugar.setVisible(false);
+				txtBuscarVehiculo.setVisible(false);
+				txtBuscarTransportista.setVisible(false);
 				
 				ponerHoteles();
 			}
@@ -272,11 +284,14 @@ public class Descubrir extends MiJPanel{
 					btnEventos.setBorderPainted(true);
 				}
 				txtBuscarNombre.setVisible(false);
-				lblBuscarN.setVisible(false);
+				lblBuscarN.setVisible(true);
 				txtBuscarProvincia.setVisible(false);
 				lblBuscarP.setVisible(false);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
+				txtBuscarLugar.setVisible(true);
+				txtBuscarVehiculo.setVisible(false);
+				txtBuscarTransportista.setVisible(false);
 				
 				ponerEventos();
 			}
@@ -313,11 +328,14 @@ public class Descubrir extends MiJPanel{
 					btnTransportes.setBorderPainted(true);
 				}
 				txtBuscarNombre.setVisible(false);
-				lblBuscarN.setVisible(false);
+				lblBuscarN.setVisible(true);
 				txtBuscarProvincia.setVisible(false);
-				lblBuscarP.setVisible(false);
+				lblBuscarP.setVisible(true);
 				txtBuscarCadenaHotelera.setVisible(false);
 				lblBuscarC.setVisible(false);
+				txtBuscarLugar.setVisible(false);
+				txtBuscarVehiculo.setVisible(true);
+				txtBuscarTransportista.setVisible(true);
 				
 				ponerTransportes();
 			}
@@ -343,7 +361,7 @@ public class Descubrir extends MiJPanel{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(btnPaquetes.isBorderPainted()){
-					
+					ponerPaquetes();
 				}
 				else if(btnHoteles.isBorderPainted())
 					ponerHoteles();
@@ -380,6 +398,12 @@ public class Descubrir extends MiJPanel{
 		panelInferior.add(lblBuscarN);
 		
 		txtBuscarProvincia = new JTextField("Provincia");
+		txtBuscarProvincia.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				ponerHoteles();
+			}
+		});
 		txtBuscarProvincia.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -413,6 +437,12 @@ public class Descubrir extends MiJPanel{
 		lblBuscarP.setVisible(false);
 		
 		txtBuscarCadenaHotelera = new JTextField("Cadena Hotelera");
+		txtBuscarCadenaHotelera.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				ponerHoteles();
+			}
+		});
 		txtBuscarCadenaHotelera.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -445,11 +475,131 @@ public class Descubrir extends MiJPanel{
 		panelInferior.add(lblBuscarC);
 		lblBuscarC.setVisible(false);
 		
+		txtBuscarLugar = new JTextField("Lugar");
+		txtBuscarLugar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				ponerEventos();
+			}
+		});
+		txtBuscarLugar.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtBuscarLugar.getText().equals("Lugar") && !placeChanged){
+					txtBuscarLugar.setText("");
+					placeChanged = true;
+					txtBuscarLugar.setForeground(Color.black);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtBuscarLugar.getText().equals("")){
+					txtBuscarLugar.setText("Lugar");
+					placeChanged = false;
+					txtBuscarLugar.setForeground(Color.gray);
+				}
+			}
+		});
+		txtBuscarLugar.setBounds(30, 80, 300, 30);
+		txtBuscarLugar.setForeground(Color.gray);
+		txtBuscarLugar.setFont(new Font("Arial", Font.PLAIN, 15));
+		panelInferior.add(txtBuscarLugar);
+		txtBuscarLugar.setVisible(false);
+		
+		txtBuscarVehiculo = new JTextField("Vehículo");
+		txtBuscarVehiculo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				ponerTransportes();
+			}
+		});
+		txtBuscarVehiculo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtBuscarVehiculo.getText().equals("Vehículo") && !vehChanged){
+					txtBuscarVehiculo.setText("");
+					vehChanged = true;
+					txtBuscarVehiculo.setForeground(Color.black);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtBuscarVehiculo.getText().equals("")){
+					txtBuscarVehiculo.setText("Vehículo");
+					vehChanged = false;
+					txtBuscarVehiculo.setForeground(Color.gray);
+				}
+			}
+		});
+		txtBuscarVehiculo.setBounds(30, 80, 300, 30);
+		txtBuscarVehiculo.setForeground(Color.gray);
+		txtBuscarVehiculo.setFont(new Font("Arial", Font.PLAIN, 15));
+		panelInferior.add(txtBuscarVehiculo);
+		txtBuscarVehiculo.setVisible(false);
+		
+		txtBuscarTransportista = new JTextField("Transportista");
+		txtBuscarTransportista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				ponerTransportes();
+			}
+		});
+		txtBuscarTransportista.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtBuscarTransportista.getText().equals("Transportista") && !transChanged){
+					txtBuscarTransportista.setText("");
+					transChanged = true;
+					txtBuscarTransportista.setForeground(Color.black);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtBuscarTransportista.getText().equals("")){
+					txtBuscarTransportista.setText("Transportista");
+					transChanged = false;
+					txtBuscarTransportista.setForeground(Color.gray);
+				}
+			}
+		});
+		txtBuscarTransportista.setBounds(420, 80, 300, 30);
+		txtBuscarTransportista.setForeground(Color.gray);
+		txtBuscarTransportista.setFont(new Font("Arial", Font.PLAIN, 15));
+		panelInferior.add(txtBuscarTransportista);
+		txtBuscarTransportista.setVisible(false);
+		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				pos = table.getSelectedRow();
+				if(btnPaquetes.isBorderPainted()){
+					padre.getPanelPrincipal().remove(este);
+					VerPaquete vh = new VerPaquete(padre, este, listaPaquetes.get(pos));
+					padre.getPanelPrincipal().add(vh);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnHoteles.isBorderPainted()){
+					padre.getPanelPrincipal().remove(este);
+					VerHotel vh = new VerHotel(padre, este, listaHoteles.get(pos));
+					padre.getPanelPrincipal().add(vh);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnEventos.isBorderPainted()){
+					padre.getPanelPrincipal().remove(este);
+					VerEvento vh = new VerEvento(padre, este, listaEventos.get(pos));
+					padre.getPanelPrincipal().add(vh);
+					padre.getPanelPrincipal().repaint();
+				}
+				else if(btnTransportes.isBorderPainted()){
+					padre.getPanelPrincipal().remove(este);
+					VerTransporte vh = new VerTransporte(padre, este, listaTransportes.get(pos));
+					padre.getPanelPrincipal().add(vh);
+					padre.getPanelPrincipal().repaint();
+				}
 			}
 			
 		});
@@ -496,7 +646,7 @@ public class Descubrir extends MiJPanel{
 		table.getColumnModel().getColumn(4).setPreferredWidth(165);
 		table.getColumnModel().getColumn(4).setResizable(false);
 		try {
-			listaPaquetes = touristPackageServices.selectAllTouristPackages();
+			buscarPaquetes();
 			for(TouristPackageDTO t : listaPaquetes){
 				String[] datos = {t.getPromotionalName(), 
 						String.valueOf(t.getNumberOfPeople()), String.valueOf(t.getNumberOfDays()), 
@@ -506,6 +656,12 @@ public class Descubrir extends MiJPanel{
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void buscarPaquetes() throws ClassNotFoundException, SQLException{
+		String nombre = "";
+		if(nameChanged) nombre = txtBuscarNombre.getText();
+		listaPaquetes = touristPackageServices.searchPackages(nombre);
 	}
 	
 	private void ponerHoteles(){
@@ -547,8 +703,13 @@ public class Descubrir extends MiJPanel{
 	}
 	
 	private void buscarHoteles() throws ClassNotFoundException, SQLException{
-		if(nameChanged) listaHoteles = hotelServices.searchHotels(txtBuscarNombre.getText());
-		else listaHoteles = hotelServices.searchHotels("");
+		String nombre = "";
+		String cadena = "";
+		String provincia = "";
+		if(nameChanged) nombre = txtBuscarNombre.getText();
+		if(chainChanged) cadena = txtBuscarCadenaHotelera.getText();
+		if(provChanged) provincia = txtBuscarProvincia.getText();
+		listaHoteles = hotelServices.searchHotels(nombre, provincia, cadena);
 	}
 	
 	private void ponerEventos(){
@@ -566,7 +727,7 @@ public class Descubrir extends MiJPanel{
 		table.getColumnModel().getColumn(1).setPreferredWidth(760);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		try{
-			listaEventos = eventServices.selectAllEvents();
+			buscarEventos();
 			for(EventDTO e : listaEventos){
 				ActivityDTO act = activityServices.findActivity(e.getActivityCode());
 				PlaceDTO lug = placeServices.findPlace(e.getPlaceCode());
@@ -576,6 +737,12 @@ public class Descubrir extends MiJPanel{
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void buscarEventos() throws ClassNotFoundException, SQLException{
+		String lugar = "";
+		if(placeChanged) lugar = txtBuscarLugar.getText();
+		listaEventos = eventServices.searchEvents(lugar);
 	}
 	
 	private void ponerTransportes(){
@@ -595,7 +762,7 @@ public class Descubrir extends MiJPanel{
 		table.getColumnModel().getColumn(2).setPreferredWidth(360);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		try {
-			listaTransportes = transportServices.selectAllTransports();
+			buscarTransportes();
 			for(TransportDTO t : listaTransportes){
 				VehicleDTO v = vehicleServices.findVehicle(t.getVehicleCode());
 				TransportModalityDTO tm = transportModalityServices.findTransportModality(t.getModalityCode());
@@ -606,6 +773,14 @@ public class Descubrir extends MiJPanel{
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void buscarTransportes() throws ClassNotFoundException, SQLException{
+		String vehiculo = "";
+		String transp = "";
+		if(vehChanged) vehiculo = txtBuscarVehiculo.getText();
+		if(transChanged) transp = txtBuscarTransportista.getText();
+		listaTransportes = transportServices.searchTransports(vehiculo, transp);
 	}
 
 }

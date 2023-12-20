@@ -33,18 +33,18 @@ public class Reporte6 extends JPanel{
 			java.sql.Connection connection = ServicesLocator.getConnection();
 			JasperReport report = null;
 			if(cad.equals("Todas") && prov.equals("Todas")){
-				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v1.jasper");
+				report = (JasperReport)JRLoader.loadObject(getClass().getResource("/reports/Reporte6v1.jasper"));
 			}
 			else if(!cad.equals("Todas") && prov.equals("Todas")){
-				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v2.jasper");
+				report = (JasperReport)JRLoader.loadObject(getClass().getResource("/reports/Reporte6v2.jasper"));
 				param.put("cadena", cad);
 			}
 			else if(cad.equals("Todas") && !prov.equals("Todas")){
-				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v3.jasper");
+				report = (JasperReport)JRLoader.loadObject(getClass().getResource("/reports/Reporte6v3.jasper"));
 				param.put("provincia", prov);
 			}
 			else if(!cad.equals("Todas") && !prov.equals("Todas")){
-				report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte6v4.jasper");
+				report = (JasperReport)JRLoader.loadObject(getClass().getResource("/reports/Reporte6v4.jasper"));
 				param.put("cadena", cad);
 				param.put("provincia", prov);
 			}

@@ -76,4 +76,23 @@ public class EventServices {
 		connection.close();
 		return events;
 	}
+	
+	public ArrayList<EventDTO> searchEvents(String lugar) throws SQLException, ClassNotFoundException{
+		ArrayList<EventDTO> events = new ArrayList<EventDTO>();
+		String function = "{?= call search_event(?)}";
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		connection.setAutoCommit(false);
+		CallableStatement preparedFunction = connection.prepareCall(function);
+		preparedFunction.registerOutParameter(1, java.sql.Types.OTHER);
+		preparedFunction.setString(2, lugar);
+		preparedFunction.execute();
+		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
+		while (rs.next()){
+			events.add(new EventDTO(rs.getInt(1), rs.getInt(2), rs.getInt(3)));
+		}
+		rs.close();
+		preparedFunction.close();
+		connection.close();
+		return events;
+	}
 }

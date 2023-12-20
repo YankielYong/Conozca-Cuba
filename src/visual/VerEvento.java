@@ -43,13 +43,13 @@ public class VerEvento extends MiJPanel {
 	private JButton btnAtras;
 
 	private Principal padre;
-	private Gestion anterior;
+	private MiJPanel anterior;
 	private VerEvento este;
 	private EventDTO e;
 	private PlaceDTO place;
 	private ActivityDTO act;
 
-	public VerEvento(Principal p, Gestion a, EventDTO r){
+	public VerEvento(Principal p, MiJPanel a, EventDTO r){
 		este = this;
 		padre = p;
 		anterior = a;

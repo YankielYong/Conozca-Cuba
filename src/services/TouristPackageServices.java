@@ -86,4 +86,23 @@ public class TouristPackageServices {
 		connection.close();
 		return touristPackages;
 	}
+	
+	public ArrayList<TouristPackageDTO> searchPackages(String nombre) throws SQLException, ClassNotFoundException{
+		ArrayList<TouristPackageDTO> touristPackages = new ArrayList<TouristPackageDTO>();
+		String function = "{?= call search_tourist_package(?)}";
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		connection.setAutoCommit(false);
+		CallableStatement preparedFunction = connection.prepareCall(function);
+		preparedFunction.registerOutParameter(1, java.sql.Types.OTHER);
+		preparedFunction.setString(2, nombre);
+		preparedFunction.execute();
+		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
+		while (rs.next()){
+			touristPackages.add(new TouristPackageDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+		}
+		rs.close();
+		preparedFunction.close();
+		connection.close();
+		return touristPackages;
+	}
 }

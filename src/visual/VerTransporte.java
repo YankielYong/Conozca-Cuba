@@ -54,14 +54,14 @@ public class VerTransporte extends MiJPanel {
 	private JPanel panelInferior;
 	private JButton btnAtras;
 	private Principal padre;
-	private Gestion anterior;
+	private MiJPanel anterior;
 	private VerTransporte este;
 	private TransportDTO transporte;
 	private VehicleDTO vehiculo;
 	private TransportModalityDTO mod;
 	private String type;
 
-	public VerTransporte(Principal p, Gestion a, TransportDTO v){
+	public VerTransporte(Principal p, MiJPanel a, TransportDTO v){
 		este = this;
 		padre = p;
 		transporte=v;
@@ -336,7 +336,6 @@ public class VerTransporte extends MiJPanel {
 		idaVuelta.setForeground(Color.black);
 		idaVuelta.setFont(new Font("Arial", Font.BOLD, 16));
 		panelInferior.add(idaVuelta);
-
 	}
 	private void buscar(){
 		try {

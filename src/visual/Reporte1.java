@@ -27,7 +27,7 @@ public class Reporte1 extends JPanel{
 			Map<String, Object> param = new HashMap<>();
 			param.put("foto", getClass().getResourceAsStream("/visual/imagenes/logo cc.png"));
 			java.sql.Connection connection = ServicesLocator.getConnection();
-			JasperReport report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte1.jasper");
+			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResource("/reports/Reporte1.jasper"));
 			JasperPrint jp = JasperFillManager.fillReport(report, param, connection);
 			JRViewer jr = new JRViewer(jp);
 			este.add(jr);

@@ -50,7 +50,7 @@ public class TransportServices {
 	
 	public TransportDTO findTransport(int transportCode) throws SQLException, ClassNotFoundException{
 		java.sql.Connection connection = ServicesLocator.getConnection();
-		Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
 		String query = "SELECT * FROM transport WHERE transport.transport_code = '"+transportCode+"'"; 
 		ResultSet rs = statement.executeQuery(query);
 		rs.first();
@@ -68,6 +68,27 @@ public class TransportServices {
 		connection.setAutoCommit(false);
 		CallableStatement preparedFunction = connection.prepareCall(function);
 		preparedFunction.registerOutParameter(1, java.sql.Types.OTHER);
+		preparedFunction.execute();
+		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
+		while (rs.next()){
+			roles.add(new TransportDTO(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4)));
+		}
+		rs.close();
+		preparedFunction.close();
+		connection.close();
+		return roles;
+	}
+	
+	public ArrayList<TransportDTO> searchTransports(String vehiculo, String transportista)
+			throws SQLException, ClassNotFoundException{
+		ArrayList<TransportDTO> roles = new ArrayList<TransportDTO>();
+		String function = "{?= call search_transport(?,?)}";
+		java.sql.Connection connection = ServicesLocator.getConnection();
+		connection.setAutoCommit(false);
+		CallableStatement preparedFunction = connection.prepareCall(function);
+		preparedFunction.registerOutParameter(1, java.sql.Types.OTHER);
+		preparedFunction.setString(2, vehiculo);
+		preparedFunction.setString(3, transportista);
 		preparedFunction.execute();
 		ResultSet rs = (ResultSet) preparedFunction.getObject(1);
 		while (rs.next()){

@@ -30,7 +30,7 @@ public class Reporte3 extends JPanel{
 			param.put("ruta2", "reports/Subreporte32.jasper");
 			param.put("ruta3", "reports/Subreporte33.jasper");
 			java.sql.Connection connection = ServicesLocator.getConnection();
-			JasperReport report = (JasperReport)JRLoader.loadObjectFromFile("reports/Reporte3.jasper");
+			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResource("/reports/Reporte3.jasper"));
 			JasperPrint jp = JasperFillManager.fillReport(report, param, connection);
 			JRViewer jr = new JRViewer(jp);
 			este.add(jr);
